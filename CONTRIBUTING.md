@@ -1,10 +1,10 @@
 # Contributing
 
-Thank you for helping improve Connect WCDP for Elementor.
+Thank you for helping improve StyleRaise.
 
 ## Reporting a bug
 
-Open an [issue](https://github.com/ridni-foundation/connect-wcdp-elementor/issues) and include:
+Open an [issue](https://github.com/ridni-foundation/styleraise/issues) and include:
 
 - the versions of WordPress, PHP, WooCommerce, Elementor (and Elementor Pro, if
   used), Donation Platform for WooCommerce and this plugin — the plugin's
@@ -29,7 +29,7 @@ private source tree (see the README), so:
   to that release, and you are credited in the changelog;
 - code follows the [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/),
   with English comments and PHPDoc;
-- escape all output, sanitise all input, and use the `connect-wcdp-elementor` text domain for
+- escape all output, sanitise all input, and use the `styleraise` text domain for
   every user-facing string;
 - never use `!important`, floats or negative margins in the stylesheets —
   appearance is driven by CSS custom properties scoped to the widget;

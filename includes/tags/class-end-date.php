@@ -33,7 +33,7 @@ class End_Date extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Campaign Deadline', 'connect-wcdp-elementor' );
+		return esc_html__( 'Campaign Deadline', 'styleraise' );
 	}
 
 	/**
@@ -46,15 +46,15 @@ class End_Date extends Tag_Base {
 		$this->add_control(
 			'output',
 			array(
-				'label'     => esc_html__( 'Output', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Output', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'human',
 				'separator' => 'before',
 				'options'   => array(
-					'human'  => esc_html__( 'Time remaining ("3 weeks to go")', 'connect-wcdp-elementor' ),
-					'diff'   => esc_html__( 'Time remaining, bare ("3 weeks")', 'connect-wcdp-elementor' ),
-					'date'   => esc_html__( 'Formatted date', 'connect-wcdp-elementor' ),
-					'days'   => esc_html__( 'Whole days remaining', 'connect-wcdp-elementor' ),
+					'human'  => esc_html__( 'Time remaining ("3 weeks to go")', 'styleraise' ),
+					'diff'   => esc_html__( 'Time remaining, bare ("3 weeks")', 'styleraise' ),
+					'date'   => esc_html__( 'Formatted date', 'styleraise' ),
+					'days'   => esc_html__( 'Whole days remaining', 'styleraise' ),
 				),
 			)
 		);
@@ -62,11 +62,11 @@ class End_Date extends Tag_Base {
 		$this->add_control(
 			'date_format',
 			array(
-				'label'       => esc_html__( 'Date Format', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Date Format', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
-				'placeholder' => esc_html__( 'Site default', 'connect-wcdp-elementor' ),
-				'description' => esc_html__( 'PHP date format, for example j F Y.', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Site default', 'styleraise' ),
+				'description' => esc_html__( 'PHP date format, for example j F Y.', 'styleraise' ),
 				'condition'   => array( 'output' => 'date' ),
 			)
 		);
@@ -74,12 +74,12 @@ class End_Date extends Tag_Base {
 		$this->add_control(
 			'ended_text',
 			array(
-				'label'       => esc_html__( 'Text When Ended', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text When Ended', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
-				'placeholder' => esc_html__( 'Campaign has ended', 'connect-wcdp-elementor' ),
-				'description' => esc_html__( 'Shown instead of a negative countdown. Leave empty to keep WCDP\'s "ended X ago" phrasing.', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Campaign has ended', 'styleraise' ),
+				'description' => esc_html__( 'Shown instead of a negative countdown. Leave empty to keep WCDP\'s "ended X ago" phrasing.', 'styleraise' ),
 				'condition'   => array( 'output' => array( 'human', 'diff', 'days' ) ),
 			)
 		);

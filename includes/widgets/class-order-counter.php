@@ -15,6 +15,7 @@ use WCDP_Elementor\Cache\Location_Index;
 use WCDP_Elementor\Data\Campaign;
 use WCDP_Elementor\Data\Value_Formatter;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -44,7 +45,7 @@ class Order_Counter extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Donation Counter', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Donation Counter', 'styleraise' );
 	}
 
 	/**
@@ -91,7 +92,7 @@ class Order_Counter extends Widget_Base {
 	 * Register controls.
 	 */
 	protected function register_controls(): void {
-		$this->open_content_section( 'section_campaign', esc_html__( 'Campaign', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_campaign', esc_html__( 'Campaign', 'styleraise' ) );
 
 		$this->register_product_controls();
 		$this->register_live_control();
@@ -100,59 +101,59 @@ class Order_Counter extends Widget_Base {
 		$this->add_control(
 			'label',
 			array(
-				'label'       => esc_html__( 'Text', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text', 'styleraise' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 3,
-				'default'     => esc_html__( '{ORDER_COUNT} people have already contributed to this project', 'connect-wcdp-elementor' ),
+				'default'     => esc_html__( '{ORDER_COUNT} people have already contributed to this project', 'styleraise' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Use {ORDER_COUNT} or {count} where the number should appear.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Use {ORDER_COUNT} or {count} where the number should appear.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'fallback',
 			array(
-				'label'       => esc_html__( 'Text With No Donations Yet', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text With No Donations Yet', 'styleraise' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 2,
 				'default'     => '',
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Shown when the count is zero. Leave empty to keep the text above.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Shown when the count is zero. Leave empty to keep the text above.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'cheat',
 			array(
-				'label'       => esc_html__( 'Count Correction', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Count Correction', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => '',
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Added to the real count. Can be negative.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Added to the real count. Can be negative.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'hide_when_empty',
 			array(
-				'label'        => esc_html__( 'Hide When Zero', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide When Zero', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
-				'description'  => esc_html__( 'Render nothing at all until the first donation arrives.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Render nothing at all until the first donation arrives.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'combine_translations',
 			array(
-				'label'        => esc_html__( 'Combine Translations', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Combine Translations', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'With Polylang or WPML active, count donations from every translation of this product.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'With Polylang or WPML active, count donations from every translation of this product.', 'styleraise' ),
 			)
 		);
 
@@ -160,7 +161,7 @@ class Order_Counter extends Widget_Base {
 
 		$this->add_text_style_section(
 			'counter',
-			esc_html__( 'Text', 'connect-wcdp-elementor' ),
+			esc_html__( 'Text', 'styleraise' ),
 			'{{WRAPPER}} .wcdp-el-counter'
 		);
 
@@ -173,7 +174,7 @@ class Order_Counter extends Widget_Base {
 	private function register_number_style(): void {
 		$this->open_style_section(
 			'section_number_style',
-			esc_html__( 'Number', 'connect-wcdp-elementor' )
+			esc_html__( 'Number', 'styleraise' )
 		);
 
 		$selector = '{{WRAPPER}} .wcdp-el-counter .wcdp-el-value--count';
@@ -189,10 +190,10 @@ class Order_Counter extends Widget_Base {
 		$this->add_control(
 			'number_badge_heading',
 			array(
-				'label'       => esc_html__( 'Badge', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Badge', 'styleraise' ),
 				'type'        => Controls_Manager::HEADING,
 				'separator'   => 'before',
-				'description' => esc_html__( 'Give the number a background to turn it into a badge.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Give the number a background to turn it into a badge.', 'styleraise' ),
 			)
 		);
 
@@ -200,7 +201,7 @@ class Order_Counter extends Widget_Base {
 
 		$this->add_slider(
 			'number_min_width',
-			esc_html__( 'Minimum Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Minimum Width', 'styleraise' ),
 			$selector,
 			'min-width: {{SIZE}}{{UNIT}}; display: inline-block; text-align: center;',
 			array( 'size_units' => array( 'px', 'em', 'ch' ) )
@@ -283,11 +284,9 @@ class Order_Counter extends Widget_Base {
 
 		$this->add_render_attribute( 'counter', $attributes );
 
-		printf(
-			'<div %1$s>%2$s</div>',
-			$this->get_render_attribute_string( 'counter' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor escapes attribute values.
-			$output // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Template is escaped above; only the count span is injected markup.
-		);
+		echo '<div ';
+		$this->print_render_attribute_string( 'counter' );
+		echo '>' . wp_kses( $output, Kses::markup() ) . '</div>';
 	}
 
 }

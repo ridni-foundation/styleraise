@@ -83,18 +83,18 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 		$sources = array();
 
 		if ( $allow_all ) {
-			$sources['all'] = esc_html__( 'All campaigns', 'connect-wcdp-elementor' );
+			$sources['all'] = esc_html__( 'All campaigns', 'styleraise' );
 		}
 
-		$sources['manual']  = esc_html__( 'Pick a campaign', 'connect-wcdp-elementor' );
-		$sources['current'] = esc_html__( 'Current post / loop item', 'connect-wcdp-elementor' );
-		$sources['tag']     = esc_html__( 'Dynamic tag or custom value', 'connect-wcdp-elementor' );
-		$sources['dynamic'] = esc_html__( 'Post meta field', 'connect-wcdp-elementor' );
+		$sources['manual']  = esc_html__( 'Pick a campaign', 'styleraise' );
+		$sources['current'] = esc_html__( 'Current post / loop item', 'styleraise' );
+		$sources['tag']     = esc_html__( 'Dynamic tag or custom value', 'styleraise' );
+		$sources['dynamic'] = esc_html__( 'Post meta field', 'styleraise' );
 
 		$this->add_control(
 			'product_source',
 			array(
-				'label'   => esc_html__( 'Campaign Source', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Campaign Source', 'styleraise' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => $default,
 				'options' => $sources,
@@ -104,39 +104,39 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 		$this->add_control(
 			'product_id_manual',
 			array(
-				'label'       => esc_html__( 'Campaign', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Campaign', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT2,
 				'options'     => Product_Resolver::get_options(),
 				'default'     => '',
 				'label_block' => true,
 				'condition'   => array( 'product_source' => 'manual' ),
-				'description' => esc_html__( 'Only products with donations enabled are listed.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Only products with donations enabled are listed.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'product_id_tag',
 			array(
-				'label'       => esc_html__( 'Product ID', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Product ID', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 				'condition'   => array( 'product_source' => 'tag' ),
-				'description' => esc_html__( 'Accepts a literal ID or any dynamic tag that resolves to one — an ACF field, a JetEngine value, the WCDP Product ID tag.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Accepts a literal ID or any dynamic tag that resolves to one — an ACF field, a JetEngine value, the WCDP Product ID tag.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'product_meta_key',
 			array(
-				'label'       => esc_html__( 'Meta Key', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Meta Key', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
 				'placeholder' => 'collection_select',
 				'condition'   => array( 'product_source' => 'dynamic' ),
-				'description' => esc_html__( 'Custom field on the current post that stores the product ID.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Custom field on the current post that stores the product ID.', 'styleraise' ),
 			)
 		);
 
@@ -145,7 +145,7 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 				'product_source_notice',
 				array(
 					'type'      => Controls_Manager::RAW_HTML,
-					'raw'       => '<div class="elementor-control-field-description">' . esc_html__( 'In an archive or Loop Grid template, choose "Current post / loop item" so every card shows its own campaign.', 'connect-wcdp-elementor' ) . '</div>',
+					'raw'       => '<div class="elementor-control-field-description">' . esc_html__( 'In an archive or Loop Grid template, choose "Current post / loop item" so every card shows its own campaign.', 'styleraise' ) . '</div>',
 					'condition' => array( 'product_source' => 'manual' ),
 				)
 			);
@@ -163,46 +163,46 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 		$this->add_control(
 			'goal',
 			array(
-				'label'       => esc_html__( 'Goal Override', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Goal Override', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => '',
 				'min'         => 0,
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Leave empty to use the goal set on the product.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Leave empty to use the goal set on the product.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'cheat',
 			array(
-				'label'       => esc_html__( 'Amount Correction', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Amount Correction', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => '',
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Added to the raised total, for example to include offline donations. Can be negative.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Added to the raised total, for example to include offline donations. Can be negative.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'addids',
 			array(
-				'label'       => esc_html__( 'Additional Product IDs', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Additional Product IDs', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
-				'description' => esc_html__( 'Comma-separated IDs whose donations are added to this campaign.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Comma-separated IDs whose donations are added to this campaign.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'combine_translations',
 			array(
-				'label'        => esc_html__( 'Combine Translations', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Combine Translations', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'With Polylang or WPML active, add the donations of every translation of this product. Turn off if each language is a separate campaign.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'With Polylang or WPML active, add the donations of every translation of this product. Turn off if each language is a separate campaign.', 'styleraise' ),
 			)
 		);
 	}
@@ -219,16 +219,16 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 		$this->add_control(
 			'live_updates',
 			array(
-				'label'       => esc_html__( 'Live Updates', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Live Updates', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => 'inherit',
 				'separator'   => 'before',
 				'options'     => array(
-					'inherit' => esc_html__( 'Follow site setting', 'connect-wcdp-elementor' ),
-					'on'      => esc_html__( 'Always refresh', 'connect-wcdp-elementor' ),
-					'off'     => esc_html__( 'Never refresh', 'connect-wcdp-elementor' ),
+					'inherit' => esc_html__( 'Follow site setting', 'styleraise' ),
+					'on'      => esc_html__( 'Always refresh', 'styleraise' ),
+					'off'     => esc_html__( 'Never refresh', 'styleraise' ),
 				),
-				'description' => esc_html__( 'Page caches serve the figures that were current when the page was cached. Refreshing fetches the real ones after load, so a cached page still shows the truth.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Page caches serve the figures that were current when the page was cached. Refreshing fetches the real ones after load, so a cached page still shows the truth.', 'styleraise' ),
 			)
 		);
 	}
@@ -330,19 +330,19 @@ abstract class Widget_Base extends Elementor_Widget_Base {
 
 		switch ( $source ) {
 			case 'current':
-				return esc_html__( 'No donation product in the current context. Set a Preview Post in the Elementor settings, or place this widget in a product template or loop.', 'connect-wcdp-elementor' );
+				return esc_html__( 'No donation product in the current context. Set a Preview Post in the Elementor settings, or place this widget in a product template or loop.', 'styleraise' );
 
 			case 'tag':
-				return esc_html__( 'The dynamic tag did not resolve to a product with donations enabled.', 'connect-wcdp-elementor' );
+				return esc_html__( 'The dynamic tag did not resolve to a product with donations enabled.', 'styleraise' );
 
 			case 'dynamic':
 				return empty( $settings['product_meta_key'] )
-					? esc_html__( 'Enter the meta key that stores the product ID.', 'connect-wcdp-elementor' )
-					: esc_html__( 'The meta field is empty on this post, or it points to a product without donations enabled. A Preview Post may be required.', 'connect-wcdp-elementor' );
+					? esc_html__( 'Enter the meta key that stores the product ID.', 'styleraise' )
+					: esc_html__( 'The meta field is empty on this post, or it points to a product without donations enabled. A Preview Post may be required.', 'styleraise' );
 
 			case 'manual':
 			default:
-				return esc_html__( 'Pick a campaign, or switch the source to "Current post / loop item".', 'connect-wcdp-elementor' );
+				return esc_html__( 'Pick a campaign, or switch the source to "Current post / loop item".', 'styleraise' );
 		}
 	}
 

@@ -87,7 +87,7 @@ final class Campaigns_Controller {
 						'q' => array(
 							'required'          => true,
 							'type'              => 'string',
-							'description'       => __( 'JSON-encoded list of campaigns to refresh.', 'connect-wcdp-elementor' ),
+							'description'       => __( 'JSON-encoded list of campaigns to refresh.', 'styleraise' ),
 							'validate_callback' => static function ( $value ) {
 								return is_string( $value ) && strlen( $value ) <= 8192;
 							},

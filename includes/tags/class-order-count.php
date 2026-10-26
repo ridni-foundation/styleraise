@@ -34,7 +34,7 @@ class Order_Count extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Donation Count', 'connect-wcdp-elementor' );
+		return esc_html__( 'Donation Count', 'styleraise' );
 	}
 
 	/**
@@ -56,22 +56,22 @@ class Order_Count extends Tag_Base {
 		$this->add_control(
 			'cheat',
 			array(
-				'label'       => esc_html__( 'Count Correction', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Count Correction', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => '',
 				'separator'   => 'before',
-				'description' => esc_html__( 'Added to the real count, for example to include offline donations. Can be negative.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Added to the real count, for example to include offline donations. Can be negative.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'localize',
 			array(
-				'label'        => esc_html__( 'Thousands Separator', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Thousands Separator', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'Turn off when the tag feeds a numeric control.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Turn off when the tag feeds a numeric control.', 'styleraise' ),
 			)
 		);
 	}

@@ -117,7 +117,7 @@ final class Requirements {
 
 		$this->failures['php'] = sprintf(
 			/* translators: 1: required PHP version, 2: current PHP version. */
-			__( 'PHP %1$s or newer is required. This site runs PHP %2$s.', 'connect-wcdp-elementor' ),
+			__( 'PHP %1$s or newer is required. This site runs PHP %2$s.', 'styleraise' ),
 			self::MINIMUM_PHP_VERSION,
 			PHP_VERSION
 		);
@@ -131,7 +131,7 @@ final class Requirements {
 			return;
 		}
 
-		$this->failures['woocommerce'] = __( 'WooCommerce must be installed and activated.', 'connect-wcdp-elementor' );
+		$this->failures['woocommerce'] = __( 'WooCommerce must be installed and activated.', 'styleraise' );
 	}
 
 	/**
@@ -139,7 +139,7 @@ final class Requirements {
 	 */
 	private function check_elementor(): void {
 		if ( ! did_action( 'elementor/loaded' ) ) {
-			$this->failures['elementor'] = __( 'Elementor must be installed and activated.', 'connect-wcdp-elementor' );
+			$this->failures['elementor'] = __( 'Elementor must be installed and activated.', 'styleraise' );
 
 			return;
 		}
@@ -150,9 +150,9 @@ final class Requirements {
 
 		$this->failures['elementor_version'] = sprintf(
 			/* translators: 1: required Elementor version, 2: installed Elementor version. */
-			__( 'Elementor %1$s or newer is required. Version %2$s is installed.', 'connect-wcdp-elementor' ),
+			__( 'Elementor %1$s or newer is required. Version %2$s is installed.', 'styleraise' ),
 			self::MINIMUM_ELEMENTOR_VERSION,
-			defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : __( 'unknown', 'connect-wcdp-elementor' )
+			defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : __( 'unknown', 'styleraise' )
 		);
 	}
 
@@ -161,7 +161,7 @@ final class Requirements {
 	 */
 	private function check_wcdp(): void {
 		if ( ! class_exists( 'WCDP' ) ) {
-			$this->failures['wcdp'] = __( 'Donation Platform for WooCommerce (WCDP) must be installed and activated.', 'connect-wcdp-elementor' );
+			$this->failures['wcdp'] = __( 'Donation Platform for WooCommerce (WCDP) must be installed and activated.', 'styleraise' );
 
 			return;
 		}
@@ -172,9 +172,9 @@ final class Requirements {
 
 		$this->failures['wcdp_version'] = sprintf(
 			/* translators: 1: required WCDP version, 2: installed WCDP version. */
-			__( 'Donation Platform for WooCommerce %1$s or newer is required. Version %2$s is installed.', 'connect-wcdp-elementor' ),
+			__( 'Donation Platform for WooCommerce %1$s or newer is required. Version %2$s is installed.', 'styleraise' ),
 			self::MINIMUM_WCDP_VERSION,
-			defined( 'WCDP_VERSION' ) ? WCDP_VERSION : __( 'unknown', 'connect-wcdp-elementor' )
+			defined( 'WCDP_VERSION' ) ? WCDP_VERSION : __( 'unknown', 'styleraise' )
 		);
 	}
 
@@ -190,7 +190,7 @@ final class Requirements {
 		echo esc_html(
 			sprintf(
 				/* translators: %s: plugin name. */
-				__( '%s is inactive.', 'connect-wcdp-elementor' ),
+				__( '%s is inactive.', 'styleraise' ),
 				WCDP_EL_NAME
 			)
 		);

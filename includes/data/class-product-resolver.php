@@ -243,7 +243,7 @@ final class Product_Resolver {
 			return $cached;
 		}
 
-		$options = array( '' => esc_html__( '— Select a campaign —', 'connect-wcdp-elementor' ) );
+		$options = array( '' => esc_html__( '— Select a campaign —', 'styleraise' ) );
 
 		/**
 		 * Filter the maximum number of products offered in the picker.
@@ -309,7 +309,7 @@ final class Product_Resolver {
 		$language = self::get_post_language( $product_id );
 
 		if ( '' === $title ) {
-			$title = esc_html__( '(no title)', 'connect-wcdp-elementor' );
+			$title = esc_html__( '(no title)', 'styleraise' );
 		}
 
 		if ( '' !== $language ) {

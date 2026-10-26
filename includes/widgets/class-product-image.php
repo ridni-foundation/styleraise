@@ -13,6 +13,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Image_Size;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -38,7 +39,7 @@ class Product_Image extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Campaign Image', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Campaign Image', 'styleraise' );
 	}
 
 	/**
@@ -72,7 +73,7 @@ class Product_Image extends Widget_Base {
 	 * Register controls.
 	 */
 	protected function register_controls(): void {
-		$this->open_content_section( 'section_content', esc_html__( 'Campaign Image', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_content', esc_html__( 'Campaign Image', 'styleraise' ) );
 
 		$this->register_product_controls( array( 'default' => 'current' ) );
 
@@ -90,7 +91,7 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'link_to_product',
 			array(
-				'label'        => esc_html__( 'Link to Campaign', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Link to Campaign', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
@@ -100,11 +101,11 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'lazy_load',
 			array(
-				'label'        => esc_html__( 'Lazy Load', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Lazy Load', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'Turn off for an image above the fold — lazy loading a hero image delays Largest Contentful Paint.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Turn off for an image above the fold — lazy loading a hero image delays Largest Contentful Paint.', 'styleraise' ),
 			)
 		);
 
@@ -117,7 +118,7 @@ class Product_Image extends Widget_Base {
 	 * Style → Image.
 	 */
 	private function register_image_style(): void {
-		$this->open_style_section( 'section_image_style', esc_html__( 'Image', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_image_style', esc_html__( 'Image', 'styleraise' ) );
 
 		$wrapper = '{{WRAPPER}} .wcdp-el-product-image';
 		$image   = $wrapper . ' img';
@@ -125,19 +126,19 @@ class Product_Image extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			array(
-				'label'     => esc_html__( 'Alignment', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Alignment', 'styleraise' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'flex-start' => array(
-						'title' => esc_html__( 'Left', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Left', 'styleraise' ),
 						'icon'  => 'eicon-text-align-left',
 					),
 					'center'     => array(
-						'title' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Center', 'styleraise' ),
 						'icon'  => 'eicon-text-align-center',
 					),
 					'flex-end'   => array(
-						'title' => esc_html__( 'Right', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Right', 'styleraise' ),
 						'icon'  => 'eicon-text-align-right',
 					),
 				),
@@ -147,7 +148,7 @@ class Product_Image extends Widget_Base {
 
 		$this->add_slider(
 			'image_width',
-			esc_html__( 'Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Width', 'styleraise' ),
 			$image,
 			'width: {{SIZE}}{{UNIT}};',
 			array(
@@ -158,7 +159,7 @@ class Product_Image extends Widget_Base {
 
 		$this->add_slider(
 			'image_max_width',
-			esc_html__( 'Maximum Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Maximum Width', 'styleraise' ),
 			$image,
 			'max-width: {{SIZE}}{{UNIT}};',
 			array(
@@ -170,11 +171,11 @@ class Product_Image extends Widget_Base {
 		$this->add_responsive_control(
 			'image_ratio',
 			array(
-				'label'       => esc_html__( 'Aspect Ratio', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Aspect Ratio', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '',
 				'options'     => array(
-					''      => esc_html__( 'Original', 'connect-wcdp-elementor' ),
+					''      => esc_html__( 'Original', 'styleraise' ),
 					'1/1'   => '1:1',
 					'4/3'   => '4:3',
 					'3/2'   => '3:2',
@@ -185,21 +186,21 @@ class Product_Image extends Widget_Base {
 					'9/16'  => '9:16',
 				),
 				'selectors'   => array( $image => 'aspect-ratio: {{VALUE}}; height: auto;' ),
-				'description' => esc_html__( 'Crops every campaign image to the same shape — the reliable way to keep archive cards aligned.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Crops every campaign image to the same shape — the reliable way to keep archive cards aligned.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'image_object_fit',
 			array(
-				'label'     => esc_html__( 'Fit', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Fit', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'cover',
 				'options'   => array(
-					'cover'      => esc_html__( 'Cover', 'connect-wcdp-elementor' ),
-					'contain'    => esc_html__( 'Contain', 'connect-wcdp-elementor' ),
-					'fill'       => esc_html__( 'Fill', 'connect-wcdp-elementor' ),
-					'scale-down' => esc_html__( 'Scale Down', 'connect-wcdp-elementor' ),
+					'cover'      => esc_html__( 'Cover', 'styleraise' ),
+					'contain'    => esc_html__( 'Contain', 'styleraise' ),
+					'fill'       => esc_html__( 'Fill', 'styleraise' ),
+					'scale-down' => esc_html__( 'Scale Down', 'styleraise' ),
 				),
 				'selectors' => array( $image => 'object-fit: {{VALUE}};' ),
 				'condition' => array( 'image_ratio!' => '' ),
@@ -209,15 +210,15 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'image_object_position',
 			array(
-				'label'     => esc_html__( 'Focal Point', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Focal Point', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'center center',
 				'options'   => array(
-					'center center' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
-					'center top'    => esc_html__( 'Top', 'connect-wcdp-elementor' ),
-					'center bottom' => esc_html__( 'Bottom', 'connect-wcdp-elementor' ),
-					'left center'   => esc_html__( 'Left', 'connect-wcdp-elementor' ),
-					'right center'  => esc_html__( 'Right', 'connect-wcdp-elementor' ),
+					'center center' => esc_html__( 'Center', 'styleraise' ),
+					'center top'    => esc_html__( 'Top', 'styleraise' ),
+					'center bottom' => esc_html__( 'Bottom', 'styleraise' ),
+					'left center'   => esc_html__( 'Left', 'styleraise' ),
+					'right center'  => esc_html__( 'Right', 'styleraise' ),
 				),
 				'selectors' => array( $image => 'object-position: {{VALUE}};' ),
 				'condition' => array( 'image_ratio!' => '' ),
@@ -247,7 +248,7 @@ class Product_Image extends Widget_Base {
 
 		$this->start_controls_tabs( 'image_tabs' );
 
-		$this->start_controls_tab( 'image_tab_normal', array( 'label' => esc_html__( 'Normal', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'image_tab_normal', array( 'label' => esc_html__( 'Normal', 'styleraise' ) ) );
 
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
@@ -260,7 +261,7 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'image_opacity',
 			array(
-				'label'      => esc_html__( 'Opacity', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Opacity', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'range'      => array(
 					'px' => array(
@@ -275,7 +276,7 @@ class Product_Image extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'image_tab_hover', array( 'label' => esc_html__( 'Hover', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'image_tab_hover', array( 'label' => esc_html__( 'Hover', 'styleraise' ) ) );
 
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
@@ -288,7 +289,7 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'image_opacity_hover',
 			array(
-				'label'     => esc_html__( 'Opacity', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Opacity', 'styleraise' ),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => array(
 					'px' => array(
@@ -304,7 +305,7 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'image_zoom_hover',
 			array(
-				'label'      => esc_html__( 'Zoom', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Zoom', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'range'      => array(
 					'px' => array(
@@ -323,7 +324,7 @@ class Product_Image extends Widget_Base {
 		$this->add_control(
 			'image_transition',
 			array(
-				'label'      => esc_html__( 'Transition Duration', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Transition Duration', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 's' ),
 				'range'      => array(
@@ -380,7 +381,7 @@ class Product_Image extends Widget_Base {
 			if ( function_exists( 'wc_placeholder_img' ) ) {
 				printf(
 					'<div class="wcdp-el-product-image wcdp-el-product-image--placeholder">%s</div>',
-					wc_placeholder_img( $size ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce image markup.
+					wp_kses( wc_placeholder_img( $size ), Kses::markup() )
 				);
 			}
 
@@ -412,7 +413,7 @@ class Product_Image extends Widget_Base {
 
 		printf(
 			'<div class="wcdp-el-product-image">%s</div>',
-			$image_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress attachment markup with escaped attributes.
+			wp_kses( $image_html, Kses::markup() )
 		);
 	}
 

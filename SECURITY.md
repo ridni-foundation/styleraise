@@ -3,14 +3,14 @@
 ## Supported versions
 
 Security fixes are released for the latest version only. Please update to the
-[latest release](https://github.com/ridni-foundation/connect-wcdp-elementor/releases/latest) before reporting.
+[latest release](https://github.com/ridni-foundation/styleraise/releases/latest) before reporting.
 
 ## Reporting a vulnerability
 
 Please do not open a public issue for a security problem.
 
 Report it privately through GitHub:
-[Report a vulnerability](https://github.com/ridni-foundation/connect-wcdp-elementor/security/advisories/new).
+[Report a vulnerability](https://github.com/ridni-foundation/styleraise/security/advisories/new).
 If you cannot use GitHub, write to community@ridni.org.ua with "Security" in
 the subject.
 

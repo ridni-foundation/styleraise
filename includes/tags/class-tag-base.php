@@ -14,6 +14,7 @@ use WCDP_Elementor\Cache\Live_Target;
 use WCDP_Elementor\Data\Campaign;
 use WCDP_Elementor\Data\Value_Formatter;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -66,13 +67,13 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'product_source',
 			array(
-				'label'   => esc_html__( 'Campaign Source', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Campaign Source', 'styleraise' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'current',
 				'options' => array(
-					'current' => esc_html__( 'Current post / loop item', 'connect-wcdp-elementor' ),
-					'manual'  => esc_html__( 'Pick a campaign', 'connect-wcdp-elementor' ),
-					'dynamic' => esc_html__( 'Post meta field', 'connect-wcdp-elementor' ),
+					'current' => esc_html__( 'Current post / loop item', 'styleraise' ),
+					'manual'  => esc_html__( 'Pick a campaign', 'styleraise' ),
+					'dynamic' => esc_html__( 'Post meta field', 'styleraise' ),
 				),
 			)
 		);
@@ -80,7 +81,7 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'product_id_manual',
 			array(
-				'label'       => esc_html__( 'Campaign', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Campaign', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT2,
 				'options'     => Product_Resolver::get_options(),
 				'default'     => '',
@@ -92,12 +93,12 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'product_meta_key',
 			array(
-				'label'       => esc_html__( 'Meta Key', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Meta Key', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
 				'condition'   => array( 'product_source' => 'dynamic' ),
-				'description' => esc_html__( 'Custom field on the current post holding the product ID.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Custom field on the current post holding the product ID.', 'styleraise' ),
 			)
 		);
 	}
@@ -109,35 +110,35 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'format',
 			array(
-				'label'       => esc_html__( 'Format', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Format', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => 'site',
 				'separator'   => 'before',
 				'options'     => array(
-					'site'     => esc_html__( 'Match the rest of the site', 'connect-wcdp-elementor' ),
-					'currency' => esc_html__( 'Store currency format', 'connect-wcdp-elementor' ),
-					'compact'  => esc_html__( 'Compact (1.2K)', 'connect-wcdp-elementor' ),
-					'raw'      => esc_html__( 'Raw number', 'connect-wcdp-elementor' ),
+					'site'     => esc_html__( 'Match the rest of the site', 'styleraise' ),
+					'currency' => esc_html__( 'Store currency format', 'styleraise' ),
+					'compact'  => esc_html__( 'Compact (1.2K)', 'styleraise' ),
+					'raw'      => esc_html__( 'Raw number', 'styleraise' ),
 				),
-				'description' => esc_html__( '"Match the rest of the site" follows a multi-currency switcher. Choose "Raw number" when the tag feeds a numeric control, such as a counter\'s end value.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( '"Match the rest of the site" follows a multi-currency switcher. Choose "Raw number" when the tag feeds a numeric control, such as a counter\'s end value.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'currency_position',
 			array(
-				'label'       => esc_html__( 'Currency Symbol Position', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Currency Symbol Position', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '',
 				'options'     => array(
-					''            => esc_html__( 'Follow WooCommerce setting', 'connect-wcdp-elementor' ),
-					'auto'        => esc_html__( 'Automatic — let a currency switcher decide', 'connect-wcdp-elementor' ),
-					'left'        => esc_html__( 'Left — {symbol}100', 'connect-wcdp-elementor' ),
-					'right'       => esc_html__( 'Right — 100{symbol}', 'connect-wcdp-elementor' ),
-					'left_space'  => esc_html__( 'Left with space — {symbol} 100', 'connect-wcdp-elementor' ),
-					'right_space' => esc_html__( 'Right with space — 100 {symbol}', 'connect-wcdp-elementor' ),
+					''            => esc_html__( 'Follow WooCommerce setting', 'styleraise' ),
+					'auto'        => esc_html__( 'Automatic — let a currency switcher decide', 'styleraise' ),
+					'left'        => esc_html__( 'Left — {symbol}100', 'styleraise' ),
+					'right'       => esc_html__( 'Right — 100{symbol}', 'styleraise' ),
+					'left_space'  => esc_html__( 'Left with space — {symbol} 100', 'styleraise' ),
+					'right_space' => esc_html__( 'Right with space — 100 {symbol}', 'styleraise' ),
 				),
-				'description' => esc_html__( 'The default reads and enforces WooCommerce → Settings → General → Currency position. Choose "Automatic" to let a multi-currency switcher decide instead.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'The default reads and enforces WooCommerce → Settings → General → Currency position. Choose "Automatic" to let a multi-currency switcher decide instead.', 'styleraise' ),
 				'condition'   => array( 'format!' => array( 'compact', 'raw' ) ),
 			)
 		);
@@ -145,12 +146,12 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'decimals',
 			array(
-				'label'       => esc_html__( 'Decimals', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Decimals', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 0,
 				'max'         => 4,
 				'default'     => '',
-				'placeholder' => esc_html__( 'Store default', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Store default', 'styleraise' ),
 				'condition'   => array( 'format' => array( 'currency', 'raw' ) ),
 			)
 		);
@@ -158,7 +159,7 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'trim_zeros',
 			array(
-				'label'        => esc_html__( 'Hide .00 Decimals', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide .00 Decimals', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -242,12 +243,12 @@ abstract class Tag_Base extends Tag {
 		$this->add_control(
 			'live_updates',
 			array(
-				'label'        => esc_html__( 'Live Updates', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Live Updates', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
 				'separator'    => 'before',
-				'description'  => esc_html__( 'Refreshes the figure after load, so a page served from cache still shows the real one. Wraps the value in a span — safe inside text, not inside a numeric or URL control.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Refreshes the figure after load, so a page served from cache still shows the real one. Wraps the value in a span — safe inside text, not inside a numeric or URL control.', 'styleraise' ),
 			)
 		);
 	}
@@ -301,7 +302,7 @@ abstract class Tag_Base extends Tag {
 		$fmt = $enabled ? $this->live_fmt() : null;
 
 		if ( ! $enabled || null === $fmt ) {
-			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Caller escapes; wc_price() returns trusted markup.
+			echo wp_kses( $html, Kses::markup() );
 
 			return;
 		}
@@ -309,7 +310,7 @@ abstract class Tag_Base extends Tag {
 		$descriptor = Live_Target::attribute( $campaign, $fmt, array(), 'on' );
 
 		if ( '' === $descriptor ) {
-			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Caller escapes; wc_price() returns trusted markup.
+			echo wp_kses( $html, Kses::markup() );
 
 			return;
 		}
@@ -324,7 +325,7 @@ abstract class Tag_Base extends Tag {
 			esc_attr( Live_Target::VALUE_ATTRIBUTE ),
 			esc_attr( Live_Target::ATTRIBUTE ),
 			esc_attr( $descriptor ),
-			$html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Caller escapes; wc_price() returns trusted markup.
+			wp_kses( $html, Kses::markup() )
 		);
 	}
 

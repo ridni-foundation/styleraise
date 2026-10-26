@@ -284,7 +284,7 @@ final class Purger {
 
 		/* ── Cloudflare and anything else listening to core signals ── */
 		$adapters['generic'] = array(
-			'label'  => esc_html__( 'Core purge signal', 'connect-wcdp-elementor' ),
+			'label'  => esc_html__( 'Core purge signal', 'styleraise' ),
 			'active' => true,
 			'posts'  => static function ( array $ids ): void {
 				// The official Cloudflare plugin, most host-level caches and a

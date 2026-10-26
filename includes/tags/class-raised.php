@@ -33,7 +33,7 @@ class Raised extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Amount Raised', 'connect-wcdp-elementor' );
+		return esc_html__( 'Amount Raised', 'styleraise' );
 	}
 
 	/**

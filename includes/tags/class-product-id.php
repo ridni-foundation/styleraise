@@ -40,7 +40,7 @@ class Product_Id extends Tag {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Product ID (post meta)', 'connect-wcdp-elementor' );
+		return esc_html__( 'Product ID (post meta)', 'styleraise' );
 	}
 
 	/**
@@ -68,23 +68,23 @@ class Product_Id extends Tag {
 		$this->add_control(
 			'meta_key',
 			array(
-				'label'       => esc_html__( 'Meta Key', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Meta Key', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
 				'placeholder' => 'product_id',
-				'description' => esc_html__( 'Custom field on the current post that stores the WooCommerce product ID.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Custom field on the current post that stores the WooCommerce product ID.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'resolve_parent',
 			array(
-				'label'        => esc_html__( 'Resolve Variations', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Resolve Variations', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'When the field holds a variation ID, return its parent product — where WCDP keeps the campaign settings.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'When the field holds a variation ID, return its parent product — where WCDP keeps the campaign settings.', 'styleraise' ),
 			)
 		);
 	}

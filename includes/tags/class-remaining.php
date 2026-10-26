@@ -35,7 +35,7 @@ class Remaining extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Amount Still Needed', 'connect-wcdp-elementor' );
+		return esc_html__( 'Amount Still Needed', 'styleraise' );
 	}
 
 	/**

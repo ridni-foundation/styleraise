@@ -667,9 +667,9 @@ final class Campaign {
 	 */
 	public static function format_compact( float $amount, int $decimals = 1 ): string {
 		$units = array(
-			1000000000 => _x( 'B', 'billions abbreviation', 'connect-wcdp-elementor' ),
-			1000000    => _x( 'M', 'millions abbreviation', 'connect-wcdp-elementor' ),
-			1000       => _x( 'K', 'thousands abbreviation', 'connect-wcdp-elementor' ),
+			1000000000 => _x( 'B', 'billions abbreviation', 'styleraise' ),
+			1000000    => _x( 'M', 'millions abbreviation', 'styleraise' ),
+			1000       => _x( 'K', 'thousands abbreviation', 'styleraise' ),
 		);
 
 		foreach ( $units as $divisor => $suffix ) {
@@ -727,11 +727,11 @@ final class Campaign {
 
 		if ( $timestamp > time() ) {
 			/* translators: %s: human readable time difference, e.g. "3 weeks". */
-			return sprintf( esc_html__( '%s to go', 'connect-wcdp-elementor' ), $diff );
+			return sprintf( esc_html__( '%s to go', 'styleraise' ), $diff );
 		}
 
 		/* translators: %s: human readable time difference, e.g. "3 weeks". */
-		return sprintf( esc_html__( 'ended %s ago', 'connect-wcdp-elementor' ), $diff );
+		return sprintf( esc_html__( 'ended %s ago', 'styleraise' ), $diff );
 	}
 
 	/**
@@ -742,12 +742,12 @@ final class Campaign {
 	public function get_aria_label(): string {
 		if ( ! $this->has_goal() ) {
 			/* translators: %s: amount raised. */
-			return sprintf( __( '%s raised', 'connect-wcdp-elementor' ), wp_strip_all_tags( self::format_amount( $this->raised ) ) );
+			return sprintf( __( '%s raised', 'styleraise' ), wp_strip_all_tags( self::format_amount( $this->raised ) ) );
 		}
 
 		return sprintf(
 			/* translators: 1: amount raised, 2: fundraising goal. */
-			__( '%1$s raised of %2$s goal', 'connect-wcdp-elementor' ),
+			__( '%1$s raised of %2$s goal', 'styleraise' ),
 			wp_strip_all_tags( self::format_amount( $this->raised ) ),
 			wp_strip_all_tags( self::format_amount( $this->goal ) )
 		);

@@ -313,7 +313,7 @@ final class Plugin {
 		$elements_manager->add_category(
 			self::CATEGORY,
 			array(
-				'title' => esc_html__( 'WCDP Donation', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'WCDP Donation', 'styleraise' ),
 				'icon'  => 'eicon-heart',
 			)
 		);
@@ -349,7 +349,7 @@ final class Plugin {
 		$tags_manager->register_group(
 			'wcdp',
 			array(
-				'title' => esc_html__( 'WCDP Donation', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'WCDP Donation', 'styleraise' ),
 			)
 		);
 

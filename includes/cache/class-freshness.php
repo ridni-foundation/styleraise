@@ -95,20 +95,20 @@ final class Freshness {
 	public static function pattern_labels(): array {
 		return array(
 			'live'     => array(
-				'title' => esc_html__( 'Live campaign', 'connect-wcdp-elementor' ),
-				'text'  => esc_html__( 'Figures refresh every 30 seconds while the tab is open, and caches are purged the moment a donation lands. Use it while a fundraiser is under paid traffic.', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'Live campaign', 'styleraise' ),
+				'text'  => esc_html__( 'Figures refresh every 30 seconds while the tab is open, and caches are purged the moment a donation lands. Use it while a fundraiser is under paid traffic.', 'styleraise' ),
 			),
 			'balanced' => array(
-				'title' => esc_html__( 'Balanced', 'connect-wcdp-elementor' ),
-				'text'  => esc_html__( 'Figures refresh when the page loads and when the visitor returns to the tab. One small request per page view. The right choice for almost every site.', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'Balanced', 'styleraise' ),
+				'text'  => esc_html__( 'Figures refresh when the page loads and when the visitor returns to the tab. One small request per page view. The right choice for almost every site.', 'styleraise' ),
 			),
 			'fast'     => array(
-				'title' => esc_html__( 'Maximum speed', 'connect-wcdp-elementor' ),
-				'text'  => esc_html__( 'No JavaScript and no requests. Freshness relies on cache purging alone, so a visitor holding a page open — or one served from their browser cache — keeps the old number.', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'Maximum speed', 'styleraise' ),
+				'text'  => esc_html__( 'No JavaScript and no requests. Freshness relies on cache purging alone, so a visitor holding a page open — or one served from their browser cache — keeps the old number.', 'styleraise' ),
 			),
 			'custom'   => array(
-				'title' => esc_html__( 'Custom', 'connect-wcdp-elementor' ),
-				'text'  => esc_html__( 'Every knob exposed individually.', 'connect-wcdp-elementor' ),
+				'title' => esc_html__( 'Custom', 'styleraise' ),
+				'text'  => esc_html__( 'Every knob exposed individually.', 'styleraise' ),
 			),
 		);
 	}

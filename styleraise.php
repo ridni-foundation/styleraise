@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: Connect WCDP for Elementor – Donation Progress, Donor Wall & Fundraising Widgets
- * Plugin URI: https://github.com/ridni-foundation/connect-wcdp-elementor
+ * Plugin Name: StyleRaise – Connector for Elementor and Donation Platform for WooCommerce
+ * Plugin URI: https://github.com/ridni-foundation/styleraise
  * Description: Donation progress, donor walls and campaign dynamic tags for Donation Platform for WooCommerce — fully styleable inside Elementor.
- * Version: 3.1.6
+ * Version: 3.1.7
  * Author: Ridni Foundation
  * Author URI: https://ridni.org.ua/en/
  * Requires at least: 7.1
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce, elementor, wc-donation-platform
- * Text Domain: connect-wcdp-elementor
+ * Text Domain: styleraise
  * Domain Path: /languages
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WCDP_EL_VERSION', '3.1.6' );
+define( 'WCDP_EL_VERSION', '3.1.7' );
 
 /**
  * Product name shown in the admin screen, notices and cache-purge logs.
@@ -34,7 +34,7 @@ define( 'WCDP_EL_VERSION', '3.1.6' );
  * rewrites it from `.wporg/wporg.json` (`short_name`), which is why every
  * visible occurrence goes through this constant.
  */
-define( 'WCDP_EL_NAME', 'Connect WCDP for Elementor' );
+define( 'WCDP_EL_NAME', 'StyleRaise' );
 define( 'WCDP_EL_FILE', __FILE__ );
 define( 'WCDP_EL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCDP_EL_URL', plugin_dir_url( __FILE__ ) );
@@ -84,12 +84,6 @@ register_activation_hook( __FILE__, array( '\WCDP_Elementor\Installer', 'activat
 add_action(
 	'plugins_loaded',
 	static function () {
-		load_plugin_textdomain(
-			'connect-wcdp-elementor',
-			false,
-			dirname( plugin_basename( WCDP_EL_FILE ) ) . '/languages'
-		);
-
 		if ( ! \WCDP_Elementor\Requirements::instance()->are_met() ) {
 			return;
 		}

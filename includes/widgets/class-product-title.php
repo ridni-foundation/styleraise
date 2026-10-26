@@ -11,6 +11,7 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -40,7 +41,7 @@ class Product_Title extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Campaign Title', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Campaign Title', 'styleraise' );
 	}
 
 	/**
@@ -74,14 +75,14 @@ class Product_Title extends Widget_Base {
 	 * Register controls.
 	 */
 	protected function register_controls(): void {
-		$this->open_content_section( 'section_content', esc_html__( 'Campaign Title', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_content', esc_html__( 'Campaign Title', 'styleraise' ) );
 
 		$this->register_product_controls( array( 'default' => 'current' ) );
 
 		$this->add_control(
 			'html_tag',
 			array(
-				'label'     => esc_html__( 'HTML Tag', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'HTML Tag', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'h2',
 				'separator' => 'before',
@@ -102,7 +103,7 @@ class Product_Title extends Widget_Base {
 		$this->add_control(
 			'link_to_product',
 			array(
-				'label'        => esc_html__( 'Link to Campaign', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Link to Campaign', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
@@ -112,16 +113,16 @@ class Product_Title extends Widget_Base {
 		$this->add_control(
 			'max_lines',
 			array(
-				'label'       => esc_html__( 'Limit to Lines', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Limit to Lines', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'max'         => 10,
 				'default'     => '',
-				'placeholder' => esc_html__( 'No limit', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'No limit', 'styleraise' ),
 				'selectors'   => array(
 					'{{WRAPPER}} .wcdp-el-product-title' => 'display: -webkit-box; -webkit-line-clamp: {{VALUE}}; -webkit-box-orient: vertical; overflow: hidden;',
 				),
-				'description' => esc_html__( 'Truncates long campaign names so archive cards stay the same height.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Truncates long campaign names so archive cards stay the same height.', 'styleraise' ),
 			)
 		);
 
@@ -131,7 +132,7 @@ class Product_Title extends Widget_Base {
 
 		$this->add_text_style_section(
 			'title',
-			esc_html__( 'Title', 'connect-wcdp-elementor' ),
+			esc_html__( 'Title', 'styleraise' ),
 			$selector,
 			array(
 				'global_typography' => Global_Typography::TYPOGRAPHY_PRIMARY,
@@ -141,7 +142,7 @@ class Product_Title extends Widget_Base {
 						'title_link_color',
 						$selector . ' a',
 						array(
-							'label'          => esc_html__( 'Link Color', 'connect-wcdp-elementor' ),
+							'label'          => esc_html__( 'Link Color', 'styleraise' ),
 							'global_default' => null,
 							'condition'      => array( 'link_to_product' => 'yes' ),
 						)
@@ -151,7 +152,7 @@ class Product_Title extends Widget_Base {
 						'title_link_hover_color',
 						$selector . ' a:hover, ' . $selector . ' a:focus-visible',
 						array(
-							'label'          => esc_html__( 'Link Hover Color', 'connect-wcdp-elementor' ),
+							'label'          => esc_html__( 'Link Hover Color', 'styleraise' ),
 							'global_default' => null,
 							'condition'      => array( 'link_to_product' => 'yes' ),
 						)
@@ -186,10 +187,9 @@ class Product_Title extends Widget_Base {
 			);
 		}
 
-		printf(
-			'<%1$s class="wcdp-el-product-title">%2$s</%1$s>',
-			$tag, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through tag_escape().
-			$content // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Title escaped above; only the anchor is added markup.
+		echo wp_kses(
+			sprintf( '<%1$s class="wcdp-el-product-title">%2$s</%1$s>', $tag, $content ),
+			Kses::markup()
 		);
 	}
 }

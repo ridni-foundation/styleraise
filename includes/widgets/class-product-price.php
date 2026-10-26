@@ -10,6 +10,7 @@ namespace WCDP_Elementor\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -37,7 +38,7 @@ class Product_Price extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Campaign Price', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Campaign Price', 'styleraise' );
 	}
 
 	/**
@@ -71,14 +72,14 @@ class Product_Price extends Widget_Base {
 	 * Register controls.
 	 */
 	protected function register_controls(): void {
-		$this->open_content_section( 'section_content', esc_html__( 'Campaign Price', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_content', esc_html__( 'Campaign Price', 'styleraise' ) );
 
 		$this->register_product_controls( array( 'default' => 'current' ) );
 
 		$this->add_control(
 			'html_tag',
 			array(
-				'label'     => esc_html__( 'HTML Tag', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'HTML Tag', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'div',
 				'separator' => 'before',
@@ -101,7 +102,7 @@ class Product_Price extends Widget_Base {
 
 		$this->add_text_style_section(
 			'price',
-			esc_html__( 'Price', 'connect-wcdp-elementor' ),
+			esc_html__( 'Price', 'styleraise' ),
 			$selector,
 			array(
 				'currency'     => true,
@@ -110,31 +111,31 @@ class Product_Price extends Widget_Base {
 					$this->add_control(
 						'price_sale_heading',
 						array(
-							'label'       => esc_html__( 'Sale Prices', 'connect-wcdp-elementor' ),
+							'label'       => esc_html__( 'Sale Prices', 'styleraise' ),
 							'type'        => Controls_Manager::HEADING,
 							'separator'   => 'before',
-							'description' => esc_html__( 'WooCommerce shows a struck-through original price next to the current one.', 'connect-wcdp-elementor' ),
+							'description' => esc_html__( 'WooCommerce shows a struck-through original price next to the current one.', 'styleraise' ),
 						)
 					);
 
-					$this->add_typography( 'price_del_typography', $selector . ' del', array( 'label' => esc_html__( 'Original Price', 'connect-wcdp-elementor' ) ) );
+					$this->add_typography( 'price_del_typography', $selector . ' del', array( 'label' => esc_html__( 'Original Price', 'styleraise' ) ) );
 
 					$this->add_color(
 						'price_del_color',
 						$selector . ' del',
 						array(
-							'label'          => esc_html__( 'Original Price Color', 'connect-wcdp-elementor' ),
+							'label'          => esc_html__( 'Original Price Color', 'styleraise' ),
 							'global_default' => null,
 						)
 					);
 
-					$this->add_typography( 'price_ins_typography', $selector . ' ins', array( 'label' => esc_html__( 'Current Price', 'connect-wcdp-elementor' ) ) );
+					$this->add_typography( 'price_ins_typography', $selector . ' ins', array( 'label' => esc_html__( 'Current Price', 'styleraise' ) ) );
 
 					$this->add_color(
 						'price_ins_color',
 						$selector . ' ins',
 						array(
-							'label'          => esc_html__( 'Current Price Color', 'connect-wcdp-elementor' ),
+							'label'          => esc_html__( 'Current Price Color', 'styleraise' ),
 							'global_default' => null,
 						)
 					);
@@ -142,14 +143,14 @@ class Product_Price extends Widget_Base {
 					$this->add_control(
 						'price_hide_del',
 						array(
-							'label'        => esc_html__( 'Hide Original Price', 'connect-wcdp-elementor' ),
+							'label'        => esc_html__( 'Hide Original Price', 'styleraise' ),
 							'type'         => Controls_Manager::SWITCHER,
 							'return_value' => 'yes',
 							'selectors'    => array( $selector . ' del' => 'display: none;' ),
 						)
 					);
 
-					$this->add_typography( 'price_suffix_typography', $selector . ' .woocommerce-price-suffix', array( 'label' => esc_html__( 'Price Suffix', 'connect-wcdp-elementor' ) ) );
+					$this->add_typography( 'price_suffix_typography', $selector . ' .woocommerce-price-suffix', array( 'label' => esc_html__( 'Price Suffix', 'styleraise' ) ) );
 				},
 			)
 		);
@@ -172,15 +173,16 @@ class Product_Price extends Widget_Base {
 		$price_html = $product->get_price_html();
 
 		if ( '' === trim( (string) $price_html ) ) {
-			$this->render_placeholder( esc_html__( 'This product has no price to display.', 'connect-wcdp-elementor' ) );
+			$this->render_placeholder( esc_html__( 'This product has no price to display.', 'styleraise' ) );
 
 			return;
 		}
 
-		printf(
-			'<%1$s class="wcdp-el-product-price">%2$s</%1$s>',
-			tag_escape( (string) ( $settings['html_tag'] ?? 'div' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through tag_escape().
-			$price_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce price markup.
+		$tag = tag_escape( (string) ( $settings['html_tag'] ?? 'div' ) );
+
+		echo wp_kses(
+			sprintf( '<%1$s class="wcdp-el-product-price">%2$s</%1$s>', $tag, $price_html ),
+			Kses::markup()
 		);
 	}
 }

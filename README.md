@@ -1,6 +1,6 @@
-# Connect WCDP for Elementor
+# StyleRaise
 
-![Connect WCDP for Elementor](.wordpress-org/banner-1544x500.png)
+![StyleRaise](.wordpress-org/banner-1544x500.png)
 
 Donation progress, donor walls and campaign dynamic tags for Donation Platform for WooCommerce — fully styleable inside Elementor.
 
@@ -15,7 +15,7 @@ on its own fundraising pages.
 
 | | |
 |---|---|
-| Version | 3.1.6 |
+| Version | 3.1.7 |
 | Requires | WordPress 7.1+, PHP 7.4+, WooCommerce, Elementor 3.20+, Donation Platform for WooCommerce 1.3.2+ |
 | Tested up to | WordPress 7.1 |
 | License | [GPL-2.0-or-later](LICENSE) |
@@ -110,8 +110,8 @@ All screenshots are in [`.wordpress-org/`](.wordpress-org/). The demo campaign a
 
 1. Install and activate WooCommerce, Elementor and Donation Platform for
    WooCommerce.
-2. Download `connect-wcdp-elementor-3.1.6.zip` from the
-   [latest release](https://github.com/ridni-foundation/connect-wcdp-elementor/releases/latest) and upload it under
+2. Download `styleraise-3.1.7.zip` from the
+   [latest release](https://github.com/ridni-foundation/styleraise/releases/latest) and upload it under
    **Plugins → Add New → Upload Plugin**. Use the release asset, not GitHub's
    "Download ZIP" button: the release asset unpacks into the folder WordPress
    expects.
@@ -175,7 +175,7 @@ Security reports: see [SECURITY.md](SECURITY.md). Changes: [CHANGELOG.md](CHANGE
 
 The Ridni Foundation is a Ukrainian charity whose mission is to overcome
 orphanhood, supporting families and children. If this plugin saves you time,
-consider [a donation](https://ridni.org.ua/en/donation/?utm_source=github&utm_medium=referral&utm_campaign=connect-wcdp-elementor&utm_content=readme-donate).
+consider [a donation](https://ridni.org.ua/en/donation/?utm_source=github&utm_medium=referral&utm_campaign=styleraise&utm_content=readme-donate).
 
 ## License and trademarks
 

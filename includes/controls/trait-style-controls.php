@@ -112,7 +112,7 @@ trait Style_Controls {
 		unset( $args['property'], $args['global_default'] );
 
 		$control = array(
-			'label'     => esc_html__( 'Color', 'connect-wcdp-elementor' ),
+			'label'     => esc_html__( 'Color', 'styleraise' ),
 			'type'      => Controls_Manager::COLOR,
 			'selectors' => array( $selector => $property . ': {{VALUE}};' ),
 		);
@@ -136,23 +136,23 @@ trait Style_Controls {
 			$name,
 			array_merge(
 				array(
-					'label'     => esc_html__( 'Alignment', 'connect-wcdp-elementor' ),
+					'label'     => esc_html__( 'Alignment', 'styleraise' ),
 					'type'      => Controls_Manager::CHOOSE,
 					'options'   => array(
 						'left'    => array(
-							'title' => esc_html__( 'Left', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Left', 'styleraise' ),
 							'icon'  => 'eicon-text-align-left',
 						),
 						'center'  => array(
-							'title' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Center', 'styleraise' ),
 							'icon'  => 'eicon-text-align-center',
 						),
 						'right'   => array(
-							'title' => esc_html__( 'Right', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Right', 'styleraise' ),
 							'icon'  => 'eicon-text-align-right',
 						),
 						'justify' => array(
-							'title' => esc_html__( 'Justified', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Justified', 'styleraise' ),
 							'icon'  => 'eicon-text-align-justify',
 						),
 					),
@@ -175,7 +175,7 @@ trait Style_Controls {
 			$name,
 			array_merge(
 				array(
-					'label'       => esc_html__( 'Alignment', 'connect-wcdp-elementor' ),
+					'label'       => esc_html__( 'Alignment', 'styleraise' ),
 					'type'        => Controls_Manager::CHOOSE,
 					// Six choices do not fit beside a label at the panel's minimum
 					// width, so the label takes its own line and the row gets the
@@ -186,27 +186,27 @@ trait Style_Controls {
 					// as a reduced imitation.
 					'options'   => array(
 						'flex-start'    => array(
-							'title' => esc_html__( 'Start', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Start', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-start-h',
 						),
 						'center'        => array(
-							'title' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Center', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-center-h',
 						),
 						'flex-end'      => array(
-							'title' => esc_html__( 'End', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'End', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-end-h',
 						),
 						'space-between' => array(
-							'title' => esc_html__( 'Space Between', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Space Between', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-space-between-h',
 						),
 						'space-around'  => array(
-							'title' => esc_html__( 'Space Around', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Space Around', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-space-around-h',
 						),
 						'space-evenly'  => array(
-							'title' => esc_html__( 'Space Evenly', 'connect-wcdp-elementor' ),
+							'title' => esc_html__( 'Space Evenly', 'styleraise' ),
 							'icon'  => 'eicon-flex eicon-justify-space-evenly-h',
 						),
 					),
@@ -295,7 +295,7 @@ trait Style_Controls {
 	 * @param array<string, mixed> $args     Extra arguments.
 	 */
 	protected function add_padding( string $name, string $selector, array $args = array() ): void {
-		$this->add_dimensions( $name, esc_html__( 'Padding', 'connect-wcdp-elementor' ), $selector, 'padding', $args );
+		$this->add_dimensions( $name, esc_html__( 'Padding', 'styleraise' ), $selector, 'padding', $args );
 	}
 
 	/**
@@ -306,7 +306,7 @@ trait Style_Controls {
 	 * @param array<string, mixed> $args     Extra arguments.
 	 */
 	protected function add_margin( string $name, string $selector, array $args = array() ): void {
-		$this->add_dimensions( $name, esc_html__( 'Margin', 'connect-wcdp-elementor' ), $selector, 'margin', $args );
+		$this->add_dimensions( $name, esc_html__( 'Margin', 'styleraise' ), $selector, 'margin', $args );
 	}
 
 	/**
@@ -317,7 +317,7 @@ trait Style_Controls {
 	 * @param array<string, mixed> $args     Extra arguments.
 	 */
 	protected function add_border_radius( string $name, string $selector, array $args = array() ): void {
-		$this->add_dimensions( $name, esc_html__( 'Border Radius', 'connect-wcdp-elementor' ), $selector, 'border-radius', $args );
+		$this->add_dimensions( $name, esc_html__( 'Border Radius', 'styleraise' ), $selector, 'border-radius', $args );
 	}
 
 	/**
@@ -332,12 +332,12 @@ trait Style_Controls {
 			$name,
 			array_merge(
 				array(
-					'label'       => esc_html__( 'Order', 'connect-wcdp-elementor' ),
+					'label'       => esc_html__( 'Order', 'styleraise' ),
 					'type'        => Controls_Manager::NUMBER,
 					'min'         => -20,
 					'max'         => 20,
 					'step'        => 1,
-					'description' => esc_html__( 'Lower values appear first. Leave empty to keep the natural order.', 'connect-wcdp-elementor' ),
+					'description' => esc_html__( 'Lower values appear first. Leave empty to keep the natural order.', 'styleraise' ),
 					'selectors'   => array( $selector => 'order: {{VALUE}};' ),
 				),
 				$args
@@ -486,7 +486,7 @@ trait Style_Controls {
 		$this->add_control(
 			$id . '_currency_heading',
 			array(
-				'label'     => esc_html__( 'Currency Symbol', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Currency Symbol', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -495,7 +495,7 @@ trait Style_Controls {
 		$this->add_control(
 			$id . '_currency_hide',
 			array(
-				'label'        => esc_html__( 'Hide Symbol', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide Symbol', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'selectors'    => array( $symbol => 'display: none;' ),
@@ -506,7 +506,7 @@ trait Style_Controls {
 			$id . '_currency_color',
 			$symbol,
 			array(
-				'label'         => esc_html__( 'Symbol Color', 'connect-wcdp-elementor' ),
+				'label'         => esc_html__( 'Symbol Color', 'styleraise' ),
 				'global_default' => null,
 				'condition'     => array( $id . '_currency_hide!' => 'yes' ),
 			)
@@ -515,7 +515,7 @@ trait Style_Controls {
 		$this->add_responsive_control(
 			$id . '_currency_size',
 			array(
-				'label'      => esc_html__( 'Symbol Size', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Symbol Size', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( '%', 'px', 'em' ),
 				'range'      => array(

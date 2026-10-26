@@ -34,7 +34,7 @@ class Percentage extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Percentage Raised', 'connect-wcdp-elementor' );
+		return esc_html__( 'Percentage Raised', 'styleraise' );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Percentage extends Tag_Base {
 		$this->add_control(
 			'decimals',
 			array(
-				'label'     => esc_html__( 'Decimals', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Decimals', 'styleraise' ),
 				'type'      => Controls_Manager::NUMBER,
 				'min'       => 0,
 				'max'       => 4,
@@ -68,22 +68,22 @@ class Percentage extends Tag_Base {
 		$this->add_control(
 			'show_symbol',
 			array(
-				'label'        => esc_html__( 'Include % Symbol', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Include % Symbol', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'Turn off when the tag feeds a numeric control.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Turn off when the tag feeds a numeric control.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'cap_at_100',
 			array(
-				'label'        => esc_html__( 'Cap at 100%', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Cap at 100%', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
-				'description'  => esc_html__( 'Overfunded campaigns otherwise report their real figure, such as 137%.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Overfunded campaigns otherwise report their real figure, such as 137%.', 'styleraise' ),
 			)
 		);
 	}

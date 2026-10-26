@@ -13,6 +13,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 use WCDP_Elementor\Render\Shortcode_Runner;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,7 +56,7 @@ class Donation_Form extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Donation Form', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Donation Form', 'styleraise' );
 	}
 
 	/**
@@ -144,7 +145,7 @@ class Donation_Form extends Widget_Base {
 	 * Content → Donation Form.
 	 */
 	private function register_content_controls(): void {
-		$this->open_content_section( 'section_campaign', esc_html__( 'Donation Form', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_campaign', esc_html__( 'Donation Form', 'styleraise' ) );
 
 		$this->register_product_controls();
 
@@ -152,16 +153,16 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'style',
 			array(
-				'label'     => esc_html__( 'Form Layout', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Form Layout', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => '1',
 				'separator' => 'before',
 				'options'   => array(
-					'1' => esc_html__( '1 — Three steps with progress header', 'connect-wcdp-elementor' ),
-					'2' => esc_html__( '2 — Everything on one page', 'connect-wcdp-elementor' ),
-					'3' => esc_html__( '3 — Three steps, no header', 'connect-wcdp-elementor' ),
-					'4' => esc_html__( '4 — Amount only, redirect to checkout', 'connect-wcdp-elementor' ),
-					'5' => esc_html__( '5 — Three steps with banner header', 'connect-wcdp-elementor' ),
+					'1' => esc_html__( '1 — Three steps with progress header', 'styleraise' ),
+					'2' => esc_html__( '2 — Everything on one page', 'styleraise' ),
+					'3' => esc_html__( '3 — Three steps, no header', 'styleraise' ),
+					'4' => esc_html__( '4 — Amount only, redirect to checkout', 'styleraise' ),
+					'5' => esc_html__( '5 — Three steps with banner header', 'styleraise' ),
 				),
 			)
 		);
@@ -169,7 +170,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'popup',
 			array(
-				'label'        => esc_html__( 'Open in a Popup', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Open in a Popup', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '',
@@ -179,21 +180,21 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'button',
 			array(
-				'label'        => esc_html__( 'Show Trigger Button', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Show Trigger Button', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '1',
 				'condition'    => array( 'popup' => '1' ),
-				'description'  => esc_html__( 'Turn off to open the popup from your own link pointing at #wcdp-form.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Turn off to open the popup from your own link pointing at #wcdp-form.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'label',
 			array(
-				'label'       => esc_html__( 'Trigger Button Label', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Trigger Button Label', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => esc_html__( 'Donate now!', 'connect-wcdp-elementor' ),
+				'default'     => esc_html__( 'Donate now!', 'styleraise' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 				'condition'   => array(
@@ -206,7 +207,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'show_image',
 			array(
-				'label'        => esc_html__( 'Show Product Image', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Show Product Image', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '',
@@ -217,7 +218,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'show_title',
 			array(
-				'label'        => esc_html__( 'Show Product Title', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Show Product Title', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '',
@@ -227,7 +228,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'show_short_description',
 			array(
-				'label'        => esc_html__( 'Show Short Description', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Show Short Description', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '',
@@ -237,7 +238,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'show_description',
 			array(
-				'label'        => esc_html__( 'Show Full Description', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Show Full Description', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => '1',
 				'default'      => '',
@@ -247,13 +248,13 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'modern_header',
 			array(
-				'label'        => esc_html__( 'Modern Step Header', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Modern Step Header', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
 				'separator'    => 'before',
 				'condition'    => array( 'style' => array( '1' ) ),
-				'description'  => esc_html__( 'Rebuilds the step header with CSS grid instead of floats and a fixed height. Same design, but it no longer collapses inside flex containers. Enable this if the header looks misaligned.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Rebuilds the step header with CSS grid instead of floats and a fixed height. Same design, but it no longer collapses inside flex containers. Enable this if the header looks misaligned.', 'styleraise' ),
 			)
 		);
 
@@ -261,7 +262,7 @@ class Donation_Form extends Widget_Base {
 			'concurrency_notice',
 			array(
 				'type'      => Controls_Manager::RAW_HTML,
-				'raw'       => '<div class="elementor-control-field-description">' . esc_html__( 'WCDP allows one donation form per page, and requires the classic [woocommerce_checkout] — the WooCommerce checkout block is unsupported upstream.', 'connect-wcdp-elementor' ) . '</div>',
+				'raw'       => '<div class="elementor-control-field-description">' . esc_html__( 'WCDP allows one donation form per page, and requires the classic [woocommerce_checkout] — the WooCommerce checkout block is unsupported upstream.', 'styleraise' ) . '</div>',
 				'separator' => 'before',
 			)
 		);
@@ -277,7 +278,7 @@ class Donation_Form extends Widget_Base {
 	 * widget root replaces the site-wide palette for this instance only.
 	 */
 	private function register_palette_style(): void {
-		$this->open_style_section( 'section_palette', esc_html__( 'Colors', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_palette', esc_html__( 'Colors', 'styleraise' ) );
 
 		$root = $this->root();
 
@@ -285,80 +286,80 @@ class Donation_Form extends Widget_Base {
 		// pushes the colour picker out of the panel at its minimum width.
 		$variables = array(
 			array(
-				'heading' => esc_html__( 'Brand', 'connect-wcdp-elementor' ),
+				'heading' => esc_html__( 'Brand', 'styleraise' ),
 			),
 			array(
 				'key'      => 'primary',
-				'label'    => esc_html__( 'Primary', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Primary', 'styleraise' ),
 				'variable' => '--wcdp-main-2',
 				'global'   => Global_Colors::COLOR_PRIMARY,
-				'note'     => esc_html__( 'Active step, buttons and the progress fill.', 'connect-wcdp-elementor' ),
+				'note'     => esc_html__( 'Active step, buttons and the progress fill.', 'styleraise' ),
 			),
 			array(
 				'key'      => 'secondary',
-				'label'    => esc_html__( 'Secondary', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Secondary', 'styleraise' ),
 				'variable' => '--wcdp-main',
 				'global'   => Global_Colors::COLOR_SECONDARY,
-				'note'     => esc_html__( 'Inactive step and the progress track.', 'connect-wcdp-elementor' ),
+				'note'     => esc_html__( 'Inactive step and the progress track.', 'styleraise' ),
 			),
 			array(
 				'key'      => 'error',
-				'label'    => esc_html__( 'Error', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Error', 'styleraise' ),
 				'variable' => '--wcdp-main-3',
 			),
 			array(
-				'heading' => esc_html__( 'Step Markers', 'connect-wcdp-elementor' ),
+				'heading' => esc_html__( 'Step Markers', 'styleraise' ),
 			),
 			array(
 				'key'      => 'step_2',
-				'label'    => esc_html__( 'Step 2', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Step 2', 'styleraise' ),
 				'variable' => '--wcdp-step-2',
 			),
 			array(
 				'key'      => 'step_3',
-				'label'    => esc_html__( 'Step 3', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Step 3', 'styleraise' ),
 				'variable' => '--wcdp-step-3',
 			),
 			array(
-				'heading' => esc_html__( 'Amount Buttons', 'connect-wcdp-elementor' ),
+				'heading' => esc_html__( 'Amount Buttons', 'styleraise' ),
 			),
 			array(
 				'key'      => 'label_inactive',
-				'label'    => esc_html__( 'Background', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Background', 'styleraise' ),
 				'variable' => '--wcdp-label-inactive',
 			),
 			array(
 				'key'      => 'label_hover',
-				'label'    => esc_html__( 'Hover', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Hover', 'styleraise' ),
 				'variable' => '--wcdp-label-inactive-hover',
 			),
 			array(
 				'key'      => 'label_text',
-				'label'    => esc_html__( 'Text', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Text', 'styleraise' ),
 				'variable' => '--wcdp-label-text',
 			),
 			array(
 				'key'      => 'label_text_on',
-				'label'    => esc_html__( 'Selected Text', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Selected Text', 'styleraise' ),
 				'variable' => '--wcdp-label-text-checked',
-				'note'     => esc_html__( 'Also used for any text sitting on the primary colour.', 'connect-wcdp-elementor' ),
+				'note'     => esc_html__( 'Also used for any text sitting on the primary colour.', 'styleraise' ),
 			),
 			array(
-				'heading' => esc_html__( 'Fields & Popup', 'connect-wcdp-elementor' ),
+				'heading' => esc_html__( 'Fields & Popup', 'styleraise' ),
 			),
 			array(
 				'key'      => 'controls',
-				'label'    => esc_html__( 'Input Text', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Input Text', 'styleraise' ),
 				'variable' => '--wcdp-controls',
 			),
 			array(
 				'key'      => 'popup_bg',
-				'label'    => esc_html__( 'Popup Background', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Popup Background', 'styleraise' ),
 				'variable' => '--wcdp-background-color',
 			),
 			array(
 				'key'      => 'overlay',
-				'label'    => esc_html__( 'Overlay', 'connect-wcdp-elementor' ),
+				'label'    => esc_html__( 'Overlay', 'styleraise' ),
 				'variable' => '--wcdp-overlay-color',
 				'alpha'    => true,
 			),
@@ -406,7 +407,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Form Box.
 	 */
 	private function register_box_style(): void {
-		$this->open_style_section( 'section_box', esc_html__( 'Form Box', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_box', esc_html__( 'Form Box', 'styleraise' ) );
 
 		$form = '{{WRAPPER}} .wcdp-form, body #wcdp-form .wcdp-form';
 
@@ -441,7 +442,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'form_max_width',
-			esc_html__( 'Maximum Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Maximum Width', 'styleraise' ),
 			$form,
 			'max-width: {{SIZE}}{{UNIT}}; margin-inline: auto;',
 			array(
@@ -452,7 +453,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'row_spacing',
-			esc_html__( 'Spacing Between Rows', 'connect-wcdp-elementor' ),
+			esc_html__( 'Spacing Between Rows', 'styleraise' ),
 			$this->sel( '.wcdp-row' ),
 			'margin-bottom: {{SIZE}}{{UNIT}};',
 			array(
@@ -470,7 +471,7 @@ class Donation_Form extends Widget_Base {
 	private function register_header_style(): void {
 		$this->open_style_section(
 			'section_header',
-			esc_html__( 'Step Header', 'connect-wcdp-elementor' ),
+			esc_html__( 'Step Header', 'styleraise' ),
 			array( 'condition' => array( 'style' => array( '1', '5' ) ) )
 		);
 
@@ -482,7 +483,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'header_circle_size',
-			esc_html__( 'Step Circle Size', 'connect-wcdp-elementor' ),
+			esc_html__( 'Step Circle Size', 'styleraise' ),
 			$root,
 			'--wcdp-el-step-circle-size: {{SIZE}}{{UNIT}};',
 			array(
@@ -494,7 +495,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'header_line_height',
-			esc_html__( 'Progress Line Thickness', 'connect-wcdp-elementor' ),
+			esc_html__( 'Progress Line Thickness', 'styleraise' ),
 			$root,
 			'--wcdp-el-step-line-height: {{SIZE}}{{UNIT}};',
 			array(
@@ -514,7 +515,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'header5_heading',
 			array(
-				'label'     => esc_html__( 'Banner Header', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Banner Header', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => array( 'style' => '5' ),
@@ -525,7 +526,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'header5_height',
-			esc_html__( 'Height', 'connect-wcdp-elementor' ),
+			esc_html__( 'Height', 'styleraise' ),
 			$this->sel( '.wcdp-style5' ),
 			'height: {{SIZE}}{{UNIT}};',
 			array(
@@ -544,7 +545,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Amount Buttons.
 	 */
 	private function register_amount_options_style(): void {
-		$this->open_style_section( 'section_amount_options', esc_html__( 'Amount Buttons', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_amount_options', esc_html__( 'Amount Buttons', 'styleraise' ) );
 
 		$list  = $this->sel( 'ul.wcdp_options' );
 		$label = $this->sel( 'ul.wcdp_options > li > label' );
@@ -552,22 +553,22 @@ class Donation_Form extends Widget_Base {
 		$this->add_responsive_control(
 			'options_columns',
 			array(
-				'label'       => esc_html__( 'Columns', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Columns', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'max'         => 6,
 				'default'     => '',
-				'placeholder' => esc_html__( 'Auto', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Auto', 'styleraise' ),
 				'selectors'   => array(
 					$list => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr));',
 				),
-				'description' => esc_html__( 'Set this per device — three amount buttons rarely fit on a phone.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Set this per device — three amount buttons rarely fit on a phone.', 'styleraise' ),
 			)
 		);
 
 		$this->add_slider(
 			'options_gap',
-			esc_html__( 'Gap', 'connect-wcdp-elementor' ),
+			esc_html__( 'Gap', 'styleraise' ),
 			$list,
 			'gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -584,7 +585,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->start_controls_tabs( 'options_tabs' );
 
-		$this->start_controls_tab( 'options_tab_normal', array( 'label' => esc_html__( 'Normal', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'options_tab_normal', array( 'label' => esc_html__( 'Normal', 'styleraise' ) ) );
 
 		$this->add_color( 'options_color', $label, array( 'global_default' => null ) );
 
@@ -607,7 +608,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'options_tab_hover', array( 'label' => esc_html__( 'Hover', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'options_tab_hover', array( 'label' => esc_html__( 'Hover', 'styleraise' ) ) );
 
 		$hover = $this->sel( 'ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label' );
 
@@ -625,7 +626,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'options_border_color_hover',
 			array(
-				'label'     => esc_html__( 'Border Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Border Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $hover => 'border-color: {{VALUE}};' ),
 			)
@@ -633,7 +634,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'options_tab_selected', array( 'label' => esc_html__( 'Selected', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'options_tab_selected', array( 'label' => esc_html__( 'Selected', 'styleraise' ) ) );
 
 		// WCDP paints both the label and any span inside it when checked, so
 		// the override has to reach both or the amount text keeps the old colour.
@@ -654,7 +655,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'options_border_color_selected',
 			array(
-				'label'     => esc_html__( 'Border Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Border Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $this->sel( 'ul.wcdp_options > li > input:checked + label' ) => 'border-color: {{VALUE}};' ),
 			)
@@ -663,7 +664,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'options_hide_checkmark',
 			array(
-				'label'        => esc_html__( 'Hide Checkmark', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide Checkmark', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'selectors'    => array(
@@ -688,12 +689,12 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'options_focus_color',
 			array(
-				'label'       => esc_html__( 'Keyboard Focus Ring', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Keyboard Focus Ring', 'styleraise' ),
 				'type'        => Controls_Manager::COLOR,
 				'selectors'   => array(
 					$this->sel( 'ul.wcdp_options > li > input:focus-visible + label' ) => 'box-shadow: 0 0 0 2px #fff, 0 0 0 4px {{VALUE}};',
 				),
-				'description' => esc_html__( 'Keep this visible — it is how keyboard users see which amount is focused.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Keep this visible — it is how keyboard users see which amount is focused.', 'styleraise' ),
 			)
 		);
 
@@ -704,7 +705,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Amount Input.
 	 */
 	private function register_amount_input_style(): void {
-		$this->open_style_section( 'section_amount_input', esc_html__( 'Amount Input', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_amount_input', esc_html__( 'Amount Input', 'styleraise' ) );
 
 		$input = $this->sel( 'input.wcdp-donation-amount' );
 
@@ -715,7 +716,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'amount_input_background',
 			array(
-				'label'     => esc_html__( 'Background', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Background', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $input => 'background-color: {{VALUE}};' ),
 			)
@@ -735,7 +736,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'amount_input_width',
-			esc_html__( 'Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Width', 'styleraise' ),
 			$this->sel( '.wcdp-amount > input.wcdp-donation-amount' ),
 			'width: {{SIZE}}{{UNIT}};',
 			array(
@@ -747,7 +748,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'amount_input_focus_color',
 			array(
-				'label'     => esc_html__( 'Focus Border Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Focus Border Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'separator' => 'before',
 				'selectors' => array( $this->sel( 'input.wcdp-donation-amount:focus' ) => 'border-color: {{VALUE}}; outline-color: {{VALUE}};' ),
@@ -757,7 +758,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'currency_symbol_heading',
 			array(
-				'label'     => esc_html__( 'Currency Symbol', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Currency Symbol', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -776,7 +777,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Amount Slider.
 	 */
 	private function register_range_style(): void {
-		$this->open_style_section( 'section_range', esc_html__( 'Amount Slider', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_range', esc_html__( 'Amount Slider', 'styleraise' ) );
 
 		$root = $this->root();
 
@@ -784,14 +785,14 @@ class Donation_Form extends Widget_Base {
 			'range_notice',
 			array(
 				'type' => Controls_Manager::RAW_HTML,
-				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'Applies when the product\'s amount layout is set to "Input box with range slider" in WCDP.', 'connect-wcdp-elementor' ) . '</div>',
+				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'Applies when the product\'s amount layout is set to "Input box with range slider" in WCDP.', 'styleraise' ) . '</div>',
 			)
 		);
 
 		$this->add_control(
 			'range_thumb_color',
 			array(
-				'label'     => esc_html__( 'Handle Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Handle Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'global'    => array( 'default' => Global_Colors::COLOR_PRIMARY ),
 				'selectors' => array( $root => '--wcdp-el-range-thumb-color: {{VALUE}};' ),
@@ -800,7 +801,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'range_thumb_size',
-			esc_html__( 'Handle Size', 'connect-wcdp-elementor' ),
+			esc_html__( 'Handle Size', 'styleraise' ),
 			$root,
 			'--wcdp-el-range-thumb-size: {{SIZE}}{{UNIT}};',
 			array(
@@ -812,7 +813,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'range_track_color',
 			array(
-				'label'     => esc_html__( 'Track Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Track Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $root => '--wcdp-el-range-track-color: {{VALUE}};' ),
 			)
@@ -820,7 +821,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'range_track_height',
-			esc_html__( 'Track Thickness', 'connect-wcdp-elementor' ),
+			esc_html__( 'Track Thickness', 'styleraise' ),
 			$root,
 			'--wcdp-el-range-track-height: {{SIZE}}{{UNIT}};',
 			array(
@@ -836,7 +837,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Labels & Headings.
 	 */
 	private function register_labels_style(): void {
-		$this->open_style_section( 'section_labels', esc_html__( 'Labels & Headings', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_labels', esc_html__( 'Labels & Headings', 'styleraise' ) );
 
 		$heading = $this->sel( '.wcdp-variation-heading' ) . ', ' . $this->sel( '.wcdp-row > label' );
 
@@ -849,7 +850,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'required_heading',
 			array(
-				'label'     => esc_html__( 'Required Marker', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Required Marker', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -859,7 +860,7 @@ class Donation_Form extends Widget_Base {
 			'required_color',
 			$this->sel( 'abbr.required' ),
 			array(
-				'label'          => esc_html__( 'Color', 'connect-wcdp-elementor' ),
+				'label'          => esc_html__( 'Color', 'styleraise' ),
 				'global_default' => null,
 			)
 		);
@@ -867,7 +868,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'required_hide',
 			array(
-				'label'        => esc_html__( 'Hide Asterisk', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide Asterisk', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'selectors'    => array( $this->sel( 'abbr.required' ) => 'display: none;' ),
@@ -881,7 +882,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Buttons.
 	 */
 	private function register_buttons_style(): void {
-		$this->open_style_section( 'section_buttons', esc_html__( 'Buttons', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_buttons', esc_html__( 'Buttons', 'styleraise' ) );
 
 		// Inside the form and, separately, the popup trigger which lives in the
 		// widget wrapper even when the form itself is in the footer.
@@ -892,7 +893,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->start_controls_tabs( 'buttons_tabs' );
 
-		$this->start_controls_tab( 'buttons_tab_normal', array( 'label' => esc_html__( 'Normal', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'buttons_tab_normal', array( 'label' => esc_html__( 'Normal', 'styleraise' ) ) );
 
 		$this->add_color( 'buttons_color', $button, array( 'global_default' => null ) );
 
@@ -915,7 +916,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'buttons_tab_hover', array( 'label' => esc_html__( 'Hover', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'buttons_tab_hover', array( 'label' => esc_html__( 'Hover', 'styleraise' ) ) );
 
 		$button_hover  = $this->sel( 'button:hover' ) . ', ' . $this->sel( '.wcdp-button:hover' );
 		$button_hover .= ', {{WRAPPER}} .wcdp-modal-open:hover';
@@ -935,7 +936,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'buttons_transition',
 			array(
-				'label'      => esc_html__( 'Transition Duration', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Transition Duration', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 's' ),
 				'range'      => array(
@@ -967,7 +968,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'buttons_row_gap',
-			esc_html__( 'Gap in Button Row', 'connect-wcdp-elementor' ),
+			esc_html__( 'Gap in Button Row', 'styleraise' ),
 			$this->root(),
 			'--wcdp-el-button-row-gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -979,7 +980,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'buttons_hide_arrows',
 			array(
-				'label'        => esc_html__( 'Hide Arrows', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide Arrows', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'selectors'    => array( $this->sel( '.wcdp-arrow' ) => 'display: none;' ),
@@ -989,20 +990,20 @@ class Donation_Form extends Widget_Base {
 		$this->add_responsive_control(
 			'trigger_align',
 			array(
-				'label'     => esc_html__( 'Trigger Button Alignment', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Trigger Button Alignment', 'styleraise' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'separator' => 'before',
 				'options'   => array(
 					'left'   => array(
-						'title' => esc_html__( 'Left', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Left', 'styleraise' ),
 						'icon'  => 'eicon-text-align-left',
 					),
 					'center' => array(
-						'title' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Center', 'styleraise' ),
 						'icon'  => 'eicon-text-align-center',
 					),
 					'right'  => array(
-						'title' => esc_html__( 'Right', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Right', 'styleraise' ),
 						'icon'  => 'eicon-text-align-right',
 					),
 				),
@@ -1023,7 +1024,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Checkout Fields.
 	 */
 	private function register_fields_style(): void {
-		$this->open_style_section( 'section_fields', esc_html__( 'Checkout Fields', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_fields', esc_html__( 'Checkout Fields', 'styleraise' ) );
 
 		$field  = $this->sel( '.woocommerce-input-wrapper input' );
 		$field .= ', ' . $this->sel( '.woocommerce-input-wrapper textarea' );
@@ -1039,7 +1040,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'fields_input_heading',
 			array(
-				'label'     => esc_html__( 'Inputs', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Inputs', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -1052,7 +1053,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'fields_background',
 			array(
-				'label'     => esc_html__( 'Background', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Background', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $field => 'background-color: {{VALUE}};' ),
 			)
@@ -1073,7 +1074,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'fields_focus_color',
 			array(
-				'label'     => esc_html__( 'Focus Border Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Focus Border Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'separator' => 'before',
 				'selectors' => array(
@@ -1087,23 +1088,23 @@ class Donation_Form extends Widget_Base {
 		$this->add_responsive_control(
 			'fields_columns',
 			array(
-				'label'       => esc_html__( 'Field Columns', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Field Columns', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'max'         => 3,
 				'default'     => '',
 				'separator'   => 'before',
-				'placeholder' => esc_html__( 'Theme default', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Theme default', 'styleraise' ),
 				'selectors'   => array(
 					$this->sel( '#wcdp-step-2 .woocommerce-billing-fields__field-wrapper' ) => 'display: grid; grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr)); gap: var(--wcdp-el-field-gap, 12px);',
 				),
-				'description' => esc_html__( 'Lay the billing fields out in a grid. Set 1 on mobile.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Lay the billing fields out in a grid. Set 1 on mobile.', 'styleraise' ),
 			)
 		);
 
 		$this->add_slider(
 			'fields_gap',
-			esc_html__( 'Column Gap', 'connect-wcdp-elementor' ),
+			esc_html__( 'Column Gap', 'styleraise' ),
 			$this->root(),
 			'--wcdp-el-field-gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -1119,7 +1120,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Fee Recovery.
 	 */
 	private function register_fee_recovery_style(): void {
-		$this->open_style_section( 'section_fee_recovery', esc_html__( 'Fee Recovery Box', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_fee_recovery', esc_html__( 'Fee Recovery Box', 'styleraise' ) );
 
 		$body     = $this->sel( '.wcdp-fee-recovery__body' );
 		$checkbox = $this->sel( '.wcdp-fee-recovery__body-cover-checkbox' );
@@ -1128,7 +1129,7 @@ class Donation_Form extends Widget_Base {
 			'fee_notice',
 			array(
 				'type' => Controls_Manager::RAW_HTML,
-				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'Applies when WCDP fee recovery is enabled.', 'connect-wcdp-elementor' ) . '</div>',
+				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'Applies when WCDP fee recovery is enabled.', 'styleraise' ) . '</div>',
 			)
 		);
 
@@ -1158,7 +1159,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'fee_checkbox_color',
 			array(
-				'label'     => esc_html__( 'Checkbox Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Checkbox Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'separator' => 'before',
 				'selectors' => array(
@@ -1177,7 +1178,7 @@ class Donation_Form extends Widget_Base {
 	private function register_popup_style(): void {
 		$this->open_style_section(
 			'section_popup',
-			esc_html__( 'Popup', 'connect-wcdp-elementor' ),
+			esc_html__( 'Popup', 'styleraise' ),
 			array( 'condition' => array( 'popup' => '1' ) )
 		);
 
@@ -1187,13 +1188,13 @@ class Donation_Form extends Widget_Base {
 			'popup_notice',
 			array(
 				'type' => Controls_Manager::RAW_HTML,
-				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'WCDP prints the popup in the page footer, outside this widget. These rules therefore target the popup by id — safe, because WCDP allows one form per page.', 'connect-wcdp-elementor' ) . '</div>',
+				'raw'  => '<div class="elementor-control-field-description">' . esc_html__( 'WCDP prints the popup in the page footer, outside this widget. These rules therefore target the popup by id — safe, because WCDP allows one form per page.', 'styleraise' ) . '</div>',
 			)
 		);
 
 		$this->add_slider(
 			'popup_width',
-			esc_html__( 'Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Width', 'styleraise' ),
 			$popup,
 			'max-width: {{SIZE}}{{UNIT}};',
 			array(
@@ -1204,7 +1205,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'popup_offset',
-			esc_html__( 'Top Offset', 'connect-wcdp-elementor' ),
+			esc_html__( 'Top Offset', 'styleraise' ),
 			$popup,
 			'margin-top: {{SIZE}}{{UNIT}}; margin-bottom: {{SIZE}}{{UNIT}};',
 			array( 'size_units' => array( 'vh', 'px', 'em' ) )
@@ -1224,7 +1225,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'popup_overlay_blur',
-			esc_html__( 'Overlay Blur', 'connect-wcdp-elementor' ),
+			esc_html__( 'Overlay Blur', 'styleraise' ),
 			$this->popup_sel(),
 			'backdrop-filter: blur({{SIZE}}{{UNIT}});',
 			array(
@@ -1237,7 +1238,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'popup_close_heading',
 			array(
-				'label'     => esc_html__( 'Close Button', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Close Button', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -1246,7 +1247,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'popup_close_color',
 			array(
-				'label'     => esc_html__( 'Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $this->popup_sel( '.wcdp-close' ) => 'stroke: {{VALUE}};' ),
 			)
@@ -1254,7 +1255,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'popup_close_size',
-			esc_html__( 'Size', 'connect-wcdp-elementor' ),
+			esc_html__( 'Size', 'styleraise' ),
 			$this->popup_sel( '.wcdp-close' ),
 			'width: {{SIZE}}{{UNIT}};',
 			array(
@@ -1272,7 +1273,7 @@ class Donation_Form extends Widget_Base {
 	private function register_media_style(): void {
 		$this->open_style_section(
 			'section_media',
-			esc_html__( 'Product Media & Text', 'connect-wcdp-elementor' ),
+			esc_html__( 'Product Media & Text', 'styleraise' ),
 			array(
 				'conditions' => array(
 					'relation' => 'or',
@@ -1306,7 +1307,7 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_slider(
 			'media_image_width',
-			esc_html__( 'Image Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Image Width', 'styleraise' ),
 			$image,
 			'width: {{SIZE}}{{UNIT}}; height: auto;',
 			array(
@@ -1322,7 +1323,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'media_title_heading',
 			array(
-				'label'     => esc_html__( 'Title', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Title', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => array( 'show_title' => '1' ),
@@ -1336,7 +1337,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'media_description_heading',
 			array(
-				'label'      => esc_html__( 'Description', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Description', 'styleraise' ),
 				'type'       => Controls_Manager::HEADING,
 				'separator'  => 'before',
 				'conditions' => array(
@@ -1370,7 +1371,7 @@ class Donation_Form extends Widget_Base {
 	 * Style → Notices, Loader & Branding.
 	 */
 	private function register_misc_style(): void {
-		$this->open_style_section( 'section_misc', esc_html__( 'Notices, Loader & Branding', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_misc', esc_html__( 'Notices, Loader & Branding', 'styleraise' ) );
 
 		$notice = $this->sel( '.woocommerce-error' ) . ', ' . $this->sel( '.woocommerce-info' ) . ', ' . $this->sel( '.wcdp-error-message' );
 
@@ -1381,7 +1382,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'notice_background',
 			array(
-				'label'     => esc_html__( 'Notice Background', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Notice Background', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $notice => 'background-color: {{VALUE}};' ),
 			)
@@ -1394,7 +1395,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'loader_heading',
 			array(
-				'label'     => esc_html__( 'Loader', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Loader', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -1403,7 +1404,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'loader_color',
 			array(
-				'label'     => esc_html__( 'Dots Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Dots Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $this->sel( '.lds-ellipsis div' ) => 'background: {{VALUE}};' ),
 			)
@@ -1412,7 +1413,7 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'branding_heading',
 			array(
-				'label'     => esc_html__( 'WCDP Branding', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'WCDP Branding', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -1425,11 +1426,11 @@ class Donation_Form extends Widget_Base {
 		$this->add_control(
 			'branding_hide',
 			array(
-				'label'        => esc_html__( 'Hide Branding', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide Branding', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'selectors'    => array( $this->sel( '.wcdp-branding' ) => 'display: none;' ),
-				'description'  => esc_html__( 'Whether WCDP shows this at all is a WCDP setting; this only hides it for this instance.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Whether WCDP shows this at all is a WCDP setting; this only hides it for this instance.', 'styleraise' ),
 			)
 		);
 
@@ -1456,7 +1457,7 @@ class Donation_Form extends Widget_Base {
 		// echoing that sentence into the layout.
 		if ( $this->is_widget_ajax_render() ) {
 			$this->render_placeholder(
-				esc_html__( 'WCDP cannot build a checkout form during an editor refresh. Reload the preview to see the form; Style tab changes apply live and need no reload.', 'connect-wcdp-elementor' )
+				esc_html__( 'WCDP cannot build a checkout form during an editor refresh. Reload the preview to see the form; Style tab changes apply live and need no reload.', 'styleraise' )
 			);
 
 			return;
@@ -1510,7 +1511,7 @@ class Donation_Form extends Widget_Base {
 		}
 
 		printf( '<div class="%s">', esc_attr( implode( ' ', $classes ) ) );
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- First-party WCDP shortcode output.
+		echo wp_kses( $html, Kses::form() );
 		echo '</div>';
 
 		// WCDP's own messages already name their cause (one form per page,
@@ -1521,7 +1522,7 @@ class Donation_Form extends Widget_Base {
 		if ( $is_error && $this->is_editor() && function_exists( 'WC' ) && ! isset( WC()->cart ) ) {
 			printf(
 				'<div class="wcdp-el-placeholder wcdp-el-placeholder--hint"><span class="wcdp-el-placeholder__text">%s</span></div>',
-				esc_html__( 'The Elementor editor has no WooCommerce cart, so WCDP cannot build the form here. Open the page or Preview to see it with the styles set in this widget.', 'connect-wcdp-elementor' )
+				esc_html__( 'The Elementor editor has no WooCommerce cart, so WCDP cannot build the form here. Open the page or Preview to see it with the styles set in this widget.', 'styleraise' )
 			);
 		}
 	}

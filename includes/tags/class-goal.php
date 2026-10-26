@@ -33,7 +33,7 @@ class Goal extends Tag_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Fundraising Goal', 'connect-wcdp-elementor' );
+		return esc_html__( 'Fundraising Goal', 'styleraise' );
 	}
 
 	/**

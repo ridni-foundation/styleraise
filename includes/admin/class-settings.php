@@ -36,7 +36,7 @@ final class Settings {
 	/**
 	 * Admin page slug.
 	 */
-	const PAGE = 'connect-wcdp-elementor';
+	const PAGE = 'styleraise';
 
 	/**
 	 * Settings group for the Settings API.
@@ -54,10 +54,18 @@ final class Settings {
 	const PURGE_ACTION = 'wcdp_el_purge_pages';
 
 	/**
+	 * Hook suffix of the settings screen, set when the menu is registered.
+	 *
+	 * @var string
+	 */
+	private $hook_suffix = '';
+
+	/**
 	 * Register hooks.
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_post_' . self::FLUSH_ACTION, array( $this, 'handle_flush' ) );
 		add_action( 'admin_post_' . self::PURGE_ACTION, array( $this, 'handle_purge' ) );
@@ -69,7 +77,7 @@ final class Settings {
 	 * for, falling back to Settings if that menu is absent.
 	 */
 	public function register_menu(): void {
-		$title = esc_html__( 'WCDP Integration', 'connect-wcdp-elementor' );
+		$title = esc_html__( 'WCDP Integration', 'styleraise' );
 
 		$hook = add_submenu_page(
 			'elementor',
@@ -81,7 +89,7 @@ final class Settings {
 		);
 
 		if ( ! $hook ) {
-			add_options_page(
+			$hook = add_options_page(
 				esc_html( WCDP_EL_NAME ),
 				$title,
 				'manage_options',
@@ -89,6 +97,8 @@ final class Settings {
 				array( $this, 'render_page' )
 			);
 		}
+
+		$this->hook_suffix = (string) $hook;
 	}
 
 	/**
@@ -117,7 +127,7 @@ final class Settings {
 
 		array_unshift(
 			$links,
-			'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'connect-wcdp-elementor' ) . '</a>'
+			'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'styleraise' ) . '</a>'
 		);
 
 		return $links;
@@ -155,7 +165,7 @@ final class Settings {
 		add_settings_error(
 			Options::OPTION,
 			'wcdp_el_saved',
-			esc_html__( 'Settings saved. Elementor\'s generated CSS was rebuilt.', 'connect-wcdp-elementor' ),
+			esc_html__( 'Settings saved. Elementor\'s generated CSS was rebuilt.', 'styleraise' ),
 			'success'
 		);
 
@@ -220,7 +230,7 @@ final class Settings {
 	 */
 	public function handle_flush(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to do this.', 'connect-wcdp-elementor' ), 403 );
+			wp_die( esc_html__( 'You are not allowed to do this.', 'styleraise' ), 403 );
 		}
 
 		check_admin_referer( self::FLUSH_ACTION );
@@ -268,7 +278,6 @@ final class Settings {
 
 		$registry = Plugin::instance()->get_widget_registry();
 
-		$this->print_styles();
 		?>
 		<div class="wrap wcdp-el-settings">
 
@@ -281,7 +290,7 @@ final class Settings {
 						</span>
 					</h1>
 					<p class="wcdp-el-hero__text">
-						<?php esc_html_e( 'Donation widgets, dynamic tags and a complete Style tab for the WCDP donation platform. Everything visual is configured per widget inside Elementor — this screen only holds what has to be site-wide.', 'connect-wcdp-elementor' ); ?>
+						<?php esc_html_e( 'Donation widgets, dynamic tags and a complete Style tab for the WCDP donation platform. Everything visual is configured per widget inside Elementor — this screen only holds what has to be site-wide.', 'styleraise' ); ?>
 					</p>
 				</div>
 			</div>
@@ -291,13 +300,13 @@ final class Settings {
 
 			if ( 'flushed' === $message ) {
 				echo '<div class="notice notice-success is-dismissible"><p>'
-					. esc_html__( 'Caches cleared.', 'connect-wcdp-elementor' )
+					. esc_html__( 'Caches cleared.', 'styleraise' )
 					. '</p></div>';
 			}
 
 			if ( 'purged' === $message ) {
 				echo '<div class="notice notice-success is-dismissible"><p>'
-					. esc_html__( 'Page caches purged.', 'connect-wcdp-elementor' )
+					. esc_html__( 'Page caches purged.', 'styleraise' )
 					. '</p></div>';
 			}
 
@@ -312,14 +321,14 @@ final class Settings {
 					<?php $this->render_freshness_card(); ?>
 
 					<div class="wcdp-el-card">
-					<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Widgets', 'connect-wcdp-elementor' ); ?></h2>
+					<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Widgets', 'styleraise' ); ?></h2>
 					<p class="wcdp-el-card__hint">
-						<?php esc_html_e( 'Turning a widget off removes it from the Elementor panel and skips loading its class. Pages already using it stop rendering it, so switch one off only when it is unused.', 'connect-wcdp-elementor' ); ?>
+						<?php esc_html_e( 'Turning a widget off removes it from the Elementor panel and skips loading its class. Pages already using it stop rendering it, so switch one off only when it is unused.', 'styleraise' ); ?>
 					</p>
 
 					<?php if ( empty( $registry ) ) : ?>
 						<p class="wcdp-el-empty">
-							<?php esc_html_e( 'No widgets are registered. A filter on wcdp_el_widget_registry may have removed them all.', 'connect-wcdp-elementor' ); ?>
+							<?php esc_html_e( 'No widgets are registered. A filter on wcdp_el_widget_registry may have removed them all.', 'styleraise' ); ?>
 						</p>
 					<?php else : ?>
 						<ul class="wcdp-el-list">
@@ -346,7 +355,7 @@ final class Settings {
 
 									<?php if ( ! $exists ) : ?>
 										<p class="wcdp-el-list__error">
-											<?php esc_html_e( 'Class file missing — reinstall the plugin.', 'connect-wcdp-elementor' ); ?>
+											<?php esc_html_e( 'Class file missing — reinstall the plugin.', 'styleraise' ); ?>
 										</p>
 									<?php endif; ?>
 								</li>
@@ -357,14 +366,14 @@ final class Settings {
 					</div>
 
 					<div class="wcdp-el-card wcdp-el-card__actions">
-						<?php submit_button( esc_html__( 'Save changes', 'connect-wcdp-elementor' ), 'primary', 'submit', false ); ?>
+						<?php submit_button( esc_html__( 'Save changes', 'styleraise' ), 'primary', 'submit', false ); ?>
 					</div>
 				</form>
 
 				<div class="wcdp-el-side">
 
 					<div class="wcdp-el-card">
-						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Diagnostics', 'connect-wcdp-elementor' ); ?></h2>
+						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Diagnostics', 'styleraise' ); ?></h2>
 						<dl class="wcdp-el-facts">
 							<?php foreach ( $this->get_diagnostics() as $fact ) : ?>
 								<dt><?php echo esc_html( $fact['label'] ); ?></dt>
@@ -382,30 +391,30 @@ final class Settings {
 					</div>
 
 					<div class="wcdp-el-card">
-						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Page caches', 'connect-wcdp-elementor' ); ?></h2>
+						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Page caches', 'styleraise' ); ?></h2>
 						<p class="wcdp-el-card__hint">
-							<?php esc_html_e( 'Rebuilds every page showing a campaign, using whichever caching plugins are installed. Use it after changing a goal, or when a figure looks stuck.', 'connect-wcdp-elementor' ); ?>
+							<?php esc_html_e( 'Rebuilds every page showing a campaign, using whichever caching plugins are installed. Use it after changing a goal, or when a figure looks stuck.', 'styleraise' ); ?>
 						</p>
 						<p class="wcdp-el-card__hint">
-							<strong><?php esc_html_e( 'Detected:', 'connect-wcdp-elementor' ); ?></strong>
+							<strong><?php esc_html_e( 'Detected:', 'styleraise' ); ?></strong>
 							<?php echo esc_html( $this->detected_caches_text() ); ?>
 						</p>
 						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 							<input type="hidden" name="action" value="<?php echo esc_attr( self::PURGE_ACTION ); ?>">
 							<?php wp_nonce_field( self::PURGE_ACTION ); ?>
-							<?php submit_button( esc_html__( 'Purge page caches', 'connect-wcdp-elementor' ), 'secondary', 'submit', false ); ?>
+							<?php submit_button( esc_html__( 'Purge page caches', 'styleraise' ), 'secondary', 'submit', false ); ?>
 						</form>
 					</div>
 
 					<div class="wcdp-el-card">
-						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Internal caches', 'connect-wcdp-elementor' ); ?></h2>
+						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Internal caches', 'styleraise' ); ?></h2>
 						<p class="wcdp-el-card__hint">
-							<?php esc_html_e( 'Clears the campaign picker list and Elementor\'s generated CSS. Use it after enabling donations on a product that does not appear in the picker.', 'connect-wcdp-elementor' ); ?>
+							<?php esc_html_e( 'Clears the campaign picker list and Elementor\'s generated CSS. Use it after enabling donations on a product that does not appear in the picker.', 'styleraise' ); ?>
 						</p>
 						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 							<input type="hidden" name="action" value="<?php echo esc_attr( self::FLUSH_ACTION ); ?>">
 							<?php wp_nonce_field( self::FLUSH_ACTION ); ?>
-							<?php submit_button( esc_html__( 'Clear caches', 'connect-wcdp-elementor' ), 'secondary', 'submit', false ); ?>
+							<?php submit_button( esc_html__( 'Clear caches', 'styleraise' ), 'secondary', 'submit', false ); ?>
 						</form>
 					</div>
 
@@ -442,7 +451,7 @@ final class Settings {
 	 * @return array<int, array{label: string, value: string, state: string}>
 	 */
 	private function get_diagnostics(): array {
-		$unknown = esc_html__( 'not detected', 'connect-wcdp-elementor' );
+		$unknown = esc_html__( 'not detected', 'styleraise' );
 
 		$missing = array();
 
@@ -452,7 +461,7 @@ final class Settings {
 			}
 		}
 
-		$multilingual = esc_html__( 'none', 'connect-wcdp-elementor' );
+		$multilingual = esc_html__( 'none', 'styleraise' );
 
 		if ( function_exists( 'pll_get_post_language' ) ) {
 			$multilingual = 'Polylang';
@@ -464,53 +473,53 @@ final class Settings {
 
 		return array(
 			array(
-				'label' => esc_html__( 'Elementor', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Elementor', 'styleraise' ),
 				'value' => defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : $unknown,
 				'state' => defined( 'ELEMENTOR_VERSION' ) ? 'ok' : 'warn',
 			),
 			array(
-				'label' => esc_html__( 'WCDP', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'WCDP', 'styleraise' ),
 				'value' => defined( 'WCDP_VERSION' ) ? WCDP_VERSION : $unknown,
 				'state' => defined( 'WCDP_VERSION' ) ? 'ok' : 'warn',
 			),
 			array(
-				'label' => esc_html__( 'WooCommerce', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'WooCommerce', 'styleraise' ),
 				'value' => defined( 'WC_VERSION' ) ? WC_VERSION : $unknown,
 				'state' => defined( 'WC_VERSION' ) ? 'ok' : 'warn',
 			),
 			array(
-				'label' => esc_html__( 'WCDP shortcodes', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'WCDP shortcodes', 'styleraise' ),
 				'value' => empty( $missing )
-					? esc_html__( 'all available', 'connect-wcdp-elementor' )
+					? esc_html__( 'all available', 'styleraise' )
 					: sprintf(
 						/* translators: %s: comma-separated shortcode names. */
-						esc_html__( 'missing: %s', 'connect-wcdp-elementor' ),
+						esc_html__( 'missing: %s', 'styleraise' ),
 						implode( ', ', $missing )
 					),
 				'state' => empty( $missing ) ? 'ok' : 'warn',
 			),
 			array(
-				'label' => esc_html__( 'WooCommerce Analytics', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'WooCommerce Analytics', 'styleraise' ),
 				'value' => $analytics_on
-					? esc_html__( 'enabled', 'connect-wcdp-elementor' )
-					: esc_html__( 'disabled — figures will be wrong', 'connect-wcdp-elementor' ),
+					? esc_html__( 'enabled', 'styleraise' )
+					: esc_html__( 'disabled — figures will be wrong', 'styleraise' ),
 				'state' => $analytics_on ? 'ok' : 'warn',
 			),
 			array(
-				'label' => esc_html__( 'Multilingual plugin', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Multilingual plugin', 'styleraise' ),
 				'value' => $multilingual,
 				'state' => 'neutral',
 			),
 			array(
-				'label' => esc_html__( 'WordPress / PHP', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'WordPress / PHP', 'styleraise' ),
 				'value' => get_bloginfo( 'version' ) . ' / ' . PHP_VERSION,
 				'state' => 'neutral',
 			),
 			array(
-				'label' => esc_html__( 'Minimum required', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Minimum required', 'styleraise' ),
 				'value' => sprintf(
 					/* translators: 1: Elementor version, 2: WCDP version. */
-					esc_html__( 'Elementor %1$s · WCDP %2$s', 'connect-wcdp-elementor' ),
+					esc_html__( 'Elementor %1$s · WCDP %2$s', 'styleraise' ),
 					Requirements::MINIMUM_ELEMENTOR_VERSION,
 					Requirements::MINIMUM_WCDP_VERSION
 				),
@@ -535,10 +544,10 @@ final class Settings {
 
 		if ( 'off' === $mode ) {
 			return array(
-				'label' => esc_html__( 'Form script', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Form script', 'styleraise' ),
 				'value' => empty( $optimisers )
-					? esc_html__( 'unprotected, no optimiser found', 'connect-wcdp-elementor' )
-					: esc_html__( 'unprotected — the form may hang on a spinner', 'connect-wcdp-elementor' ),
+					? esc_html__( 'unprotected, no optimiser found', 'styleraise' )
+					: esc_html__( 'unprotected — the form may hang on a spinner', 'styleraise' ),
 				'state' => empty( $optimisers ) ? 'neutral' : 'warn',
 			);
 		}
@@ -547,10 +556,10 @@ final class Settings {
 		// off, is the exact configuration that leaves a spinner on screen.
 		if ( 'auto' === $mode && ! empty( $unreachable ) ) {
 			return array(
-				'label' => esc_html__( 'Form script', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Form script', 'styleraise' ),
 				'value' => sprintf(
 					/* translators: %s: comma-separated optimisation plugin names. */
-					esc_html__( 'protected, but %s needs tag marking', 'connect-wcdp-elementor' ),
+					esc_html__( 'protected, but %s needs tag marking', 'styleraise' ),
 					implode( ', ', array_keys( $unreachable ) )
 				),
 				'state' => 'warn',
@@ -558,10 +567,10 @@ final class Settings {
 		}
 
 		return array(
-			'label' => esc_html__( 'Form script', 'connect-wcdp-elementor' ),
+			'label' => esc_html__( 'Form script', 'styleraise' ),
 			'value' => 'attributes' === $mode
-				? esc_html__( 'protected, tags marked', 'connect-wcdp-elementor' )
-				: esc_html__( 'protected on form pages', 'connect-wcdp-elementor' ),
+				? esc_html__( 'protected, tags marked', 'styleraise' )
+				: esc_html__( 'protected on form pages', 'styleraise' ),
 			'state' => 'ok',
 		);
 	}
@@ -579,14 +588,14 @@ final class Settings {
 		$refreshing = Freshness::HYDRATE_OFF !== $config['hydrate'];
 
 		return array(
-			'label' => esc_html__( 'Freshness', 'connect-wcdp-elementor' ),
+			'label' => esc_html__( 'Freshness', 'styleraise' ),
 			'value' => sprintf(
 				/* translators: 1: pattern name, 2: whether figures refresh in the browser. */
-				esc_html__( '%1$s · %2$s', 'connect-wcdp-elementor' ),
+				esc_html__( '%1$s · %2$s', 'styleraise' ),
 				$labels[ $pattern ]['title'] ?? $pattern,
 				$refreshing
-					? esc_html__( 'figures refresh', 'connect-wcdp-elementor' )
-					: esc_html__( 'no refreshing', 'connect-wcdp-elementor' )
+					? esc_html__( 'figures refresh', 'styleraise' )
+					: esc_html__( 'no refreshing', 'styleraise' )
 			),
 			// Without refreshing, a cached page keeps its original totals for
 			// anyone whose browser or CDN already holds it.
@@ -604,8 +613,8 @@ final class Settings {
 
 		if ( ! $last || empty( $last['time'] ) ) {
 			return array(
-				'label' => esc_html__( 'Last purge', 'connect-wcdp-elementor' ),
-				'value' => esc_html__( 'never', 'connect-wcdp-elementor' ),
+				'label' => esc_html__( 'Last purge', 'styleraise' ),
+				'value' => esc_html__( 'never', 'styleraise' ),
 				'state' => 'neutral',
 			);
 		}
@@ -613,11 +622,11 @@ final class Settings {
 		$pages = (int) ( $last['posts'] ?? 0 );
 
 		return array(
-			'label' => esc_html__( 'Last purge', 'connect-wcdp-elementor' ),
+			'label' => esc_html__( 'Last purge', 'styleraise' ),
 			// Raw on purpose: the diagnostics table escapes every value on output.
 			'value' => sprintf(
 				/* translators: 1: human time difference, 2: number of pages, e.g. "3 pages". */
-				__( '%1$s ago · %2$s', 'connect-wcdp-elementor' ),
+				__( '%1$s ago · %2$s', 'styleraise' ),
 				human_time_diff( (int) $last['time'] ),
 				self::count_pages( $pages )
 			),
@@ -636,14 +645,14 @@ final class Settings {
 		$campaigns = (int) $stats['campaigns'];
 
 		return array(
-			'label' => esc_html__( 'Known locations', 'connect-wcdp-elementor' ),
+			'label' => esc_html__( 'Known locations', 'styleraise' ),
 			// Raw on purpose: the diagnostics table escapes every value on output.
 			'value' => sprintf(
 				/* translators: 1: number of campaigns, e.g. "2 campaigns"; 2: number of pages, e.g. "5 pages". */
-				__( '%1$s on %2$s', 'connect-wcdp-elementor' ),
+				__( '%1$s on %2$s', 'styleraise' ),
 				sprintf(
 					/* translators: %d: number of campaigns. */
-					_n( '%d campaign', '%d campaigns', $campaigns, 'connect-wcdp-elementor' ),
+					_n( '%d campaign', '%d campaigns', $campaigns, 'styleraise' ),
 					$campaigns
 				),
 				self::count_pages( (int) $stats['pages'] )
@@ -661,7 +670,7 @@ final class Settings {
 	private static function count_pages( int $pages ): string {
 		return sprintf(
 			/* translators: %d: number of pages. */
-			_n( '%d page', '%d pages', $pages, 'connect-wcdp-elementor' ),
+			_n( '%d page', '%d pages', $pages, 'styleraise' ),
 			$pages
 		);
 	}
@@ -671,7 +680,7 @@ final class Settings {
 	 */
 	public function handle_purge(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to do this.', 'connect-wcdp-elementor' ), 403 );
+			wp_die( esc_html__( 'You are not allowed to do this.', 'styleraise' ), 403 );
 		}
 
 		check_admin_referer( self::PURGE_ACTION );
@@ -718,7 +727,7 @@ final class Settings {
 		}
 
 		if ( empty( $labels ) ) {
-			return esc_html__( 'no page caching plugin found — only the core purge signal will be sent', 'connect-wcdp-elementor' );
+			return esc_html__( 'no page caching plugin found — only the core purge signal will be sent', 'styleraise' );
 		}
 
 		return implode( ', ', $labels );
@@ -737,9 +746,9 @@ final class Settings {
 		$name    = Options::OPTION;
 		?>
 		<div class="wcdp-el-card wcdp-el-freshness">
-			<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Freshness', 'connect-wcdp-elementor' ); ?></h2>
+			<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Freshness', 'styleraise' ); ?></h2>
 			<p class="wcdp-el-card__hint">
-				<?php esc_html_e( 'A page cache serves the totals that were current when it stored the page — often for hours. These patterns decide how hard the plugin works to correct that: by refreshing figures in the visitor\'s browser, and by telling the cache to rebuild when a donation lands.', 'connect-wcdp-elementor' ); ?>
+				<?php esc_html_e( 'A page cache serves the totals that were current when it stored the page — often for hours. These patterns decide how hard the plugin works to correct that: by refreshing figures in the visitor\'s browser, and by telling the cache to rebuild when a donation lands.', 'styleraise' ); ?>
 			</p>
 
 			<div class="wcdp-el-patterns">
@@ -760,20 +769,20 @@ final class Settings {
 			</div>
 
 			<div class="wcdp-el-custom">
-				<h3 class="wcdp-el-subtitle"><?php esc_html_e( 'Custom settings', 'connect-wcdp-elementor' ); ?></h3>
+				<h3 class="wcdp-el-subtitle"><?php esc_html_e( 'Custom settings', 'styleraise' ); ?></h3>
 
 				<table class="form-table" role="presentation">
 					<tbody>
 						<tr>
-							<th scope="row"><label for="wcdp-el-hydrate"><?php esc_html_e( 'Refresh figures', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-hydrate"><?php esc_html_e( 'Refresh figures', 'styleraise' ); ?></label></th>
 							<td>
 								<select id="wcdp-el-hydrate" name="<?php echo esc_attr( $name ); ?>[freshness_hydrate]">
 									<?php
 									$modes = array(
-										Freshness::HYDRATE_OFF      => esc_html__( 'Never', 'connect-wcdp-elementor' ),
-										Freshness::HYDRATE_LOAD     => esc_html__( 'On page load', 'connect-wcdp-elementor' ),
-										Freshness::HYDRATE_FOCUS    => esc_html__( 'On load and when the tab regains focus', 'connect-wcdp-elementor' ),
-										Freshness::HYDRATE_INTERVAL => esc_html__( 'Continuously, on a timer', 'connect-wcdp-elementor' ),
+										Freshness::HYDRATE_OFF      => esc_html__( 'Never', 'styleraise' ),
+										Freshness::HYDRATE_LOAD     => esc_html__( 'On page load', 'styleraise' ),
+										Freshness::HYDRATE_FOCUS    => esc_html__( 'On load and when the tab regains focus', 'styleraise' ),
+										Freshness::HYDRATE_INTERVAL => esc_html__( 'Continuously, on a timer', 'styleraise' ),
 									);
 
 									foreach ( $modes as $value => $mode_label ) {
@@ -787,32 +796,32 @@ final class Settings {
 									?>
 								</select>
 								<p class="description">
-									<?php esc_html_e( 'Fetches current figures over a route no page cache touches, then patches them into the page. This is what makes cached HTML harmless.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Fetches current figures over a route no page cache touches, then patches them into the page. This is what makes cached HTML harmless.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="wcdp-el-interval"><?php esc_html_e( 'Timer interval', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-interval"><?php esc_html_e( 'Timer interval', 'styleraise' ); ?></label></th>
 							<td>
 								<input type="number" id="wcdp-el-interval" class="small-text" min="10" max="3600" step="5"
 									name="<?php echo esc_attr( $name ); ?>[freshness_interval]"
 									value="<?php echo esc_attr( (string) Options::get( 'freshness_interval', 30 ) ); ?>">
-								<?php esc_html_e( 'seconds', 'connect-wcdp-elementor' ); ?>
+								<?php esc_html_e( 'seconds', 'styleraise' ); ?>
 								<p class="description">
-									<?php esc_html_e( 'Only used by the timer mode. Every open tab makes one request per interval, so short values cost real server time under heavy traffic.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Only used by the timer mode. Every open tab makes one request per interval, so short values cost real server time under heavy traffic.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="wcdp-el-purge"><?php esc_html_e( 'Purge on donation', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-purge"><?php esc_html_e( 'Purge on donation', 'styleraise' ); ?></label></th>
 							<td>
 								<select id="wcdp-el-purge" name="<?php echo esc_attr( $name ); ?>[freshness_purge]">
 									<?php
 									$purges = array(
-										Freshness::PURGE_OFF   => esc_html__( 'Never', 'connect-wcdp-elementor' ),
-										Freshness::PURGE_INDEX => esc_html__( 'Pages that show the campaign', 'connect-wcdp-elementor' ),
-										Freshness::PURGE_URLS  => esc_html__( 'Only the URLs listed below', 'connect-wcdp-elementor' ),
-										Freshness::PURGE_ALL   => esc_html__( 'The entire site cache', 'connect-wcdp-elementor' ),
+										Freshness::PURGE_OFF   => esc_html__( 'Never', 'styleraise' ),
+										Freshness::PURGE_INDEX => esc_html__( 'Pages that show the campaign', 'styleraise' ),
+										Freshness::PURGE_URLS  => esc_html__( 'Only the URLs listed below', 'styleraise' ),
+										Freshness::PURGE_ALL   => esc_html__( 'The entire site cache', 'styleraise' ),
 									);
 
 									foreach ( $purges as $value => $purge_label ) {
@@ -826,56 +835,56 @@ final class Settings {
 									?>
 								</select>
 								<p class="description">
-									<?php esc_html_e( 'The plugin records which pages display which campaign as they render, so it can rebuild exactly those and leave the rest of the site cached.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'The plugin records which pages display which campaign as they render, so it can rebuild exactly those and leave the rest of the site cached.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="wcdp-el-throttle"><?php esc_html_e( 'Minimum time between purges', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-throttle"><?php esc_html_e( 'Minimum time between purges', 'styleraise' ); ?></label></th>
 							<td>
 								<input type="number" id="wcdp-el-throttle" class="small-text" min="0" max="3600" step="5"
 									name="<?php echo esc_attr( $name ); ?>[freshness_purge_throttle]"
 									value="<?php echo esc_attr( (string) Options::get( 'freshness_purge_throttle', 60 ) ); ?>">
-								<?php esc_html_e( 'seconds', 'connect-wcdp-elementor' ); ?>
+								<?php esc_html_e( 'seconds', 'styleraise' ); ?>
 								<p class="description">
-									<?php esc_html_e( 'Stops a burst of donations from emptying the cache continuously, which would leave every visitor waiting for a full render.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Stops a burst of donations from emptying the cache continuously, which would leave every visitor waiting for a full render.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="wcdp-el-purge-urls"><?php esc_html_e( 'Always purge these URLs', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-purge-urls"><?php esc_html_e( 'Always purge these URLs', 'styleraise' ); ?></label></th>
 							<td>
 								<textarea id="wcdp-el-purge-urls" rows="4" class="large-text code"
 									name="<?php echo esc_attr( $name ); ?>[freshness_purge_urls]"
 									placeholder="/&#10;/campaign/"><?php echo esc_textarea( (string) Options::get( 'freshness_purge_urls', '' ) ); ?></textarea>
 								<p class="description">
-									<?php esc_html_e( 'One per line. A path such as /campaign/ is resolved against the site address, so the list survives a domain change.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'One per line. A path such as /campaign/ is resolved against the site address, so the list survives a domain change.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="wcdp-el-data-ttl"><?php esc_html_e( 'WCDP cache lifetime', 'connect-wcdp-elementor' ); ?></label></th>
+							<th scope="row"><label for="wcdp-el-data-ttl"><?php esc_html_e( 'WCDP cache lifetime', 'styleraise' ); ?></label></th>
 							<td>
 								<input type="number" id="wcdp-el-data-ttl" class="small-text" min="0" max="21600" step="10"
 									name="<?php echo esc_attr( $name ); ?>[freshness_data_ttl]"
 									value="<?php echo esc_attr( (string) Options::get( 'freshness_data_ttl', 0 ) ); ?>">
-								<?php esc_html_e( 'seconds (0 keeps WCDP\'s own six hours)', 'connect-wcdp-elementor' ); ?>
+								<?php esc_html_e( 'seconds (0 keeps WCDP\'s own six hours)', 'styleraise' ); ?>
 								<p class="description">
-									<?php esc_html_e( 'Applies to the donation counter and the leaderboard. The raised total is not affected: WCDP already drops it within about thirty seconds of a donation, through WooCommerce Analytics.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Applies to the donation counter and the leaderboard. The raised total is not affected: WCDP already drops it within about thirty seconds of a donation, through WooCommerce Analytics.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><?php esc_html_e( 'Force recalculation', 'connect-wcdp-elementor' ); ?></th>
+							<th scope="row"><?php esc_html_e( 'Force recalculation', 'styleraise' ); ?></th>
 							<td>
 								<label for="wcdp-el-force-recalc">
 									<input type="checkbox" id="wcdp-el-force-recalc" value="1"
 										name="<?php echo esc_attr( $name ); ?>[freshness_force_recalc]"
 										<?php checked( (bool) Options::get( 'freshness_force_recalc', false ) ); ?>>
-									<?php esc_html_e( 'Drop WCDP\'s stored total on every donation', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Drop WCDP\'s stored total on every donation', 'styleraise' ); ?>
 								</label>
 								<p class="description">
-									<?php esc_html_e( 'Only needed where WooCommerce Analytics is disabled or lagging. It costs one heavy database join on the next uncached render.', 'connect-wcdp-elementor' ); ?>
+									<?php esc_html_e( 'Only needed where WooCommerce Analytics is disabled or lagging. It costs one heavy database join on the next uncached render.', 'styleraise' ); ?>
 								</p>
 							</td>
 						</tr>
@@ -883,17 +892,17 @@ final class Settings {
 				</table>
 			</div>
 
-			<h3 class="wcdp-el-subtitle"><?php esc_html_e( 'Donation form script', 'connect-wcdp-elementor' ); ?></h3>
+			<h3 class="wcdp-el-subtitle"><?php esc_html_e( 'Donation form script', 'styleraise' ); ?></h3>
 
 			<p class="wcdp-el-card__hint">
-				<?php esc_html_e( 'WCDP renders the form hidden and reveals it with its own script. Every "delay JavaScript until interaction" feature holds that script back, so the form waits behind a spinner until the visitor moves the mouse — which on a phone may never happen.', 'connect-wcdp-elementor' ); ?>
+				<?php esc_html_e( 'WCDP renders the form hidden and reveals it with its own script. Every "delay JavaScript until interaction" feature holds that script back, so the form waits behind a spinner until the visitor moves the mouse — which on a phone may never happen.', 'styleraise' ); ?>
 			</p>
 
 			<?php $optimisers = Script_Guard::detected_optimisers(); ?>
 
 			<?php if ( ! empty( $optimisers ) ) : ?>
 				<p class="wcdp-el-card__hint">
-					<strong><?php esc_html_e( 'Detected:', 'connect-wcdp-elementor' ); ?></strong>
+					<strong><?php esc_html_e( 'Detected:', 'styleraise' ); ?></strong>
 					<?php
 					$rendered = array();
 
@@ -901,7 +910,7 @@ final class Settings {
 						$rendered[] = $reachable
 							? $label
 							/* translators: %s: optimisation plugin name. */
-							: sprintf( esc_html__( '%s (needs "Also mark the tags")', 'connect-wcdp-elementor' ), $label );
+							: sprintf( esc_html__( '%s (needs "Also mark the tags")', 'styleraise' ), $label );
 					}
 
 					echo esc_html( implode( ', ', $rendered ) );
@@ -912,26 +921,26 @@ final class Settings {
 			<table class="form-table" role="presentation">
 				<tbody>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Protection', 'connect-wcdp-elementor' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Protection', 'styleraise' ); ?></th>
 						<td>
 							<fieldset>
-								<legend class="screen-reader-text"><?php esc_html_e( 'Donation form script protection', 'connect-wcdp-elementor' ); ?></legend>
+								<legend class="screen-reader-text"><?php esc_html_e( 'Donation form script protection', 'styleraise' ); ?></legend>
 
 								<?php
 								$guard_mode = Script_Guard::mode();
 
 								$guard_options = array(
 									'auto'       => array(
-										esc_html__( 'Only where the form is (recommended)', 'connect-wcdp-elementor' ),
-										esc_html__( 'Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the form script — and jQuery, which it needs — alone, but only on pages that actually contain a form. The rest of the site keeps every optimisation.', 'connect-wcdp-elementor' ),
+										esc_html__( 'Only where the form is (recommended)', 'styleraise' ),
+										esc_html__( 'Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the form script — and jQuery, which it needs — alone, but only on pages that actually contain a form. The rest of the site keeps every optimisation.', 'styleraise' ),
 									),
 									'attributes' => array(
-										esc_html__( 'Also mark the tags (widest coverage)', 'connect-wcdp-elementor' ),
-										esc_html__( 'Adds opt-out attributes the above plus Cloudflare Rocket Loader, WP Meteor and NitroPack understand. These cannot be limited to form pages, so jQuery stops being delayed site-wide. Use it if the form still shows a spinner.', 'connect-wcdp-elementor' ),
+										esc_html__( 'Also mark the tags (widest coverage)', 'styleraise' ),
+										esc_html__( 'Adds opt-out attributes the above plus Cloudflare Rocket Loader, WP Meteor and NitroPack understand. These cannot be limited to form pages, so jQuery stops being delayed site-wide. Use it if the form still shows a spinner.', 'styleraise' ),
 									),
 									'off'        => array(
-										esc_html__( 'Off', 'connect-wcdp-elementor' ),
-										esc_html__( 'Change nothing. Only sensible if you maintain the exclusions by hand in your caching plugin.', 'connect-wcdp-elementor' ),
+										esc_html__( 'Off', 'styleraise' ),
+										esc_html__( 'Change nothing. Only sensible if you maintain the exclusions by hand in your caching plugin.', 'styleraise' ),
 									),
 								);
 
@@ -953,7 +962,7 @@ final class Settings {
 							</fieldset>
 
 							<p class="description">
-								<?php esc_html_e( 'With this on, remove any manual exclusion you added for the donation form or jQuery in your caching plugin — a manual jQuery exclusion applies to the whole site and undoes the point of the targeted mode.', 'connect-wcdp-elementor' ); ?>
+								<?php esc_html_e( 'With this on, remove any manual exclusion you added for the donation form or jQuery in your caching plugin — a manual jQuery exclusion applies to the whole site and undoes the point of the targeted mode.', 'styleraise' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -964,357 +973,20 @@ final class Settings {
 	}
 
 	/**
-	 * The only CSS this screen needs.
+	 * Enqueue the screen's stylesheet on this screen only.
 	 *
-	 * Printed inline rather than enqueued — it is smaller than the HTTP request
-	 * that would fetch it, and there is no second screen to share it with.
-	 * Every colour resolves to a WordPress design token where the install has
-	 * them (WP 7.1+) and to wp-admin's own palette otherwise, so the screen
-	 * follows the active admin colour scheme instead of inventing one.
+	 * @param string $hook_suffix Current admin page hook.
 	 */
-	private function print_styles(): void {
-		?>
-		<style>
-			.wcdp-el-settings {
-				--wcdp-el-line: var(--wpds-color-stroke-surface-neutral-weak, #dcdcde);
-				--wcdp-el-surface: var(--wpds-color-background-surface-neutral-strong, #fff);
-				--wcdp-el-muted: var(--wpds-color-foreground-content-neutral-weak, #646970);
-				/* Interactive tokens, not surface ones: on WP 7.1 the surface-brand
-				   colour is a pale tint (#ecf0fa) a white knob disappears on. */
-				--wcdp-el-accent: var(--wpds-color-background-interactive-brand-strong, #2271b1);
-				--wcdp-el-radius: var(--wpds-border-radius-lg, 6px);
-				max-width: 1120px;
-			}
+	public function enqueue_styles( string $hook_suffix ): void {
+		if ( '' === $this->hook_suffix || $hook_suffix !== $this->hook_suffix ) {
+			return;
+		}
 
-			/* ── Header ── */
-
-			.wcdp-el-hero {
-				margin: 12px 0 20px;
-				padding-bottom: 16px;
-				border-bottom: 1px solid var(--wcdp-el-line);
-			}
-
-			.wcdp-el-hero__title {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-				margin: 0 0 6px;
-				padding: 0;
-				font-size: 21px;
-				font-weight: 600;
-			}
-
-			.wcdp-el-hero__text {
-				max-width: 62ch;
-				margin: 0;
-				color: var(--wcdp-el-muted);
-			}
-
-			/* ── Layout ── */
-
-			.wcdp-el-grid {
-				display: grid;
-				grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
-				gap: 20px;
-				align-items: start;
-			}
-
-			.wcdp-el-side {
-				display: grid;
-				gap: 20px;
-			}
-
-			@media (max-width: 960px) {
-				.wcdp-el-grid {
-					grid-template-columns: minmax(0, 1fr);
-				}
-			}
-
-			.wcdp-el-card {
-				box-sizing: border-box;
-				padding: 18px 20px;
-				border: 1px solid var(--wcdp-el-line);
-				border-radius: var(--wcdp-el-radius);
-				background: var(--wcdp-el-surface);
-			}
-
-			.wcdp-el-card__title {
-				margin: 0 0 4px;
-				padding: 0;
-				font-size: 14px;
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: .04em;
-				color: var(--wcdp-el-muted);
-			}
-
-			.wcdp-el-card__hint {
-				max-width: 62ch;
-				margin: 0 0 14px;
-				color: var(--wcdp-el-muted);
-			}
-
-			.wcdp-el-main {
-				display: grid;
-				gap: 20px;
-				align-content: start;
-			}
-
-			/* ── Freshness patterns ── */
-
-			.wcdp-el-patterns {
-				display: grid;
-				gap: 10px;
-				margin-bottom: 6px;
-			}
-
-			.wcdp-el-pattern {
-				display: flex;
-				gap: 10px;
-				align-items: flex-start;
-				padding: 12px 14px;
-				border: 1px solid var(--wcdp-el-line);
-				border-radius: var(--wcdp-el-radius);
-				cursor: pointer;
-			}
-
-			.wcdp-el-pattern:hover {
-				border-color: #2271b1;
-			}
-
-			.wcdp-el-pattern:has(input:checked) {
-				border-color: #2271b1;
-				box-shadow: inset 3px 0 0 #2271b1;
-			}
-
-			.wcdp-el-pattern:has(input:focus-visible) {
-				outline: 2px solid #2271b1;
-				outline-offset: 2px;
-			}
-
-			.wcdp-el-pattern input {
-				margin-top: 3px;
-			}
-
-			.wcdp-el-pattern__body {
-				display: grid;
-				gap: 2px;
-			}
-
-			.wcdp-el-pattern__name {
-				font-weight: 600;
-			}
-
-			.wcdp-el-pattern__text {
-				max-width: 62ch;
-				color: var(--wcdp-el-muted);
-			}
-
-			.wcdp-el-choice {
-				display: flex;
-				gap: 8px;
-				align-items: flex-start;
-				margin-bottom: 10px;
-				max-width: 62ch;
-			}
-
-			.wcdp-el-choice input {
-				margin-top: 3px;
-			}
-
-			.wcdp-el-choice__text {
-				color: var(--wcdp-el-muted);
-			}
-
-			.wcdp-el-subtitle {
-				margin: 18px 0 0;
-				padding-top: 14px;
-				border-top: 1px solid var(--wcdp-el-line);
-				font-size: 13px;
-			}
-
-			/* The custom knobs only matter in custom mode. Where :has() is
-			   unsupported they stay visible, which is the safe direction to
-			   fail — hiding them would make the mode unusable. */
-			@supports selector(:has(*)) {
-				.wcdp-el-freshness:not(:has(#wcdp-el-pattern-custom:checked)) .wcdp-el-custom {
-					display: none;
-				}
-			}
-
-			.wcdp-el-card__actions {
-				margin-top: 16px;
-				padding-top: 16px;
-				border-top: 1px solid var(--wcdp-el-line);
-			}
-
-			.wcdp-el-empty {
-				margin: 0;
-				padding: 16px;
-				border: 1px dashed var(--wcdp-el-line);
-				border-radius: var(--wcdp-el-radius);
-				color: var(--wcdp-el-muted);
-				text-align: center;
-			}
-
-			/* ── Widget list ── */
-
-			.wcdp-el-list {
-				margin: 0;
-				padding: 0;
-				list-style: none;
-				border-top: 1px solid var(--wcdp-el-line);
-			}
-
-			.wcdp-el-list__row {
-				margin: 0;
-				padding: 10px 0;
-				border-bottom: 1px solid var(--wcdp-el-line);
-			}
-
-			.wcdp-el-list__error {
-				margin: 4px 0 0 3.4em;
-				color: #b32d2e;
-			}
-
-			/* ── Toggle ── */
-
-			.wcdp-el-toggle {
-				display: flex;
-				align-items: center;
-				gap: .8em;
-				cursor: pointer;
-			}
-
-			.wcdp-el-toggle input {
-				position: absolute;
-				width: 1px;
-				height: 1px;
-				margin: 0;
-				opacity: 0;
-			}
-
-			.wcdp-el-toggle__track {
-				position: relative;
-				flex: 0 0 auto;
-				width: 2.5em;
-				height: 1.35em;
-				border-radius: 999px;
-				background: var(--wpds-color-stroke-interactive-neutral, #8c8f94);
-				transition: background-color .15s ease;
-			}
-
-			.wcdp-el-toggle__track::after {
-				content: "";
-				position: absolute;
-				top: .175em;
-				left: .175em;
-				width: 1em;
-				height: 1em;
-				border-radius: 50%;
-				background: #fff;
-				transition: transform .15s ease;
-			}
-
-			.wcdp-el-toggle input:checked + .wcdp-el-toggle__track {
-				background: var(--wcdp-el-accent);
-			}
-
-			.wcdp-el-toggle input:checked + .wcdp-el-toggle__track::after {
-				transform: translateX(1.15em);
-			}
-
-			/* The input is visually hidden, so focus has to show on the track. */
-			.wcdp-el-toggle input:focus-visible + .wcdp-el-toggle__track {
-				outline: 2px solid var(--wcdp-el-accent);
-				outline-offset: 2px;
-			}
-
-			.wcdp-el-toggle input:disabled + .wcdp-el-toggle__track {
-				opacity: .5;
-			}
-
-			.wcdp-el-toggle:has(input:disabled) {
-				cursor: not-allowed;
-			}
-
-			.wcdp-el-toggle__text {
-				display: flex;
-				flex-wrap: wrap;
-				align-items: baseline;
-				gap: .6em;
-				min-width: 0;
-			}
-
-			.wcdp-el-toggle__name {
-				font-weight: 500;
-			}
-
-			.wcdp-el-toggle__slug {
-				padding: 0;
-				font-size: 11px;
-				color: var(--wcdp-el-muted);
-				background: transparent;
-			}
-
-			/* ── Diagnostics ── */
-
-			.wcdp-el-facts {
-				display: grid;
-				grid-template-columns: auto minmax(0, 1fr);
-				gap: 8px 14px;
-				margin: 0;
-				font-size: 13px;
-			}
-
-			.wcdp-el-facts dt {
-				margin: 0;
-				color: var(--wcdp-el-muted);
-			}
-
-			.wcdp-el-facts dd {
-				margin: 0;
-				min-width: 0;
-				overflow-wrap: anywhere;
-				text-align: right;
-			}
-
-			/* ── Status pill ── */
-
-			.wcdp-el-pill {
-				display: inline-block;
-				padding: 1px 8px;
-				border-radius: 999px;
-				font-size: 12px;
-				font-weight: 500;
-				line-height: 1.7;
-				white-space: nowrap;
-			}
-
-			.wcdp-el-pill--ok {
-				color: #00450c;
-				background: #edfaef;
-			}
-
-			.wcdp-el-pill--warn {
-				color: #674e00;
-				background: #fcf9e8;
-				white-space: normal;
-			}
-
-			.wcdp-el-pill--neutral {
-				color: var(--wcdp-el-muted);
-				background: var(--wpds-color-background-surface-neutral-weak, #f0f0f1);
-				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-			}
-
-			@media (prefers-reduced-motion: reduce) {
-				.wcdp-el-toggle__track,
-				.wcdp-el-toggle__track::after {
-					transition: none;
-				}
-			}
-		</style>
-		<?php
+		wp_enqueue_style(
+			'wcdp-el-settings',
+			WCDP_EL_URL . 'assets/css/wcdp-el-settings.css',
+			array(),
+			WCDP_EL_VERSION
+		);
 	}
 }

@@ -1,0 +1,346 @@
+/**
+ * Settings screen of the plugin (Elementor → the plugin's submenu).
+ *
+ * Enqueued on that screen only. Every colour resolves to a WordPress design
+ * token where the install has them (WP 7.1+) and to wp-admin's own palette
+ * otherwise, so the screen follows the active admin colour scheme.
+ */
+.wcdp-el-settings {
+	--wcdp-el-line: var(--wpds-color-stroke-surface-neutral-weak, #dcdcde);
+	--wcdp-el-surface: var(--wpds-color-background-surface-neutral-strong, #fff);
+	--wcdp-el-muted: var(--wpds-color-foreground-content-neutral-weak, #646970);
+	/* Interactive tokens, not surface ones: on WP 7.1 the surface-brand
+	   colour is a pale tint (#ecf0fa) a white knob disappears on. */
+	--wcdp-el-accent: var(--wpds-color-background-interactive-brand-strong, #2271b1);
+	--wcdp-el-radius: var(--wpds-border-radius-lg, 6px);
+	max-width: 1120px;
+}
+
+/* ── Header ── */
+
+.wcdp-el-hero {
+	margin: 12px 0 20px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid var(--wcdp-el-line);
+}
+
+.wcdp-el-hero__title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 6px;
+	padding: 0;
+	font-size: 21px;
+	font-weight: 600;
+}
+
+.wcdp-el-hero__text {
+	max-width: 62ch;
+	margin: 0;
+	color: var(--wcdp-el-muted);
+}
+
+/* ── Layout ── */
+
+.wcdp-el-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+	gap: 20px;
+	align-items: start;
+}
+
+.wcdp-el-side {
+	display: grid;
+	gap: 20px;
+}
+
+@media (max-width: 960px) {
+	.wcdp-el-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.wcdp-el-card {
+	box-sizing: border-box;
+	padding: 18px 20px;
+	border: 1px solid var(--wcdp-el-line);
+	border-radius: var(--wcdp-el-radius);
+	background: var(--wcdp-el-surface);
+}
+
+.wcdp-el-card__title {
+	margin: 0 0 4px;
+	padding: 0;
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	color: var(--wcdp-el-muted);
+}
+
+.wcdp-el-card__hint {
+	max-width: 62ch;
+	margin: 0 0 14px;
+	color: var(--wcdp-el-muted);
+}
+
+.wcdp-el-main {
+	display: grid;
+	gap: 20px;
+	align-content: start;
+}
+
+/* ── Freshness patterns ── */
+
+.wcdp-el-patterns {
+	display: grid;
+	gap: 10px;
+	margin-bottom: 6px;
+}
+
+.wcdp-el-pattern {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	padding: 12px 14px;
+	border: 1px solid var(--wcdp-el-line);
+	border-radius: var(--wcdp-el-radius);
+	cursor: pointer;
+}
+
+.wcdp-el-pattern:hover {
+	border-color: #2271b1;
+}
+
+.wcdp-el-pattern:has(input:checked) {
+	border-color: #2271b1;
+	box-shadow: inset 3px 0 0 #2271b1;
+}
+
+.wcdp-el-pattern:has(input:focus-visible) {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.wcdp-el-pattern input {
+	margin-top: 3px;
+}
+
+.wcdp-el-pattern__body {
+	display: grid;
+	gap: 2px;
+}
+
+.wcdp-el-pattern__name {
+	font-weight: 600;
+}
+
+.wcdp-el-pattern__text {
+	max-width: 62ch;
+	color: var(--wcdp-el-muted);
+}
+
+.wcdp-el-choice {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	margin-bottom: 10px;
+	max-width: 62ch;
+}
+
+.wcdp-el-choice input {
+	margin-top: 3px;
+}
+
+.wcdp-el-choice__text {
+	color: var(--wcdp-el-muted);
+}
+
+.wcdp-el-subtitle {
+	margin: 18px 0 0;
+	padding-top: 14px;
+	border-top: 1px solid var(--wcdp-el-line);
+	font-size: 13px;
+}
+
+/* The custom knobs only matter in custom mode. Where :has() is
+   unsupported they stay visible, which is the safe direction to
+   fail — hiding them would make the mode unusable. */
+@supports selector(:has(*)) {
+	.wcdp-el-freshness:not(:has(#wcdp-el-pattern-custom:checked)) .wcdp-el-custom {
+		display: none;
+	}
+}
+
+.wcdp-el-card__actions {
+	margin-top: 16px;
+	padding-top: 16px;
+	border-top: 1px solid var(--wcdp-el-line);
+}
+
+.wcdp-el-empty {
+	margin: 0;
+	padding: 16px;
+	border: 1px dashed var(--wcdp-el-line);
+	border-radius: var(--wcdp-el-radius);
+	color: var(--wcdp-el-muted);
+	text-align: center;
+}
+
+/* ── Widget list ── */
+
+.wcdp-el-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--wcdp-el-line);
+}
+
+.wcdp-el-list__row {
+	margin: 0;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--wcdp-el-line);
+}
+
+.wcdp-el-list__error {
+	margin: 4px 0 0 3.4em;
+	color: #b32d2e;
+}
+
+/* ── Toggle ── */
+
+.wcdp-el-toggle {
+	display: flex;
+	align-items: center;
+	gap: .8em;
+	cursor: pointer;
+}
+
+.wcdp-el-toggle input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+}
+
+.wcdp-el-toggle__track {
+	position: relative;
+	flex: 0 0 auto;
+	width: 2.5em;
+	height: 1.35em;
+	border-radius: 999px;
+	background: var(--wpds-color-stroke-interactive-neutral, #8c8f94);
+	transition: background-color .15s ease;
+}
+
+.wcdp-el-toggle__track::after {
+	content: "";
+	position: absolute;
+	top: .175em;
+	left: .175em;
+	width: 1em;
+	height: 1em;
+	border-radius: 50%;
+	background: #fff;
+	transition: transform .15s ease;
+}
+
+.wcdp-el-toggle input:checked + .wcdp-el-toggle__track {
+	background: var(--wcdp-el-accent);
+}
+
+.wcdp-el-toggle input:checked + .wcdp-el-toggle__track::after {
+	transform: translateX(1.15em);
+}
+
+/* The input is visually hidden, so focus has to show on the track. */
+.wcdp-el-toggle input:focus-visible + .wcdp-el-toggle__track {
+	outline: 2px solid var(--wcdp-el-accent);
+	outline-offset: 2px;
+}
+
+.wcdp-el-toggle input:disabled + .wcdp-el-toggle__track {
+	opacity: .5;
+}
+
+.wcdp-el-toggle:has(input:disabled) {
+	cursor: not-allowed;
+}
+
+.wcdp-el-toggle__text {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: .6em;
+	min-width: 0;
+}
+
+.wcdp-el-toggle__name {
+	font-weight: 500;
+}
+
+.wcdp-el-toggle__slug {
+	padding: 0;
+	font-size: 11px;
+	color: var(--wcdp-el-muted);
+	background: transparent;
+}
+
+/* ── Diagnostics ── */
+
+.wcdp-el-facts {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 8px 14px;
+	margin: 0;
+	font-size: 13px;
+}
+
+.wcdp-el-facts dt {
+	margin: 0;
+	color: var(--wcdp-el-muted);
+}
+
+.wcdp-el-facts dd {
+	margin: 0;
+	min-width: 0;
+	overflow-wrap: anywhere;
+	text-align: right;
+}
+
+/* ── Status pill ── */
+
+.wcdp-el-pill {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.7;
+	white-space: nowrap;
+}
+
+.wcdp-el-pill--ok {
+	color: #00450c;
+	background: #edfaef;
+}
+
+.wcdp-el-pill--warn {
+	color: #674e00;
+	background: #fcf9e8;
+	white-space: normal;
+}
+
+.wcdp-el-pill--neutral {
+	color: var(--wcdp-el-muted);
+	background: var(--wpds-color-background-surface-neutral-weak, #f0f0f1);
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wcdp-el-toggle__track,
+	.wcdp-el-toggle__track::after {
+		transition: none;
+	}
+}

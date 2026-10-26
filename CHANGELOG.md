@@ -1,12 +1,24 @@
 # Changelog
 
-All notable changes to Connect WCDP for Elementor are documented here.
+All notable changes to StyleRaise are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project uses [Semantic Versioning](https://semver.org/).
 
 Versions before 3.1.2 were used privately by the Ridni Foundation under the
 name "WCDP Elementor Integration" and were never published; they are listed so
 the history of the code is complete.
+
+## [3.1.7] — 2026-10-26
+
+### Changed
+
+- New name: StyleRaise – Connector for Elementor and Donation Platform for WooCommerce (previously "Connect WCDP for Elementor"), as requested by the WordPress.org plugin review. The plugin folder and text domain are now `styleraise`; widgets, saved pages and settings are not affected.
+- The settings screen loads its styles from a stylesheet instead of an inline `<style>` block.
+- Translations are loaded by WordPress itself; the plugin no longer calls `load_plugin_textdomain()`.
+
+### Security
+
+- Every piece of markup the widgets print — the donation form, the leaderboard, prices, titles, images and counters — now passes through `wp_kses()` with an explicit list of allowed tags and attributes.
 
 ## [3.1.6] — 2026-10-23
 
@@ -144,4 +156,7 @@ the history of the code is complete.
 
 - Initial version: Elementor widgets for the donation form, progress bar, leaderboard, donation counter and campaign title, price and image, plus a Product ID dynamic tag.
 
-[3.1.2]: https://github.com/ridni-foundation/connect-wcdp-elementor/releases/tag/v3.1.2
+[3.1.7]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.7
+[3.1.6]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.6
+[3.1.5]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.5
+[3.1.2]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.2

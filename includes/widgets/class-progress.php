@@ -19,6 +19,7 @@ use WCDP_Elementor\Cache\Location_Index;
 use WCDP_Elementor\Data\Campaign;
 use WCDP_Elementor\Data\Product_Resolver;
 use WCDP_Elementor\Data\Value_Formatter;
+use WCDP_Elementor\Render\Kses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -57,7 +58,7 @@ class Progress extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Progress', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Progress', 'styleraise' );
 	}
 
 	/**
@@ -162,16 +163,16 @@ class Progress extends Widget_Base {
 	 */
 	private static function preset_labels(): array {
 		return array(
-			'1'  => esc_html__( '1 — Bar with amount inside', 'connect-wcdp-elementor' ),
-			'2'  => esc_html__( '2 — Amounts and deadline above bar', 'connect-wcdp-elementor' ),
-			'3'  => esc_html__( '3 — Amounts above bar, deadline below', 'connect-wcdp-elementor' ),
-			'4'  => esc_html__( '4 — Percentage and deadline above bar', 'connect-wcdp-elementor' ),
-			'5'  => esc_html__( '5 — Deadline only', 'connect-wcdp-elementor' ),
-			'6'  => esc_html__( '6 — Goal only', 'connect-wcdp-elementor' ),
-			'7'  => esc_html__( '7 — Amount still needed', 'connect-wcdp-elementor' ),
-			'8'  => esc_html__( '8 — Raised of goal', 'connect-wcdp-elementor' ),
-			'9'  => esc_html__( '9 — Raised only', 'connect-wcdp-elementor' ),
-			'10' => esc_html__( '10 — Percentage only', 'connect-wcdp-elementor' ),
+			'1'  => esc_html__( '1 — Bar with amount inside', 'styleraise' ),
+			'2'  => esc_html__( '2 — Amounts and deadline above bar', 'styleraise' ),
+			'3'  => esc_html__( '3 — Amounts above bar, deadline below', 'styleraise' ),
+			'4'  => esc_html__( '4 — Percentage and deadline above bar', 'styleraise' ),
+			'5'  => esc_html__( '5 — Deadline only', 'styleraise' ),
+			'6'  => esc_html__( '6 — Goal only', 'styleraise' ),
+			'7'  => esc_html__( '7 — Amount still needed', 'styleraise' ),
+			'8'  => esc_html__( '8 — Raised of goal', 'styleraise' ),
+			'9'  => esc_html__( '9 — Raised only', 'styleraise' ),
+			'10' => esc_html__( '10 — Percentage only', 'styleraise' ),
 		);
 	}
 
@@ -211,11 +212,11 @@ class Progress extends Widget_Base {
 		switch ( $key ) {
 			case 'raised_of_goal':
 				/* translators: {raised} and {goal} are replaced with formatted amounts. Keep both placeholders. */
-				return esc_html__( '{raised} of {goal}', 'connect-wcdp-elementor' );
+				return esc_html__( '{raised} of {goal}', 'styleraise' );
 
 			case 'count':
 				/* translators: {count} is replaced with the number of donations. Keep the placeholder. */
-				return esc_html__( '{count} donations', 'connect-wcdp-elementor' );
+				return esc_html__( '{count} donations', 'styleraise' );
 
 			case 'raised':
 			case 'goal':
@@ -248,7 +249,7 @@ class Progress extends Widget_Base {
 	 * Content → Campaign.
 	 */
 	private function register_campaign_section(): void {
-		$this->open_content_section( 'section_campaign', esc_html__( 'Campaign', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_campaign', esc_html__( 'Campaign', 'styleraise' ) );
 
 		$this->register_product_controls();
 		$this->register_campaign_data_controls();
@@ -261,18 +262,18 @@ class Progress extends Widget_Base {
 	 * Content → Layout & Elements.
 	 */
 	private function register_layout_section(): void {
-		$this->open_content_section( 'section_layout', esc_html__( 'Layout & Elements', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_layout', esc_html__( 'Layout & Elements', 'styleraise' ) );
 
 
 		$this->add_control(
 			'content_mode',
 			array(
-				'label'        => esc_html__( 'Composition', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Composition', 'styleraise' ),
 				'type'         => Controls_Manager::SELECT,
 				'default'      => 'preset',
 				'options'      => array(
-					'preset' => esc_html__( 'Use a preset', 'connect-wcdp-elementor' ),
-					'custom' => esc_html__( 'Build it myself', 'connect-wcdp-elementor' ),
+					'preset' => esc_html__( 'Use a preset', 'styleraise' ),
+					'custom' => esc_html__( 'Build it myself', 'styleraise' ),
 				),
 			)
 		);
@@ -280,7 +281,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'style',
 			array(
-				'label'      => esc_html__( 'Preset', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Preset', 'styleraise' ),
 				'type'       => Controls_Manager::SELECT,
 				'default'    => '1',
 				'options'    => self::preset_labels(),
@@ -293,7 +294,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'show_bar',
 			array(
-				'label'        => esc_html__( 'Progress Bar', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Progress Bar', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -305,7 +306,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'bar_label',
 			array(
-				'label'       => esc_html__( 'Text Inside Bar', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text Inside Bar', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
@@ -316,12 +317,12 @@ class Progress extends Widget_Base {
 			)
 		);
 
-		$this->register_element_content_controls( 'amount', esc_html__( 'Amount', 'connect-wcdp-elementor' ), self::template( 'raised_of_goal' ), $custom_only, 'yes' );
-		$this->register_element_content_controls( 'goal', esc_html__( 'Goal', 'connect-wcdp-elementor' ), self::template( 'goal' ), $custom_only, '' );
-		$this->register_element_content_controls( 'percentage', esc_html__( 'Percentage', 'connect-wcdp-elementor' ), self::template( 'percentage' ), $custom_only, '' );
-		$this->register_element_content_controls( 'remaining', esc_html__( 'Still Needed', 'connect-wcdp-elementor' ), self::template( 'remaining' ), $custom_only, '' );
-		$this->register_element_content_controls( 'deadline', esc_html__( 'Deadline', 'connect-wcdp-elementor' ), self::template( 'timeleft' ), $custom_only, '' );
-		$this->register_element_content_controls( 'count', esc_html__( 'Donation Count', 'connect-wcdp-elementor' ), self::template( 'count' ), $custom_only, '' );
+		$this->register_element_content_controls( 'amount', esc_html__( 'Amount', 'styleraise' ), self::template( 'raised_of_goal' ), $custom_only, 'yes' );
+		$this->register_element_content_controls( 'goal', esc_html__( 'Goal', 'styleraise' ), self::template( 'goal' ), $custom_only, '' );
+		$this->register_element_content_controls( 'percentage', esc_html__( 'Percentage', 'styleraise' ), self::template( 'percentage' ), $custom_only, '' );
+		$this->register_element_content_controls( 'remaining', esc_html__( 'Still Needed', 'styleraise' ), self::template( 'remaining' ), $custom_only, '' );
+		$this->register_element_content_controls( 'deadline', esc_html__( 'Deadline', 'styleraise' ), self::template( 'timeleft' ), $custom_only, '' );
+		$this->register_element_content_controls( 'count', esc_html__( 'Donation Count', 'styleraise' ), self::template( 'count' ), $custom_only, '' );
 
 		$this->end_controls_section();
 	}
@@ -351,7 +352,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			$element . '_template',
 			array(
-				'label'       => esc_html__( 'Text', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => $template,
 				'label_block' => true,
@@ -364,12 +365,12 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			$element . '_position',
 			array(
-				'label'     => esc_html__( 'Position', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Position', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'above',
 				'options'   => array(
-					'above' => esc_html__( 'Above the bar', 'connect-wcdp-elementor' ),
-					'below' => esc_html__( 'Below the bar', 'connect-wcdp-elementor' ),
+					'above' => esc_html__( 'Above the bar', 'styleraise' ),
+					'below' => esc_html__( 'Below the bar', 'styleraise' ),
 				),
 				'condition' => $base + array( 'show_' . $element => 'yes' ),
 			)
@@ -382,50 +383,50 @@ class Progress extends Widget_Base {
 	private function register_format_section(): void {
 		$this->open_content_section(
 			'section_format',
-			esc_html__( 'Number Format', 'connect-wcdp-elementor' )
+			esc_html__( 'Number Format', 'styleraise' )
 		);
 
 		$this->add_control(
 			'amount_source',
 			array(
-				'label'       => esc_html__( 'Amount Formatting', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Amount Formatting', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => 'site',
 				'options'     => array(
-					'site'   => esc_html__( 'Match the rest of the site', 'connect-wcdp-elementor' ),
-					'custom' => esc_html__( 'Format here', 'connect-wcdp-elementor' ),
+					'site'   => esc_html__( 'Match the rest of the site', 'styleraise' ),
+					'custom' => esc_html__( 'Format here', 'styleraise' ),
 				),
-				'description' => esc_html__( '"Match the rest of the site" prints the amounts exactly as WCDP does, so a multi-currency switcher keeps working. Choose "Format here" only if you need the decimal and compact options below — they format the base currency and will not follow a currency switcher.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( '"Match the rest of the site" prints the amounts exactly as WCDP does, so a multi-currency switcher keeps working. Choose "Format here" only if you need the decimal and compact options below — they format the base currency and will not follow a currency switcher.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'currency_position',
 			array(
-				'label'       => esc_html__( 'Currency Symbol Position', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Currency Symbol Position', 'styleraise' ),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '',
 				'options'     => array(
-					''            => esc_html__( 'Follow WooCommerce setting', 'connect-wcdp-elementor' ),
-					'auto'        => esc_html__( 'Automatic — let a currency switcher decide', 'connect-wcdp-elementor' ),
-					'left'        => esc_html__( 'Left — {symbol}100', 'connect-wcdp-elementor' ),
-					'right'       => esc_html__( 'Right — 100{symbol}', 'connect-wcdp-elementor' ),
-					'left_space'  => esc_html__( 'Left with space — {symbol} 100', 'connect-wcdp-elementor' ),
-					'right_space' => esc_html__( 'Right with space — 100 {symbol}', 'connect-wcdp-elementor' ),
+					''            => esc_html__( 'Follow WooCommerce setting', 'styleraise' ),
+					'auto'        => esc_html__( 'Automatic — let a currency switcher decide', 'styleraise' ),
+					'left'        => esc_html__( 'Left — {symbol}100', 'styleraise' ),
+					'right'       => esc_html__( 'Right — 100{symbol}', 'styleraise' ),
+					'left_space'  => esc_html__( 'Left with space — {symbol} 100', 'styleraise' ),
+					'right_space' => esc_html__( 'Right with space — 100 {symbol}', 'styleraise' ),
 				),
-				'description' => esc_html__( 'Applies in both formatting modes. The default reads WooCommerce → Settings → General → Currency position and enforces it, so a currency plugin cannot quietly flip the symbol. Choose "Automatic" if you want a multi-currency switcher to set the position per currency.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Applies in both formatting modes. The default reads WooCommerce → Settings → General → Currency position and enforces it, so a currency plugin cannot quietly flip the symbol. Choose "Automatic" if you want a multi-currency switcher to set the position per currency.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'amount_decimals',
 			array(
-				'label'       => esc_html__( 'Amount Decimals', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Amount Decimals', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 0,
 				'max'         => 4,
 				'default'     => '',
-				'placeholder' => esc_html__( 'Store default', 'connect-wcdp-elementor' ),
+				'placeholder' => esc_html__( 'Store default', 'styleraise' ),
 				'condition'   => array( 'amount_source' => 'custom' ),
 			)
 		);
@@ -433,11 +434,11 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'trim_zero_decimals',
 			array(
-				'label'        => esc_html__( 'Hide .00 Decimals', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Hide .00 Decimals', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
-				'description'  => esc_html__( 'Show whole amounts without decimal places.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Show whole amounts without decimal places.', 'styleraise' ),
 				'condition'   => array( 'amount_source' => 'custom' ),
 			)
 		);
@@ -445,11 +446,11 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'compact_amounts',
 			array(
-				'label'        => esc_html__( 'Compact Notation', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Compact Notation', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
-				'description'  => esc_html__( 'Render large amounts as 1.2K / 3.4M. The currency symbol is dropped in this mode.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'Render large amounts as 1.2K / 3.4M. The currency symbol is dropped in this mode.', 'styleraise' ),
 				'condition'   => array( 'amount_source' => 'custom' ),
 			)
 		);
@@ -458,7 +459,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'percentage_decimals',
 			array(
-				'label'   => esc_html__( 'Percentage Decimals', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Percentage Decimals', 'styleraise' ),
 				'type'    => Controls_Manager::NUMBER,
 				'min'     => 0,
 				'max'     => 4,
@@ -475,7 +476,7 @@ class Progress extends Widget_Base {
 	 * @return string
 	 */
 	private function get_placeholder_help(): string {
-		return esc_html__( 'Placeholders: {raised} {goal} {remaining} {percentage} {count} {timeleft}', 'connect-wcdp-elementor' );
+		return esc_html__( 'Placeholders: {raised} {goal} {remaining} {percentage} {count} {timeleft}', 'styleraise' );
 	}
 
 	/* ─────────────────────────── Style: bar ─────────────────────────── */
@@ -505,7 +506,7 @@ class Progress extends Widget_Base {
 	private function register_bar_style(): void {
 		$this->open_style_section(
 			'section_bar_style',
-			esc_html__( 'Progress Bar', 'connect-wcdp-elementor' ),
+			esc_html__( 'Progress Bar', 'styleraise' ),
 			array( 'conditions' => $this->bar_conditions() )
 		);
 
@@ -515,7 +516,7 @@ class Progress extends Widget_Base {
 
 		$this->add_slider(
 			'bar_height',
-			esc_html__( 'Height', 'connect-wcdp-elementor' ),
+			esc_html__( 'Height', 'styleraise' ),
 			$bar,
 			'min-height: {{SIZE}}{{UNIT}};',
 			array(
@@ -532,7 +533,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'bar_track_heading',
 			array(
-				'label'     => esc_html__( 'Track', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Track', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -550,7 +551,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'bar_fill_heading',
 			array(
-				'label'     => esc_html__( 'Fill', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Fill', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -585,7 +586,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'bar_animate',
 			array(
-				'label'        => esc_html__( 'Animate on Load', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Animate on Load', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -596,7 +597,7 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'bar_animation_duration',
 			array(
-				'label'      => esc_html__( 'Animation Duration', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Animation Duration', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 's' ),
 				'range'      => array(
@@ -668,7 +669,7 @@ class Progress extends Widget_Base {
 
 		$this->add_text_style_section(
 			'bar_label',
-			esc_html__( 'Text Inside Bar', 'connect-wcdp-elementor' ),
+			esc_html__( 'Text Inside Bar', 'styleraise' ),
 			$selector,
 			array(
 				'conditions'   => $conditions,
@@ -680,12 +681,12 @@ class Progress extends Widget_Base {
 					$this->add_control(
 						'bar_label_placement',
 						array(
-							'label'     => esc_html__( 'Placement', 'connect-wcdp-elementor' ),
+							'label'     => esc_html__( 'Placement', 'styleraise' ),
 							'type'      => Controls_Manager::SELECT,
 							'default'   => 'fill',
 							'options'   => array(
-								'fill' => esc_html__( 'Follow the fill', 'connect-wcdp-elementor' ),
-								'bar'  => esc_html__( 'Over the whole bar', 'connect-wcdp-elementor' ),
+								'fill' => esc_html__( 'Follow the fill', 'styleraise' ),
+								'bar'  => esc_html__( 'Over the whole bar', 'styleraise' ),
 							),
 							'separator' => 'before',
 						)
@@ -715,12 +716,12 @@ class Progress extends Widget_Base {
 	 */
 	private function register_element_styles(): void {
 		$labels = array(
-			'amount'     => esc_html__( 'Amount', 'connect-wcdp-elementor' ),
-			'goal'       => esc_html__( 'Goal', 'connect-wcdp-elementor' ),
-			'percentage' => esc_html__( 'Percentage', 'connect-wcdp-elementor' ),
-			'remaining'  => esc_html__( 'Still Needed', 'connect-wcdp-elementor' ),
-			'deadline'   => esc_html__( 'Deadline', 'connect-wcdp-elementor' ),
-			'count'      => esc_html__( 'Donation Count', 'connect-wcdp-elementor' ),
+			'amount'     => esc_html__( 'Amount', 'styleraise' ),
+			'goal'       => esc_html__( 'Goal', 'styleraise' ),
+			'percentage' => esc_html__( 'Percentage', 'styleraise' ),
+			'remaining'  => esc_html__( 'Still Needed', 'styleraise' ),
+			'deadline'   => esc_html__( 'Deadline', 'styleraise' ),
+			'count'      => esc_html__( 'Donation Count', 'styleraise' ),
 		);
 
 		foreach ( $labels as $element => $label ) {
@@ -755,21 +756,21 @@ class Progress extends Widget_Base {
 	 */
 	private function add_value_part_controls( string $prefix, string $selector ): void {
 		$parts = array(
-			'raised'     => esc_html__( 'Raised Value', 'connect-wcdp-elementor' ),
-			'goal'       => esc_html__( 'Goal Value', 'connect-wcdp-elementor' ),
-			'remaining'  => esc_html__( 'Remaining Value', 'connect-wcdp-elementor' ),
-			'percentage' => esc_html__( 'Percentage Value', 'connect-wcdp-elementor' ),
-			'count'      => esc_html__( 'Count Value', 'connect-wcdp-elementor' ),
-			'timeleft'   => esc_html__( 'Time Left Value', 'connect-wcdp-elementor' ),
+			'raised'     => esc_html__( 'Raised Value', 'styleraise' ),
+			'goal'       => esc_html__( 'Goal Value', 'styleraise' ),
+			'remaining'  => esc_html__( 'Remaining Value', 'styleraise' ),
+			'percentage' => esc_html__( 'Percentage Value', 'styleraise' ),
+			'count'      => esc_html__( 'Count Value', 'styleraise' ),
+			'timeleft'   => esc_html__( 'Time Left Value', 'styleraise' ),
 		);
 
 		$this->add_control(
 			$prefix . '_parts_heading',
 			array(
-				'label'       => esc_html__( 'Individual Values', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Individual Values', 'styleraise' ),
 				'type'        => Controls_Manager::HEADING,
 				'separator'   => 'before',
-				'description' => esc_html__( 'Overrides for a single placeholder inside the text above. Only the placeholders you actually use have any effect.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Overrides for a single placeholder inside the text above. Only the placeholders you actually use have any effect.', 'styleraise' ),
 			)
 		);
 
@@ -787,7 +788,7 @@ class Progress extends Widget_Base {
 				$part_selector,
 				array(
 					/* translators: %s: name of the value, e.g. "Raised Value". */
-					'label'          => sprintf( esc_html__( '%s Color', 'connect-wcdp-elementor' ), $label ),
+					'label'          => sprintf( esc_html__( '%s Color', 'styleraise' ), $label ),
 					'global_default' => null,
 				)
 			);
@@ -802,21 +803,21 @@ class Progress extends Widget_Base {
 	private function register_layout_style(): void {
 		$this->open_style_section(
 			'section_layout_style',
-			esc_html__( 'Layout', 'connect-wcdp-elementor' )
+			esc_html__( 'Layout', 'styleraise' )
 		);
 
 		$this->add_responsive_control(
 			'row_direction',
 			array(
-				'label'     => esc_html__( 'Rows Direction', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Rows Direction', 'styleraise' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'row'    => array(
-						'title' => esc_html__( 'Side by side', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Side by side', 'styleraise' ),
 						'icon'  => 'eicon-arrow-right',
 					),
 					'column' => array(
-						'title' => esc_html__( 'Stacked', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Stacked', 'styleraise' ),
 						'icon'  => 'eicon-arrow-down',
 					),
 				),
@@ -824,7 +825,7 @@ class Progress extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .wcdp-el-progress__row' => 'flex-direction: {{VALUE}};',
 				),
-				'description' => esc_html__( 'Set this per device — stacking the amounts on mobile is usually what you want.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Set this per device — stacking the amounts on mobile is usually what you want.', 'styleraise' ),
 			)
 		);
 
@@ -834,7 +835,7 @@ class Progress extends Widget_Base {
 			'row_align',
 			'{{WRAPPER}} .wcdp-el-progress__row',
 			array(
-				'label'   => esc_html__( 'Alignment — All Rows', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Alignment — All Rows', 'styleraise' ),
 				'default' => 'space-between',
 			)
 		);
@@ -842,28 +843,28 @@ class Progress extends Widget_Base {
 		$this->add_control(
 			'row_align_heading',
 			array(
-				'label'       => esc_html__( 'Per-Row Override', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Per-Row Override', 'styleraise' ),
 				'type'        => Controls_Manager::HEADING,
 				'separator'   => 'before',
-				'description' => esc_html__( 'Rows above and below the bar usually hold a different number of items — two amounts spread apart above, a single value aligned right below. Leave a field empty to keep the shared alignment.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Rows above and below the bar usually hold a different number of items — two amounts spread apart above, a single value aligned right below. Leave a field empty to keep the shared alignment.', 'styleraise' ),
 			)
 		);
 
 		$this->add_flex_align(
 			'row_align_above',
 			'{{WRAPPER}} .wcdp-el-progress__row--above',
-			array( 'label' => esc_html__( 'Above the Bar', 'connect-wcdp-elementor' ) )
+			array( 'label' => esc_html__( 'Above the Bar', 'styleraise' ) )
 		);
 
 		$this->add_flex_align(
 			'row_align_below',
 			'{{WRAPPER}} .wcdp-el-progress__row--below',
-			array( 'label' => esc_html__( 'Below the Bar', 'connect-wcdp-elementor' ) )
+			array( 'label' => esc_html__( 'Below the Bar', 'styleraise' ) )
 		);
 
 		$this->add_slider(
 			'row_gap',
-			esc_html__( 'Gap Inside Rows', 'connect-wcdp-elementor' ),
+			esc_html__( 'Gap Inside Rows', 'styleraise' ),
 			'{{WRAPPER}} .wcdp-el-progress__row',
 			'gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -874,7 +875,7 @@ class Progress extends Widget_Base {
 
 		$this->add_slider(
 			'stack_gap',
-			esc_html__( 'Gap Between Rows and Bar', 'connect-wcdp-elementor' ),
+			esc_html__( 'Gap Between Rows and Bar', 'styleraise' ),
 			'{{WRAPPER}} .wcdp-el-progress',
 			'gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -950,7 +951,7 @@ class Progress extends Widget_Base {
 		}
 
 		if ( empty( $rows['above'] ) && empty( $rows['below'] ) && ! $composition['bar'] ) {
-			$this->render_placeholder( esc_html__( 'Nothing to show — enable the bar or at least one element.', 'connect-wcdp-elementor' ) );
+			$this->render_placeholder( esc_html__( 'Nothing to show — enable the bar or at least one element.', 'styleraise' ) );
 
 			return;
 		}
@@ -1031,7 +1032,7 @@ class Progress extends Widget_Base {
 		printf(
 			'<div class="wcdp-el-progress__row wcdp-el-progress__row--%1$s">%2$s</div>',
 			esc_attr( $position ),
-			implode( '', $items ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Items are assembled from escaped values in render_value_template().
+			wp_kses( implode( '', $items ), Kses::markup() )
 		);
 	}
 
@@ -1073,7 +1074,7 @@ class Progress extends Widget_Base {
 			// instead of being clipped.
 			printf(
 				'<div class="wcdp-el-progress__fill"><span class="wcdp-el-progress__bar-label">%s</span></div>',
-				$label // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Assembled from escaped values in render_value_template().
+				wp_kses( $label, Kses::markup() )
 			);
 		} else {
 			echo '<div class="wcdp-el-progress__fill"></div>';
@@ -1081,7 +1082,7 @@ class Progress extends Widget_Base {
 			if ( '' !== $label ) {
 				printf(
 					'<div class="wcdp-el-progress__bar-wrap"><span class="wcdp-el-progress__bar-label">%s</span></div>',
-					$label // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Assembled from escaped values in render_value_template().
+					wp_kses( $label, Kses::markup() )
 				);
 			}
 		}
@@ -1332,7 +1333,7 @@ class Progress extends Widget_Base {
 			'<span class="wcdp-el-value wcdp-el-value--%1$s" %2$s="%1$s">%3$s</span>',
 			esc_attr( $name ),
 			esc_attr( Live_Target::VALUE_ATTRIBUTE ),
-			$html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Caller escapes; wc_price() returns trusted markup.
+			$html
 		);
 	}
 
@@ -1352,7 +1353,7 @@ class Progress extends Widget_Base {
 
 		printf(
 			'<div class="wcdp-el-placeholder wcdp-el-placeholder--hint"><span class="wcdp-el-placeholder__text">%s</span></div>',
-			esc_html__( 'No fundraising goal is set on this product, so the bar, percentage and remaining amount are hidden. Set a goal in the product\'s WCDP settings, or enter a Goal Override.', 'connect-wcdp-elementor' )
+			esc_html__( 'No fundraising goal is set on this product, so the bar, percentage and remaining amount are hidden. Set a goal in the product\'s WCDP settings, or enter a Goal Override.', 'styleraise' )
 		);
 	}
 }

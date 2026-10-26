@@ -1,11 +1,11 @@
-=== Connect WCDP for Elementor – Donation Progress, Donor Wall & Fundraising Widgets ===
+=== StyleRaise – Connector for Elementor and Donation Platform for WooCommerce ===
 Contributors: gufi2019, ridni
-Donate link: https://ridni.org.ua/en/donation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=connect-wcdp-elementor&utm_content=plugin-donate-link
+Donate link: https://ridni.org.ua/en/donation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=styleraise&utm_content=plugin-donate-link
 Tags: donation, elementor, woocommerce, fundraising, progress bar
 Requires at least: 7.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.6
+Stable tag: 3.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,12 @@ calling it: no personal data, no writes.
 7. The settings screen under Elementor → WCDP Integration, with freshness patterns, donation form script protection, the widget manager and a diagnostics panel.
 
 == Changelog ==
+
+= 3.1.7 =
+* New name: StyleRaise – Connector for Elementor and Donation Platform for WooCommerce (previously "Connect WCDP for Elementor"), as requested by the WordPress.org plugin review. The plugin folder and text domain are now `styleraise`; widgets, saved pages and settings are not affected.
+* The settings screen loads its styles from a stylesheet instead of an inline `<style>` block.
+* Translations are loaded by WordPress itself; the plugin no longer calls `load_plugin_textdomain()`.
+* Every piece of markup the widgets print — the donation form, the leaderboard, prices, titles, images and counters — now passes through `wp_kses()` with an explicit list of allowed tags and attributes.
 
 = 3.1.6 =
 * Requires WordPress 7.1 or newer, the oldest version it is tested on. No code changes.

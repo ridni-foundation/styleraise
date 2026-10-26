@@ -14,6 +14,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Render\Kses;
 use WCDP_Elementor\Render\Shortcode_Runner;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +48,7 @@ class Leaderboard extends Widget_Base {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'WCDP Leaderboard', 'connect-wcdp-elementor' );
+		return esc_html__( 'WCDP Leaderboard', 'styleraise' );
 	}
 
 	/**
@@ -92,7 +93,7 @@ class Leaderboard extends Widget_Base {
 	 * Content → Leaderboard.
 	 */
 	private function register_content_controls(): void {
-		$this->open_content_section( 'section_campaign', esc_html__( 'Leaderboard', 'connect-wcdp-elementor' ) );
+		$this->open_content_section( 'section_campaign', esc_html__( 'Leaderboard', 'styleraise' ) );
 
 		$this->register_product_controls(
 			array(
@@ -106,13 +107,13 @@ class Leaderboard extends Widget_Base {
 			'style',
 			array
 			(
-				'label'     => esc_html__( 'Layout', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Layout', 'styleraise' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => '1',
 				'separator' => 'before',
 				'options'   => array(
-					'1' => esc_html__( '1 — Timeline with dots', 'connect-wcdp-elementor' ),
-					'2' => esc_html__( '2 — Compact list with icon', 'connect-wcdp-elementor' ),
+					'1' => esc_html__( '1 — Timeline with dots', 'styleraise' ),
+					'2' => esc_html__( '2 — Compact list with icon', 'styleraise' ),
 				),
 			)
 		);
@@ -120,7 +121,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'limit',
 			array(
-				'label'   => esc_html__( 'Number of Donations', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Number of Donations', 'styleraise' ),
 				'type'    => Controls_Manager::NUMBER,
 				'default' => 10,
 				'min'     => 1,
@@ -132,12 +133,12 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'orderby',
 			array(
-				'label'   => esc_html__( 'Order By', 'connect-wcdp-elementor' ),
+				'label'   => esc_html__( 'Order By', 'styleraise' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'date',
 				'options' => array(
-					'date'  => esc_html__( 'Most recent', 'connect-wcdp-elementor' ),
-					'total' => esc_html__( 'Largest amount', 'connect-wcdp-elementor' ),
+					'date'  => esc_html__( 'Most recent', 'styleraise' ),
+					'total' => esc_html__( 'Largest amount', 'styleraise' ),
 				),
 			)
 		);
@@ -145,20 +146,20 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'split',
 			array(
-				'label'       => esc_html__( 'Show Initially', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Show Initially', 'styleraise' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => -1,
 				'min'         => -1,
-				'description' => esc_html__( 'Reveal the rest behind a "Show more" button. Use -1 to show everything at once.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Reveal the rest behind a "Show more" button. Use -1 to show everything at once.', 'styleraise' ),
 			)
 		);
 
 		$this->add_control(
 			'button_text',
 			array(
-				'label'       => esc_html__( '"Show More" Label', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( '"Show More" Label', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => esc_html__( 'Show more', 'connect-wcdp-elementor' ),
+				'default'     => esc_html__( 'Show more', 'styleraise' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 				'conditions'  => array(
@@ -176,7 +177,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'fallback',
 			array(
-				'label'       => esc_html__( 'Text With No Donations', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Text With No Donations', 'styleraise' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'label_block' => true,
@@ -187,12 +188,12 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'combine_translations',
 			array(
-				'label'        => esc_html__( 'Combine Translations', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Combine Translations', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
 				'condition'    => array( 'product_source!' => 'all' ),
-				'description'  => esc_html__( 'With Polylang or WPML active, include donations made through every translation of this product.', 'connect-wcdp-elementor' ),
+				'description'  => esc_html__( 'With Polylang or WPML active, include donations made through every translation of this product.', 'styleraise' ),
 			)
 		);
 
@@ -202,8 +203,8 @@ class Leaderboard extends Widget_Base {
 				'type'      => Controls_Manager::RAW_HTML,
 				'raw'       => '<div class="elementor-control-field-description">' . sprintf(
 					/* translators: %s: link to the WCDP settings screen. */
-					esc_html__( 'The donor line itself ("{firstname} donated {amount}") is a WCDP setting shared site-wide. %s', 'connect-wcdp-elementor' ),
-					'<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=wc-donation-platform' ) ) . '" target="_blank" rel="noopener">' . esc_html__( 'Edit it in WCDP settings', 'connect-wcdp-elementor' ) . '</a>'
+					esc_html__( 'The donor line itself ("{firstname} donated {amount}") is a WCDP setting shared site-wide. %s', 'styleraise' ),
+					'<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=wc-donation-platform' ) ) . '" target="_blank" rel="noopener">' . esc_html__( 'Edit it in WCDP settings', 'styleraise' ) . '</a>'
 				) . '</div>',
 				'separator' => 'before',
 			)
@@ -216,7 +217,7 @@ class Leaderboard extends Widget_Base {
 	 * Style → List & Rows.
 	 */
 	private function register_list_style(): void {
-		$this->open_style_section( 'section_list_style', esc_html__( 'List & Rows', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_list_style', esc_html__( 'List & Rows', 'styleraise' ) );
 
 		$wrapper = '{{WRAPPER}} .wcdp-el-leaderboard';
 		$item    = $wrapper . ' .wcdp-leaderboard-li';
@@ -226,7 +227,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'row_heading',
 			array(
-				'label'     => esc_html__( 'Rows', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Rows', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -248,7 +249,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'row_divider',
 			array(
-				'label'        => esc_html__( 'Divider Between Rows', 'connect-wcdp-elementor' ),
+				'label'        => esc_html__( 'Divider Between Rows', 'styleraise' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
@@ -259,7 +260,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'row_divider_color',
 			array(
-				'label'     => esc_html__( 'Divider Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Divider Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#e0e0e0',
 				'selectors' => array(
@@ -271,7 +272,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'row_divider_width',
-			esc_html__( 'Divider Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Divider Width', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-divider-width: {{SIZE}}{{UNIT}};',
 			array(
@@ -286,7 +287,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'row_stripe_color',
 			array(
-				'label'     => esc_html__( 'Alternate Row Background', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Alternate Row Background', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'separator' => 'before',
 				'selectors' => array(
@@ -302,7 +303,7 @@ class Leaderboard extends Widget_Base {
 	 * Style → Marker.
 	 */
 	private function register_marker_style(): void {
-		$this->open_style_section( 'section_marker_style', esc_html__( 'Marker', 'connect-wcdp-elementor' ) );
+		$this->open_style_section( 'section_marker_style', esc_html__( 'Marker', 'styleraise' ) );
 
 		$wrapper = '{{WRAPPER}} .wcdp-el-leaderboard';
 
@@ -311,7 +312,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'marker_dot_color',
 			array(
-				'label'     => esc_html__( 'Dot Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Dot Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'global'    => array( 'default' => Global_Colors::COLOR_PRIMARY ),
 				'selectors' => array( $wrapper => '--wcdp-el-lb-dot-color: {{VALUE}};' ),
@@ -321,7 +322,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_dot_size',
-			esc_html__( 'Dot Size', 'connect-wcdp-elementor' ),
+			esc_html__( 'Dot Size', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-dot-size: {{SIZE}}{{UNIT}};',
 			array(
@@ -334,7 +335,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'marker_line_color',
 			array(
-				'label'     => esc_html__( 'Line Color', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Line Color', 'styleraise' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $wrapper => '--wcdp-el-lb-line-color: {{VALUE}};' ),
 				'condition' => array( 'style' => '1' ),
@@ -343,7 +344,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_line_width',
-			esc_html__( 'Line Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Line Width', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-line-width: {{SIZE}}{{UNIT}};',
 			array(
@@ -355,7 +356,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_indent',
-			esc_html__( 'Text Indent', 'connect-wcdp-elementor' ),
+			esc_html__( 'Text Indent', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-indent: {{SIZE}}{{UNIT}};',
 			array(
@@ -367,7 +368,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_line_offset',
-			esc_html__( 'Line Offset', 'connect-wcdp-elementor' ),
+			esc_html__( 'Line Offset', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-line-offset: {{SIZE}}{{UNIT}};',
 			array(
@@ -382,18 +383,18 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'marker_icon',
 			array(
-				'label'       => esc_html__( 'Icon', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Icon', 'styleraise' ),
 				'type'        => Controls_Manager::MEDIA,
 				'media_types' => array( 'image', 'svg' ),
 				'selectors'   => array( $wrapper => '--wcdp-el-lb-icon: url({{URL}});' ),
 				'condition'   => array( 'style' => '2' ),
-				'description' => esc_html__( 'Leave empty to keep the WCDP donation icon.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Leave empty to keep the WCDP donation icon.', 'styleraise' ),
 			)
 		);
 
 		$this->add_slider(
 			'marker_icon_width',
-			esc_html__( 'Icon Width', 'connect-wcdp-elementor' ),
+			esc_html__( 'Icon Width', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-icon-width: {{SIZE}}{{UNIT}};',
 			array(
@@ -405,7 +406,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_icon_height',
-			esc_html__( 'Icon Height', 'connect-wcdp-elementor' ),
+			esc_html__( 'Icon Height', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-icon-height: {{SIZE}}{{UNIT}};',
 			array(
@@ -417,7 +418,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_slider(
 			'marker_icon_gap',
-			esc_html__( 'Icon Gap', 'connect-wcdp-elementor' ),
+			esc_html__( 'Icon Gap', 'styleraise' ),
 			$wrapper,
 			'--wcdp-el-lb-icon-gap: {{SIZE}}{{UNIT}};',
 			array(
@@ -438,7 +439,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_text_style_section(
 			'lb_title',
-			esc_html__( 'Donor Line', 'connect-wcdp-elementor' ),
+			esc_html__( 'Donor Line', 'styleraise' ),
 			$wrapper . ' .wcdp-leaderboard-title',
 			array(
 				'global_typography' => Global_Typography::TYPOGRAPHY_PRIMARY,
@@ -450,7 +451,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_text_style_section(
 			'lb_subtitle',
-			esc_html__( 'Secondary Line', 'connect-wcdp-elementor' ),
+			esc_html__( 'Secondary Line', 'styleraise' ),
 			$wrapper . ' .wcdp-leaderboard-subtitle',
 			array(
 				'extra' => function () use ( $wrapper ) {
@@ -461,7 +462,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->add_text_style_section(
 			'lb_fallback',
-			esc_html__( 'Empty State', 'connect-wcdp-elementor' ),
+			esc_html__( 'Empty State', 'styleraise' ),
 			$wrapper . ' .wcdp-el-leaderboard__fallback',
 			array( 'order' => false )
 		);
@@ -478,25 +479,25 @@ class Leaderboard extends Widget_Base {
 	 */
 	private function add_donor_part_controls( string $prefix, string $wrapper ): void {
 		$parts = array(
-			'amount'          => esc_html__( 'Amount', 'connect-wcdp-elementor' ),
-			'firstname'       => esc_html__( 'First Name', 'connect-wcdp-elementor' ),
-			'lastname'        => esc_html__( 'Last Name', 'connect-wcdp-elementor' ),
-			'company_or_name' => esc_html__( 'Company or Name', 'connect-wcdp-elementor' ),
-			'timediff'        => esc_html__( 'Time Ago', 'connect-wcdp-elementor' ),
-			'datetime'        => esc_html__( 'Date & Time', 'connect-wcdp-elementor' ),
-			'city'            => esc_html__( 'City', 'connect-wcdp-elementor' ),
-			'comment'         => esc_html__( 'Comment', 'connect-wcdp-elementor' ),
-			'anonymous'       => esc_html__( 'Anonymous Label', 'connect-wcdp-elementor' ),
-			'product'         => esc_html__( 'Campaign Name', 'connect-wcdp-elementor' ),
+			'amount'          => esc_html__( 'Amount', 'styleraise' ),
+			'firstname'       => esc_html__( 'First Name', 'styleraise' ),
+			'lastname'        => esc_html__( 'Last Name', 'styleraise' ),
+			'company_or_name' => esc_html__( 'Company or Name', 'styleraise' ),
+			'timediff'        => esc_html__( 'Time Ago', 'styleraise' ),
+			'datetime'        => esc_html__( 'Date & Time', 'styleraise' ),
+			'city'            => esc_html__( 'City', 'styleraise' ),
+			'comment'         => esc_html__( 'Comment', 'styleraise' ),
+			'anonymous'       => esc_html__( 'Anonymous Label', 'styleraise' ),
+			'product'         => esc_html__( 'Campaign Name', 'styleraise' ),
 		);
 
 		$this->add_control(
 			$prefix . '_parts_heading',
 			array(
-				'label'       => esc_html__( 'Individual Values', 'connect-wcdp-elementor' ),
+				'label'       => esc_html__( 'Individual Values', 'styleraise' ),
 				'type'        => Controls_Manager::HEADING,
 				'separator'   => 'before',
-				'description' => esc_html__( 'Only the placeholders used by the WCDP donor-line template have any effect.', 'connect-wcdp-elementor' ),
+				'description' => esc_html__( 'Only the placeholders used by the WCDP donor-line template have any effect.', 'styleraise' ),
 			)
 		);
 
@@ -510,7 +511,7 @@ class Leaderboard extends Widget_Base {
 				$selector,
 				array(
 					/* translators: %s: name of the value, e.g. "Amount". */
-					'label'          => sprintf( esc_html__( '%s Color', 'connect-wcdp-elementor' ), $label ),
+					'label'          => sprintf( esc_html__( '%s Color', 'styleraise' ), $label ),
 					'global_default' => null,
 				)
 			);
@@ -523,7 +524,7 @@ class Leaderboard extends Widget_Base {
 	private function register_button_style(): void {
 		$this->open_style_section(
 			'section_button_style',
-			esc_html__( 'Show More Button', 'connect-wcdp-elementor' ),
+			esc_html__( 'Show More Button', 'styleraise' ),
 			array(
 				'conditions' => array(
 					'terms' => array(
@@ -542,23 +543,23 @@ class Leaderboard extends Widget_Base {
 		$this->add_responsive_control(
 			'button_align',
 			array(
-				'label'     => esc_html__( 'Alignment', 'connect-wcdp-elementor' ),
+				'label'     => esc_html__( 'Alignment', 'styleraise' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'flex-start' => array(
-						'title' => esc_html__( 'Left', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Left', 'styleraise' ),
 						'icon'  => 'eicon-text-align-left',
 					),
 					'center'     => array(
-						'title' => esc_html__( 'Center', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Center', 'styleraise' ),
 						'icon'  => 'eicon-text-align-center',
 					),
 					'flex-end'   => array(
-						'title' => esc_html__( 'Right', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Right', 'styleraise' ),
 						'icon'  => 'eicon-text-align-right',
 					),
 					'stretch'    => array(
-						'title' => esc_html__( 'Full Width', 'connect-wcdp-elementor' ),
+						'title' => esc_html__( 'Full Width', 'styleraise' ),
 						'icon'  => 'eicon-text-align-justify',
 					),
 				),
@@ -571,7 +572,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->start_controls_tabs( 'button_tabs' );
 
-		$this->start_controls_tab( 'button_tab_normal', array( 'label' => esc_html__( 'Normal', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'button_tab_normal', array( 'label' => esc_html__( 'Normal', 'styleraise' ) ) );
 
 		$this->add_color( 'button_color', $button, array( 'global_default' => null ) );
 
@@ -586,7 +587,7 @@ class Leaderboard extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'button_tab_hover', array( 'label' => esc_html__( 'Hover', 'connect-wcdp-elementor' ) ) );
+		$this->start_controls_tab( 'button_tab_hover', array( 'label' => esc_html__( 'Hover', 'styleraise' ) ) );
 
 		$this->add_color(
 			'button_color_hover',
@@ -606,7 +607,7 @@ class Leaderboard extends Widget_Base {
 		$this->add_control(
 			'button_transition',
 			array(
-				'label'      => esc_html__( 'Transition Duration', 'connect-wcdp-elementor' ),
+				'label'      => esc_html__( 'Transition Duration', 'styleraise' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 's' ),
 				'range'      => array(
@@ -710,7 +711,7 @@ class Leaderboard extends Widget_Base {
 		$html = Shortcode_Runner::run( 'wcdp_leaderboard', $atts );
 
 		if ( '' === trim( $html ) ) {
-			$this->render_placeholder( esc_html__( 'WCDP returned no output for this leaderboard.', 'connect-wcdp-elementor' ) );
+			$this->render_placeholder( esc_html__( 'WCDP returned no output for this leaderboard.', 'styleraise' ) );
 
 			return;
 		}
@@ -739,7 +740,7 @@ class Leaderboard extends Widget_Base {
 		echo '<div ';
 		$this->print_render_attribute_string( 'wrapper' );
 		echo '>';
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- First-party WCDP shortcode output.
+		echo wp_kses( $html, Kses::form() );
 		echo '</div>';
 	}
 
