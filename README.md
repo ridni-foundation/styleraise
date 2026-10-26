@@ -1,4 +1,4 @@
-# StyleRaise
+# StyleRaise – Connector for Elementor and Donation Platform for WooCommerce
 
 ![StyleRaise](.wordpress-org/banner-1544x500.png)
 
