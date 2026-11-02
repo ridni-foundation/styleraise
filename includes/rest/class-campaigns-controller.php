@@ -27,8 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * was served. That is why a visitor arriving from an ad on a ten-hour-old
  * cached page still sees the real total.
  *
- * Everything it returns is already public on the page that asks for it, so the
- * route is unauthenticated — but it is rate-bounded by a short server-side
+ * The route is unauthenticated on purpose: cached pages are served to anonymous
+ * visitors, and those are exactly the requests it exists for. It answers only
+ * for campaigns a visitor could reach anyway — published products without a
+ * password, see is_public() — and it is rate-bounded by a short server-side
  * micro-cache, because each uncached item can trigger WCDP's revenue join.
  */
 final class Campaigns_Controller {
@@ -80,8 +82,9 @@ final class Campaigns_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_campaigns' ),
-					// Every figure returned here is already rendered on the
-					// public page making the request.
+					// Intentionally public: the callers are anonymous visitors
+					// of cached pages. Private, draft and password-protected
+					// campaigns are refused per item in build_item().
 					'permission_callback' => '__return_true',
 					'args'                => array(
 						'q' => array(
@@ -171,14 +174,24 @@ final class Campaigns_Controller {
 	private function build_item( array $item ) {
 		$product_id = absint( $item['id'] ?? 0 );
 
-		if ( ! $product_id || ! Product_Resolver::is_donable( $product_id ) ) {
+		if ( ! $product_id || ! self::is_public( $product_id ) || ! Product_Resolver::is_donable( $product_id ) ) {
 			return null;
 		}
 
 		$addids = array();
 
 		if ( ! empty( $item['add'] ) && is_array( $item['add'] ) ) {
-			$addids = array_slice( array_map( 'absint', $item['add'] ), 0, self::MAX_ADDIDS );
+			$addids = array_values( array_filter( array_slice( array_map( 'absint', $item['add'] ), 0, self::MAX_ADDIDS ) ) );
+		}
+
+		// One non-public product refuses the whole campaign rather than being
+		// dropped from it: otherwise the difference between two answers would
+		// reveal the total of the product that was left out. The page keeps
+		// the figures it was rendered with.
+		foreach ( $addids as $addid ) {
+			if ( ! self::is_public( $addid ) ) {
+				return null;
+			}
 		}
 
 		$fmt = Value_Formatter::sanitize_fmt( is_array( $item['fmt'] ?? null ) ? $item['fmt'] : array() );
@@ -204,6 +217,41 @@ final class Campaigns_Controller {
 			'values' => Value_Formatter::values( $campaign, $fmt ),
 			'state'  => Value_Formatter::state( $campaign ),
 		);
+	}
+
+	/**
+	 * Whether anyone may see a product's figures.
+	 *
+	 * True for a published product without a password — what an anonymous
+	 * visitor can open anyway. A variation must be enabled itself and belong
+	 * to such a product. Drafts, private, pending and trashed products, and
+	 * IDs that are not products at all, are refused.
+	 *
+	 * @param int $product_id Product or variation ID.
+	 * @return bool
+	 */
+	private static function is_public( int $product_id ): bool {
+		$post = get_post( $product_id );
+
+		if ( ! $post instanceof \WP_Post ) {
+			return false;
+		}
+
+		if ( 'product_variation' === $post->post_type ) {
+			if ( 'publish' !== $post->post_status ) {
+				return false;
+			}
+
+			$post = get_post( (int) $post->post_parent );
+
+			if ( ! $post instanceof \WP_Post ) {
+				return false;
+			}
+		}
+
+		return 'product' === $post->post_type
+			&& 'publish' === $post->post_status
+			&& '' === $post->post_password;
 	}
 
 	/**

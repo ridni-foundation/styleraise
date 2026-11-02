@@ -5,7 +5,7 @@ Tags: donation, elementor, woocommerce, fundraising, progress bar
 Requires at least: 7.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.7
+Stable tag: 3.1.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,9 @@ calling it: no personal data, no writes.
 7. The settings screen under Elementor → WCDP Integration, with freshness patterns, donation form script protection, the widget manager and a diagnostics panel.
 
 == Changelog ==
+
+= 3.1.8 =
+* The live-figures REST route (`wcdp-el/v1/campaigns`) now answers only for published campaigns without a password. Private, draft, pending and password-protected products are refused, also when passed as an additional product of a public campaign — then the whole campaign is refused, so its total cannot reveal the hidden one. Pages keep the figures they were rendered with.
 
 = 3.1.7 =
 * New name: StyleRaise – Connector for Elementor and Donation Platform for WooCommerce (previously "Connect WCDP for Elementor"), as requested by the WordPress.org plugin review. The plugin folder and text domain are now `styleraise`; widgets, saved pages and settings are not affected.

@@ -8,6 +8,12 @@ Versions before 3.1.2 were used privately by the Ridni Foundation under the
 name "WCDP Elementor Integration" and were never published; they are listed so
 the history of the code is complete.
 
+## [3.1.8] — 2026-11-02
+
+### Security
+
+- The live-figures REST route (`wcdp-el/v1/campaigns`) now answers only for published campaigns without a password. Private, draft, pending and password-protected products are refused, also when passed as an additional product of a public campaign — then the whole campaign is refused, so its total cannot reveal the hidden one. Pages keep the figures they were rendered with.
+
 ## [3.1.7] — 2026-10-26
 
 ### Changed
@@ -156,6 +162,7 @@ the history of the code is complete.
 
 - Initial version: Elementor widgets for the donation form, progress bar, leaderboard, donation counter and campaign title, price and image, plus a Product ID dynamic tag.
 
+[3.1.8]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.8
 [3.1.7]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.7
 [3.1.6]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.6
 [3.1.5]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.5
