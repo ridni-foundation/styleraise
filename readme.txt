@@ -5,7 +5,7 @@ Tags: donation, elementor, woocommerce, fundraising, progress bar
 Requires at least: 7.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.8
+Stable tag: 3.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,13 @@ calling it: no personal data, no writes.
 7. The settings screen under Elementor → WCDP Integration, with freshness patterns, donation form script protection, the widget manager and a diagnostics panel.
 
 == Changelog ==
+
+= 3.1.10 =
+* When the REST micro-cache was full, newly fetched campaigns were dropped instead of the oldest ones, so they were never served from the cache. Version 3.1.9 had this bug and was not published.
+* Calls to LiteSpeed Cache's own hooks are marked as third-party hooks for the coding-standards check.
+
+= 3.1.9 =
+* The live-figures REST route keeps its server-side micro-cache in a single transient holding at most 20 campaigns, keyed by the validated and normalised campaign. Previously each distinct request created its own transient, so anonymous requests could add rows to the database without limit.
 
 = 3.1.8 =
 * The live-figures REST route (`wcdp-el/v1/campaigns`) now answers only for published campaigns without a password. Private, draft, pending and password-protected products are refused, also when passed as an additional product of a public campaign — then the whole campaign is refused, so its total cannot reveal the hidden one. Pages keep the figures they were rendered with.

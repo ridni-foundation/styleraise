@@ -32,6 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * for campaigns a visitor could reach anyway — published products without a
  * password, see is_public() — and it is rate-bounded by a short server-side
  * micro-cache, because each uncached item can trigger WCDP's revenue join.
+ * The micro-cache is one transient with at most CACHE_MAX_ENTRIES campaigns,
+ * keyed by the normalised campaign, so no request can add rows or grow it.
  */
 final class Campaigns_Controller {
 
@@ -54,6 +56,16 @@ final class Campaigns_Controller {
 	 * Most additional product IDs accepted per campaign.
 	 */
 	const MAX_ADDIDS = 20;
+
+	/**
+	 * The single transient holding the micro-cache.
+	 */
+	const CACHE_TRANSIENT = 'wcdp_el_api_cache';
+
+	/**
+	 * Most campaigns the micro-cache keeps; the oldest are dropped first.
+	 */
+	const CACHE_MAX_ENTRIES = 20;
 
 	/**
 	 * Register hooks.
@@ -116,14 +128,30 @@ final class Campaigns_Controller {
 
 		$requested = array_slice( $requested, 0, self::MAX_ITEMS );
 
-		$cache_key = $this->cache_key( $requested );
-		$cached    = get_transient( $cache_key );
+		/**
+		 * Filter how long a campaign's figures are reused server-side.
+		 *
+		 * This bounds the database work an unauthenticated endpoint can cause,
+		 * while still being orders of magnitude fresher than any page cache.
+		 *
+		 * @param int $ttl Seconds.
+		 */
+		$ttl   = (int) apply_filters( 'wcdp_el_api_cache_ttl', 15 );
+		$now   = time();
+		$store = $ttl > 0 ? get_transient( self::CACHE_TRANSIENT ) : array();
+		$store = is_array( $store ) ? $store : array();
 
-		if ( is_array( $cached ) ) {
-			return $this->respond( $cached, true );
-		}
+		// Entries carry their own time: the transient's expiry restarts on
+		// every write, so it cannot age individual campaigns.
+		$store = array_filter(
+			$store,
+			static function ( $entry ) use ( $now, $ttl ) {
+				return is_array( $entry ) && isset( $entry['t'], $entry['p'] ) && $entry['t'] > $now - $ttl;
+			}
+		);
 
-		$items = array();
+		$items  = array();
+		$missed = false;
 
 		foreach ( $requested as $item ) {
 			if ( ! is_array( $item ) ) {
@@ -136,42 +164,59 @@ final class Campaigns_Controller {
 				continue;
 			}
 
-			$payload = $this->build_item( $item );
+			$campaign = $this->normalize_item( $item );
+
+			if ( null === $campaign ) {
+				continue;
+			}
+
+			$entry_key = $this->entry_key( $campaign );
+
+			if ( isset( $store[ $entry_key ] ) ) {
+				$items[ $key ] = $store[ $entry_key ]['p'];
+
+				continue;
+			}
+
+			$missed  = true;
+			$payload = $this->build_item( $campaign );
 
 			if ( null !== $payload ) {
-				$items[ $key ] = $payload;
+				$items[ $key ]       = $payload;
+				$store[ $entry_key ] = array(
+					't' => $now,
+					'p' => $payload,
+				);
 			}
+		}
+
+		if ( $missed && $ttl > 0 ) {
+			// New entries are appended, so the last ones are the newest. Keep
+			// those: the cache never holds more than CACHE_MAX_ENTRIES
+			// campaigns whatever the requests ask for. (Sorting by `t` would
+			// not do — entries written within one second tie.)
+			set_transient( self::CACHE_TRANSIENT, array_slice( $store, -self::CACHE_MAX_ENTRIES, null, true ), $ttl );
 		}
 
 		$body = array(
 			'items' => empty( $items ) ? new \stdClass() : $items,
-			'ts'    => time(),
+			'ts'    => $now,
 		);
 
-		/**
-		 * Filter how long a hydration response is reused server-side.
-		 *
-		 * This bounds the database work an unauthenticated endpoint can cause,
-		 * while still being orders of magnitude fresher than any page cache.
-		 *
-		 * @param int $ttl Seconds.
-		 */
-		$ttl = (int) apply_filters( 'wcdp_el_api_cache_ttl', 15 );
-
-		if ( $ttl > 0 ) {
-			set_transient( $cache_key, $body, $ttl );
-		}
-
-		return $this->respond( $body );
+		return $this->respond( $body, ! $missed && ! empty( $items ) );
 	}
 
 	/**
-	 * Build the payload for one requested campaign.
+	 * Validate one requested campaign and reduce it to a canonical form.
+	 *
+	 * Everything the cache key is built from passes through here: unknown
+	 * fields are dropped, numbers are cast and rounded, additional IDs are
+	 * sorted and deduplicated, so equivalent requests share one entry.
 	 *
 	 * @param array<string, mixed> $item Requested item.
-	 * @return array<string, mixed>|null
+	 * @return array<string, mixed>|null Null when the campaign may not be served.
 	 */
-	private function build_item( array $item ) {
+	private function normalize_item( array $item ) {
 		$product_id = absint( $item['id'] ?? 0 );
 
 		if ( ! $product_id || ! self::is_public( $product_id ) || ! Product_Resolver::is_donable( $product_id ) ) {
@@ -181,7 +226,9 @@ final class Campaigns_Controller {
 		$addids = array();
 
 		if ( ! empty( $item['add'] ) && is_array( $item['add'] ) ) {
-			$addids = array_values( array_filter( array_slice( array_map( 'absint', $item['add'] ), 0, self::MAX_ADDIDS ) ) );
+			$addids = array_unique( array_filter( array_slice( array_map( 'absint', $item['add'] ), 0, self::MAX_ADDIDS ) ) );
+			$addids = array_values( array_diff( $addids, array( $product_id ) ) );
+			sort( $addids );
 		}
 
 		// One non-public product refuses the whole campaign rather than being
@@ -194,17 +241,33 @@ final class Campaigns_Controller {
 			}
 		}
 
-		$fmt = Value_Formatter::sanitize_fmt( is_array( $item['fmt'] ?? null ) ? $item['fmt'] : array() );
-
 		$goal  = $item['goal'] ?? '';
 		$cheat = $item['cheat'] ?? 0;
 
+		return array(
+			'id'    => $product_id,
+			'add'   => $addids,
+			'goal'  => is_numeric( $goal ) ? round( (float) $goal, 2 ) : '',
+			'cheat' => is_numeric( $cheat ) ? round( (float) $cheat, 2 ) : 0.0,
+			'fmt'   => Value_Formatter::sanitize_fmt( is_array( $item['fmt'] ?? null ) ? $item['fmt'] : array() ),
+		);
+	}
+
+	/**
+	 * Build the payload for one normalised campaign.
+	 *
+	 * @param array<string, mixed> $campaign Output of normalize_item().
+	 * @return array<string, mixed>|null
+	 */
+	private function build_item( array $campaign ) {
+		$fmt = $campaign['fmt'];
+
 		$campaign = Campaign::get(
-			$product_id,
+			$campaign['id'],
 			array(
-				'goal'              => is_numeric( $goal ) ? (float) $goal : '',
-				'cheat'             => is_numeric( $cheat ) ? (float) $cheat : 0,
-				'addids'            => $addids,
+				'goal'              => $campaign['goal'],
+				'cheat'             => $campaign['cheat'],
+				'addids'            => $campaign['add'],
 				'currency_position' => $fmt['cp'],
 			)
 		);
@@ -255,23 +318,23 @@ final class Campaigns_Controller {
 	}
 
 	/**
-	 * Micro-cache key for a request.
+	 * Micro-cache key of one normalised campaign.
 	 *
 	 * The currency and locale are part of the key: with a multi-currency or
 	 * multilingual plugin active, two visitors asking for the same campaign
 	 * must not be served each other's formatted strings.
 	 *
-	 * @param array<int, mixed> $requested Requested items.
+	 * @param array<string, mixed> $campaign Output of normalize_item().
 	 * @return string
 	 */
-	private function cache_key( array $requested ): string {
+	private function entry_key( array $campaign ): string {
 		$context = array(
-			$requested,
+			$campaign,
 			function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : '',
 			determine_locale(),
 		);
 
-		return 'wcdp_el_api_' . md5( (string) wp_json_encode( $context ) );
+		return md5( (string) wp_json_encode( $context ) );
 	}
 
 	/**
@@ -294,7 +357,7 @@ final class Campaigns_Controller {
 		$response->header( 'X-WCDP-EL-Cached', $cached ? '1' : '0' );
 
 		// LiteSpeed caches REST responses when asked to; opt this route out.
-		do_action( 'litespeed_control_set_nocache', 'WCDP Elementor live figures' );
+		do_action( 'litespeed_control_set_nocache', 'WCDP Elementor live figures' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party hook: LiteSpeed Cache.
 
 		return $response;
 	}

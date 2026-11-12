@@ -15,7 +15,7 @@ on its own fundraising pages.
 
 | | |
 |---|---|
-| Version | 3.1.8 |
+| Version | 3.1.10 |
 | Requires | WordPress 7.1+, PHP 7.4+, WooCommerce, Elementor 3.20+, Donation Platform for WooCommerce 1.3.2+ |
 | Tested up to | WordPress 7.1 |
 | License | [GPL-2.0-or-later](LICENSE) |
@@ -110,7 +110,7 @@ All screenshots are in [`.wordpress-org/`](.wordpress-org/). The demo campaign a
 
 1. Install and activate WooCommerce, Elementor and Donation Platform for
    WooCommerce.
-2. Download `styleraise-3.1.8.zip` from the
+2. Download `styleraise-3.1.10.zip` from the
    [latest release](https://github.com/ridni-foundation/styleraise/releases/latest) and upload it under
    **Plugins → Add New → Upload Plugin**. Use the release asset, not GitHub's
    "Download ZIP" button: the release asset unpacks into the folder WordPress
@@ -147,7 +147,7 @@ A wordpress.org listing is in preparation.
 | `wcdp_el_product_picker_limit` | filter | Number of campaigns in the editor picker (default 300) |
 | `wcdp_el_freshness_config` | filter | Override the freshness policy in code |
 | `wcdp_el_cache_adapters` | filter | Add support for a page cache the plugin does not know |
-| `wcdp_el_api_cache_ttl` | filter | Seconds a REST response is reused on the server (default 15) |
+| `wcdp_el_api_cache_ttl` | filter | Seconds a campaign's figures are reused by the REST route (default 15; one transient holding at most 20 campaigns) |
 | `wcdp_el_cache_purged` | action | Fires after page caches were purged |
 | `wcdp_el_protect_form_scripts` | filter | Whether to protect the form scripts on this page |
 | `wcdp_el_script_guard_patterns` | filter | Script patterns excluded on pages with a form |

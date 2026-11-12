@@ -88,16 +88,16 @@ final class Purger {
 			'active' => defined( 'LSCWP_V' ) || class_exists( '\LiteSpeed\Core' ),
 			'posts'  => static function ( array $ids ): void {
 				foreach ( $ids as $id ) {
-					do_action( 'litespeed_purge_post', $id );
+					do_action( 'litespeed_purge_post', $id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party hook: LiteSpeed Cache.
 				}
 			},
 			'urls'   => static function ( array $urls ): void {
 				foreach ( $urls as $url ) {
-					do_action( 'litespeed_purge_url', $url );
+					do_action( 'litespeed_purge_url', $url ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party hook: LiteSpeed Cache.
 				}
 			},
 			'all'    => static function (): void {
-				do_action( 'litespeed_purge_all', WCDP_EL_NAME );
+				do_action( 'litespeed_purge_all', WCDP_EL_NAME ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party hook: LiteSpeed Cache.
 			},
 		);
 

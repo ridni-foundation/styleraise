@@ -8,6 +8,19 @@ Versions before 3.1.2 were used privately by the Ridni Foundation under the
 name "WCDP Elementor Integration" and were never published; they are listed so
 the history of the code is complete.
 
+## [3.1.10] — 2026-11-06
+
+### Fixed
+
+- When the REST micro-cache was full, newly fetched campaigns were dropped instead of the oldest ones, so they were never served from the cache. Version 3.1.9 had this bug and was not published.
+- Calls to LiteSpeed Cache's own hooks are marked as third-party hooks for the coding-standards check.
+
+## [3.1.9] — 2026-11-06
+
+### Security
+
+- The live-figures REST route keeps its server-side micro-cache in a single transient holding at most 20 campaigns, keyed by the validated and normalised campaign. Previously each distinct request created its own transient, so anonymous requests could add rows to the database without limit.
+
 ## [3.1.8] — 2026-11-02
 
 ### Security
@@ -162,6 +175,7 @@ the history of the code is complete.
 
 - Initial version: Elementor widgets for the donation form, progress bar, leaderboard, donation counter and campaign title, price and image, plus a Product ID dynamic tag.
 
+[3.1.10]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.10
 [3.1.8]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.8
 [3.1.7]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.7
 [3.1.6]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.6

@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the StyleRaise package.
 msgid ""
 msgstr ""
-"Project-Id-Version: StyleRaise 3.1.8\n"
+"Project-Id-Version: StyleRaise 3.1.10\n"
 "Report-Msgid-Bugs-To: https://github.com/ridni-foundation/styleraise/issues\n"
 "POT-Creation-Date: 2026-10-21 18:22+0300\n"
 "MIME-Version: 1.0\n"
