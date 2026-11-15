@@ -3,7 +3,7 @@
  * Plugin Name: StyleRaise – Connector for Elementor and Donation Platform for WooCommerce
  * Plugin URI: https://github.com/ridni-foundation/styleraise
  * Description: Donation progress, donor walls and campaign dynamic tags for Donation Platform for WooCommerce — fully styleable inside Elementor.
- * Version: 3.1.10
+ * Version: 3.2.0
  * Author: Ridni Foundation
  * Author URI: https://ridni.org.ua/en/
  * Requires at least: 7.1
@@ -13,10 +13,10 @@
  * Domain Path: /languages
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Elementor tested up to: 4.3.5
+ * Elementor tested up to: 4.4.0
  * Elementor Pro tested up to: 4.3.2
  * WC requires at least: 4.0.0
- * WC tested up to: 11.2
+ * WC tested up to: 11.3
  *
  * @package WCDP_Elementor
  */
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WCDP_EL_VERSION', '3.1.10' );
+define( 'WCDP_EL_VERSION', '3.2.0' );
 
 /**
  * Product name shown in the admin screen, notices and cache-purge logs.

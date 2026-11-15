@@ -1,0 +1,11 @@
+/*
+ * Elementor preview iframe only (enqueued on elementor/preview/enqueue_styles
+ * while the editor form preview is on).
+ *
+ * The widget prints WCDP's form already revealed, but wcdp.js never runs on
+ * the editor's copy of that markup, so the spinner it would hide stays on top
+ * of the first step. Hide it here.
+ */
+.wcdp-el-form-host .wcdp-loader {
+	display: none;
+}

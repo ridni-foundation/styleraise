@@ -3,241 +3,255 @@
 # This file is distributed under the same license as the StyleRaise package.
 msgid ""
 msgstr ""
-"Project-Id-Version: StyleRaise 3.1.10\n"
+"Project-Id-Version: StyleRaise 3.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/ridni-foundation/styleraise/issues\n"
-"POT-Creation-Date: 2026-10-21 18:22+0300\n"
+"POT-Creation-Date: 2026-11-14 17:24+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: styleraise\n"
 
-#: includes/admin/class-settings.php:72
+#: includes/admin/class-settings.php:81
 msgid "WCDP Integration"
 msgstr ""
 
-#: includes/admin/class-settings.php:120
+#: includes/admin/class-settings.php:131
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:158
+#: includes/admin/class-settings.php:172
 msgid "Settings saved. Elementor's generated CSS was rebuilt."
 msgstr ""
 
-#: includes/admin/class-settings.php:223 includes/admin/class-settings.php:674
+#: includes/admin/class-settings.php:237 includes/admin/class-settings.php:705
 msgid "You are not allowed to do this."
 msgstr ""
 
-#: includes/admin/class-settings.php:284
+#: includes/admin/class-settings.php:297
 msgid ""
 "Donation widgets, dynamic tags and a complete Style tab for the WCDP "
 "donation platform. Everything visual is configured per widget inside "
 "Elementor — this screen only holds what has to be site-wide."
 msgstr ""
 
-#: includes/admin/class-settings.php:294
+#: includes/admin/class-settings.php:307
 msgid "Caches cleared."
 msgstr ""
 
-#: includes/admin/class-settings.php:300
+#: includes/admin/class-settings.php:313
 msgid "Page caches purged."
 msgstr ""
 
-#: includes/admin/class-settings.php:315
+#: includes/admin/class-settings.php:328
 msgid "Widgets"
 msgstr ""
 
-#: includes/admin/class-settings.php:317
+#: includes/admin/class-settings.php:330
 msgid ""
 "Turning a widget off removes it from the Elementor panel and skips loading "
 "its class. Pages already using it stop rendering it, so switch one off only "
 "when it is unused."
 msgstr ""
 
-#: includes/admin/class-settings.php:322
+#: includes/admin/class-settings.php:335
 msgid ""
 "No widgets are registered. A filter on wcdp_el_widget_registry may have "
 "removed them all."
 msgstr ""
 
-#: includes/admin/class-settings.php:349
+#: includes/admin/class-settings.php:362
 msgid "Class file missing — reinstall the plugin."
 msgstr ""
 
-#: includes/admin/class-settings.php:360
+#: includes/admin/class-settings.php:373
+msgid "Elementor editor"
+msgstr ""
+
+#: includes/admin/class-settings.php:382
+msgid "Show the donation form in the Elementor editor"
+msgstr ""
+
+#: includes/admin/class-settings.php:386
+msgid ""
+"Loads a WooCommerce cart only while you edit, so WCDP can build the form. "
+"Nothing is added to the cart."
+msgstr ""
+
+#: includes/admin/class-settings.php:391
 msgid "Save changes"
 msgstr ""
 
-#: includes/admin/class-settings.php:367
+#: includes/admin/class-settings.php:398
 msgid "Diagnostics"
 msgstr ""
 
-#: includes/admin/class-settings.php:385
+#: includes/admin/class-settings.php:416
 msgid "Page caches"
 msgstr ""
 
-#: includes/admin/class-settings.php:387
+#: includes/admin/class-settings.php:418
 msgid ""
 "Rebuilds every page showing a campaign, using whichever caching plugins are "
 "installed. Use it after changing a goal, or when a figure looks stuck."
 msgstr ""
 
-#: includes/admin/class-settings.php:390 includes/admin/class-settings.php:896
+#: includes/admin/class-settings.php:421 includes/admin/class-settings.php:927
 msgid "Detected:"
 msgstr ""
 
-#: includes/admin/class-settings.php:396
+#: includes/admin/class-settings.php:427
 msgid "Purge page caches"
 msgstr ""
 
-#: includes/admin/class-settings.php:401
+#: includes/admin/class-settings.php:432
 msgid "Internal caches"
 msgstr ""
 
-#: includes/admin/class-settings.php:403
+#: includes/admin/class-settings.php:434
 msgid ""
 "Clears the campaign picker list and Elementor's generated CSS. Use it after "
 "enabling donations on a product that does not appear in the picker."
 msgstr ""
 
-#: includes/admin/class-settings.php:408
+#: includes/admin/class-settings.php:439
 msgid "Clear caches"
 msgstr ""
 
-#: includes/admin/class-settings.php:445
+#: includes/admin/class-settings.php:476
 msgid "not detected"
 msgstr ""
 
-#: includes/admin/class-settings.php:455
+#: includes/admin/class-settings.php:486
 msgid "none"
 msgstr ""
 
-#: includes/admin/class-settings.php:467
+#: includes/admin/class-settings.php:498
 msgid "Elementor"
 msgstr ""
 
-#: includes/admin/class-settings.php:472
+#: includes/admin/class-settings.php:503
 msgid "WCDP"
 msgstr ""
 
-#: includes/admin/class-settings.php:477
+#: includes/admin/class-settings.php:508
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/admin/class-settings.php:482
+#: includes/admin/class-settings.php:513
 msgid "WCDP shortcodes"
 msgstr ""
 
-#: includes/admin/class-settings.php:484
+#: includes/admin/class-settings.php:515
 msgid "all available"
 msgstr ""
 
 #. translators: %s: comma-separated shortcode names.
-#: includes/admin/class-settings.php:487
+#: includes/admin/class-settings.php:518
 #, php-format
 msgid "missing: %s"
 msgstr ""
 
-#: includes/admin/class-settings.php:493
+#: includes/admin/class-settings.php:524
 msgid "WooCommerce Analytics"
 msgstr ""
 
-#: includes/admin/class-settings.php:495
+#: includes/admin/class-settings.php:526
 msgid "enabled"
 msgstr ""
 
-#: includes/admin/class-settings.php:496
+#: includes/admin/class-settings.php:527
 msgid "disabled — figures will be wrong"
 msgstr ""
 
-#: includes/admin/class-settings.php:500
+#: includes/admin/class-settings.php:531
 msgid "Multilingual plugin"
 msgstr ""
 
-#: includes/admin/class-settings.php:505
+#: includes/admin/class-settings.php:536
 msgid "WordPress / PHP"
 msgstr ""
 
-#: includes/admin/class-settings.php:510
+#: includes/admin/class-settings.php:541
 msgid "Minimum required"
 msgstr ""
 
 #. translators: 1: Elementor version, 2: WCDP version.
-#: includes/admin/class-settings.php:513
+#: includes/admin/class-settings.php:544
 #, php-format
 msgid "Elementor %1$s · WCDP %2$s"
 msgstr ""
 
-#: includes/admin/class-settings.php:538 includes/admin/class-settings.php:550
-#: includes/admin/class-settings.php:561
+#: includes/admin/class-settings.php:569 includes/admin/class-settings.php:581
+#: includes/admin/class-settings.php:592
 msgid "Form script"
 msgstr ""
 
-#: includes/admin/class-settings.php:540
+#: includes/admin/class-settings.php:571
 msgid "unprotected, no optimiser found"
 msgstr ""
 
-#: includes/admin/class-settings.php:541
+#: includes/admin/class-settings.php:572
 msgid "unprotected — the form may hang on a spinner"
 msgstr ""
 
 #. translators: %s: comma-separated optimisation plugin names.
-#: includes/admin/class-settings.php:553
+#: includes/admin/class-settings.php:584
 #, php-format
 msgid "protected, but %s needs tag marking"
 msgstr ""
 
-#: includes/admin/class-settings.php:563
+#: includes/admin/class-settings.php:594
 msgid "protected, tags marked"
 msgstr ""
 
-#: includes/admin/class-settings.php:564
+#: includes/admin/class-settings.php:595
 msgid "protected on form pages"
 msgstr ""
 
-#: includes/admin/class-settings.php:582 includes/admin/class-settings.php:740
+#: includes/admin/class-settings.php:613 includes/admin/class-settings.php:771
 msgid "Freshness"
 msgstr ""
 
 #. translators: 1: pattern name, 2: whether figures refresh in the browser.
-#: includes/admin/class-settings.php:585
+#: includes/admin/class-settings.php:616
 #, php-format
 msgid "%1$s · %2$s"
 msgstr ""
 
-#: includes/admin/class-settings.php:588
+#: includes/admin/class-settings.php:619
 msgid "figures refresh"
 msgstr ""
 
-#: includes/admin/class-settings.php:589
+#: includes/admin/class-settings.php:620
 msgid "no refreshing"
 msgstr ""
 
-#: includes/admin/class-settings.php:607 includes/admin/class-settings.php:616
+#: includes/admin/class-settings.php:638 includes/admin/class-settings.php:647
 msgid "Last purge"
 msgstr ""
 
-#: includes/admin/class-settings.php:608
+#: includes/admin/class-settings.php:639
 msgid "never"
 msgstr ""
 
 #. translators: 1: human time difference, 2: number of pages, e.g. "3 pages".
-#: includes/admin/class-settings.php:620
+#: includes/admin/class-settings.php:651
 #, php-format
 msgid "%1$s ago · %2$s"
 msgstr ""
 
-#: includes/admin/class-settings.php:639
+#: includes/admin/class-settings.php:670
 msgid "Known locations"
 msgstr ""
 
 #. translators: 1: number of campaigns, e.g. "2 campaigns"; 2: number of pages, e.g. "5 pages".
-#: includes/admin/class-settings.php:643
+#: includes/admin/class-settings.php:674
 #, php-format
 msgid "%1$s on %2$s"
 msgstr ""
 
 #. translators: %d: number of campaigns.
-#: includes/admin/class-settings.php:646
+#: includes/admin/class-settings.php:677
 #, php-format
 msgid "%d campaign"
 msgid_plural "%d campaigns"
@@ -245,18 +259,18 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of pages.
-#: includes/admin/class-settings.php:664
+#: includes/admin/class-settings.php:695
 #, php-format
 msgid "%d page"
 msgid_plural "%d pages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-settings.php:721
+#: includes/admin/class-settings.php:752
 msgid "no page caching plugin found — only the core purge signal will be sent"
 msgstr ""
 
-#: includes/admin/class-settings.php:742
+#: includes/admin/class-settings.php:773
 msgid ""
 "A page cache serves the totals that were current when it stored the page — "
 "often for hours. These patterns decide how hard the plugin works to correct "
@@ -264,126 +278,126 @@ msgid ""
 "cache to rebuild when a donation lands."
 msgstr ""
 
-#: includes/admin/class-settings.php:763
+#: includes/admin/class-settings.php:794
 msgid "Custom settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:768
+#: includes/admin/class-settings.php:799
 msgid "Refresh figures"
 msgstr ""
 
-#: includes/admin/class-settings.php:773 includes/admin/class-settings.php:812
+#: includes/admin/class-settings.php:804 includes/admin/class-settings.php:843
 msgid "Never"
 msgstr ""
 
-#: includes/admin/class-settings.php:774
+#: includes/admin/class-settings.php:805
 msgid "On page load"
 msgstr ""
 
-#: includes/admin/class-settings.php:775
+#: includes/admin/class-settings.php:806
 msgid "On load and when the tab regains focus"
 msgstr ""
 
-#: includes/admin/class-settings.php:776
+#: includes/admin/class-settings.php:807
 msgid "Continuously, on a timer"
 msgstr ""
 
-#: includes/admin/class-settings.php:790
+#: includes/admin/class-settings.php:821
 msgid ""
 "Fetches current figures over a route no page cache touches, then patches "
 "them into the page. This is what makes cached HTML harmless."
 msgstr ""
 
-#: includes/admin/class-settings.php:795
+#: includes/admin/class-settings.php:826
 msgid "Timer interval"
 msgstr ""
 
-#: includes/admin/class-settings.php:800 includes/admin/class-settings.php:839
+#: includes/admin/class-settings.php:831 includes/admin/class-settings.php:870
 msgid "seconds"
 msgstr ""
 
-#: includes/admin/class-settings.php:802
+#: includes/admin/class-settings.php:833
 msgid ""
 "Only used by the timer mode. Every open tab makes one request per interval, "
 "so short values cost real server time under heavy traffic."
 msgstr ""
 
-#: includes/admin/class-settings.php:807
+#: includes/admin/class-settings.php:838
 msgid "Purge on donation"
 msgstr ""
 
-#: includes/admin/class-settings.php:813
+#: includes/admin/class-settings.php:844
 msgid "Pages that show the campaign"
 msgstr ""
 
-#: includes/admin/class-settings.php:814
+#: includes/admin/class-settings.php:845
 msgid "Only the URLs listed below"
 msgstr ""
 
-#: includes/admin/class-settings.php:815
+#: includes/admin/class-settings.php:846
 msgid "The entire site cache"
 msgstr ""
 
-#: includes/admin/class-settings.php:829
+#: includes/admin/class-settings.php:860
 msgid ""
 "The plugin records which pages display which campaign as they render, so it "
 "can rebuild exactly those and leave the rest of the site cached."
 msgstr ""
 
-#: includes/admin/class-settings.php:834
+#: includes/admin/class-settings.php:865
 msgid "Minimum time between purges"
 msgstr ""
 
-#: includes/admin/class-settings.php:841
+#: includes/admin/class-settings.php:872
 msgid ""
 "Stops a burst of donations from emptying the cache continuously, which would "
 "leave every visitor waiting for a full render."
 msgstr ""
 
-#: includes/admin/class-settings.php:846
+#: includes/admin/class-settings.php:877
 msgid "Always purge these URLs"
 msgstr ""
 
-#: includes/admin/class-settings.php:852
+#: includes/admin/class-settings.php:883
 msgid ""
 "One per line. A path such as /campaign/ is resolved against the site "
 "address, so the list survives a domain change."
 msgstr ""
 
-#: includes/admin/class-settings.php:857
+#: includes/admin/class-settings.php:888
 msgid "WCDP cache lifetime"
 msgstr ""
 
-#: includes/admin/class-settings.php:862
+#: includes/admin/class-settings.php:893
 msgid "seconds (0 keeps WCDP's own six hours)"
 msgstr ""
 
-#: includes/admin/class-settings.php:864
+#: includes/admin/class-settings.php:895
 msgid ""
 "Applies to the donation counter and the leaderboard. The raised total is not "
 "affected: WCDP already drops it within about thirty seconds of a donation, "
 "through WooCommerce Analytics."
 msgstr ""
 
-#: includes/admin/class-settings.php:869
+#: includes/admin/class-settings.php:900
 msgid "Force recalculation"
 msgstr ""
 
-#: includes/admin/class-settings.php:875
+#: includes/admin/class-settings.php:906
 msgid "Drop WCDP's stored total on every donation"
 msgstr ""
 
-#: includes/admin/class-settings.php:878
+#: includes/admin/class-settings.php:909
 msgid ""
 "Only needed where WooCommerce Analytics is disabled or lagging. It costs one "
 "heavy database join on the next uncached render."
 msgstr ""
 
-#: includes/admin/class-settings.php:886
+#: includes/admin/class-settings.php:917
 msgid "Donation form script"
 msgstr ""
 
-#: includes/admin/class-settings.php:889
+#: includes/admin/class-settings.php:920
 msgid ""
 "WCDP renders the form hidden and reveals it with its own script. Every "
 "\"delay JavaScript until interaction\" feature holds that script back, so "
@@ -392,56 +406,62 @@ msgid ""
 msgstr ""
 
 #. translators: %s: optimisation plugin name.
-#: includes/admin/class-settings.php:904
+#: includes/admin/class-settings.php:935
 #, php-format
 msgid "%s (needs \"Also mark the tags\")"
 msgstr ""
 
-#: includes/admin/class-settings.php:915
+#: includes/admin/class-settings.php:946
 msgid "Protection"
 msgstr ""
 
-#: includes/admin/class-settings.php:918
+#: includes/admin/class-settings.php:949
 msgid "Donation form script protection"
 msgstr ""
 
-#: includes/admin/class-settings.php:925
+#: includes/admin/class-settings.php:956
 msgid "Only where the form is (recommended)"
 msgstr ""
 
-#: includes/admin/class-settings.php:926
+#: includes/admin/class-settings.php:957
 msgid ""
-"Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the form "
-"script — and jQuery, which it needs — alone, but only on pages that actually "
-"contain a form. The rest of the site keeps every optimisation."
+"Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the "
+"donation form script and the scripts it needs alone — the WordPress "
+"translation scripts, or jQuery with Donation Platform for WooCommerce older "
+"than 1.5.0 — but only on pages that actually contain a form. The rest of the "
+"site keeps every optimisation."
 msgstr ""
 
-#: includes/admin/class-settings.php:929
+#: includes/admin/class-settings.php:960
 msgid "Also mark the tags (widest coverage)"
 msgstr ""
 
-#: includes/admin/class-settings.php:930
+#: includes/admin/class-settings.php:961
 msgid ""
 "Adds opt-out attributes the above plus Cloudflare Rocket Loader, WP Meteor "
-"and NitroPack understand. These cannot be limited to form pages, so jQuery "
-"stops being delayed site-wide. Use it if the form still shows a spinner."
+"and NitroPack understand. These cannot be limited to form pages, so the "
+"scripts the donation form script needs (the WordPress translation scripts, "
+"or jQuery with Donation Platform for WooCommerce older than 1.5.0) stop "
+"being delayed site-wide. Use it if the form still shows a spinner."
 msgstr ""
 
-#: includes/admin/class-settings.php:933
+#: includes/admin/class-settings.php:964
 msgid "Off"
 msgstr ""
 
-#: includes/admin/class-settings.php:934
+#: includes/admin/class-settings.php:965
 msgid ""
 "Change nothing. Only sensible if you maintain the exclusions by hand in your "
 "caching plugin."
 msgstr ""
 
-#: includes/admin/class-settings.php:956
+#: includes/admin/class-settings.php:987
 msgid ""
-"With this on, remove any manual exclusion you added for the donation form or "
-"jQuery in your caching plugin — a manual jQuery exclusion applies to the "
-"whole site and undoes the point of the targeted mode."
+"With this on, remove any manual exclusion you added in your caching plugin "
+"for the donation form or the scripts it needs (the WordPress translation "
+"scripts, or jQuery with Donation Platform for WooCommerce older than 1.5.0) "
+"— a manual exclusion applies to the whole site and undoes the point of the "
+"targeted mode."
 msgstr ""
 
 #: includes/cache/class-freshness.php:98
@@ -488,7 +508,7 @@ msgstr ""
 msgid "Core purge signal"
 msgstr ""
 
-#: includes/class-plugin.php:316 includes/class-plugin.php:352
+#: includes/class-plugin.php:320 includes/class-plugin.php:356
 msgid "WCDP Donation"
 msgstr ""
 
@@ -536,40 +556,40 @@ msgid "%s is inactive."
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:115
-#: includes/widgets/class-donation-form.php:862
-#: includes/widgets/class-donation-form.php:1249
+#: includes/widgets/class-donation-form.php:937
+#: includes/widgets/class-donation-form.php:1328
 msgid "Color"
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:139
 #: includes/controls/trait-style-controls.php:178
-#: includes/widgets/class-leaderboard.php:545
-#: includes/widgets/class-product-image.php:128
+#: includes/widgets/class-leaderboard.php:546
+#: includes/widgets/class-product-image.php:129
 msgid "Alignment"
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:143
-#: includes/widgets/class-donation-form.php:997
-#: includes/widgets/class-leaderboard.php:549
-#: includes/widgets/class-product-image.php:132
-#: includes/widgets/class-product-image.php:219
+#: includes/widgets/class-donation-form.php:1076
+#: includes/widgets/class-leaderboard.php:550
+#: includes/widgets/class-product-image.php:133
+#: includes/widgets/class-product-image.php:220
 msgid "Left"
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:147
 #: includes/controls/trait-style-controls.php:193
-#: includes/widgets/class-donation-form.php:1001
-#: includes/widgets/class-leaderboard.php:553
-#: includes/widgets/class-product-image.php:136
-#: includes/widgets/class-product-image.php:216
+#: includes/widgets/class-donation-form.php:1080
+#: includes/widgets/class-leaderboard.php:554
+#: includes/widgets/class-product-image.php:137
+#: includes/widgets/class-product-image.php:217
 msgid "Center"
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:151
-#: includes/widgets/class-donation-form.php:1005
-#: includes/widgets/class-leaderboard.php:557
-#: includes/widgets/class-product-image.php:140
-#: includes/widgets/class-product-image.php:220
+#: includes/widgets/class-donation-form.php:1084
+#: includes/widgets/class-leaderboard.php:558
+#: includes/widgets/class-product-image.php:141
+#: includes/widgets/class-product-image.php:221
 msgid "Right"
 msgstr ""
 
@@ -618,7 +638,7 @@ msgid "Lower values appear first. Leave empty to keep the natural order."
 msgstr ""
 
 #: includes/controls/trait-style-controls.php:489
-#: includes/widgets/class-donation-form.php:760
+#: includes/widgets/class-donation-form.php:835
 msgid "Currency Symbol"
 msgstr ""
 
@@ -681,7 +701,7 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: includes/rest/class-campaigns-controller.php:90
+#: includes/rest/class-campaigns-controller.php:105
 msgid "JSON-encoded list of campaigns to refresh."
 msgstr ""
 
@@ -740,13 +760,13 @@ msgid "Fundraising Goal"
 msgstr ""
 
 #: includes/tags/class-order-count.php:37
-#: includes/widgets/class-progress.php:324
-#: includes/widgets/class-progress.php:723
+#: includes/widgets/class-progress.php:325
+#: includes/widgets/class-progress.php:724
 msgid "Donation Count"
 msgstr ""
 
 #: includes/tags/class-order-count.php:59
-#: includes/widgets/class-order-counter.php:129
+#: includes/widgets/class-order-counter.php:130
 msgid "Count Correction"
 msgstr ""
 
@@ -768,7 +788,7 @@ msgstr ""
 msgid "Percentage Raised"
 msgstr ""
 
-#: includes/tags/class-percentage.php:59 includes/tags/class-tag-base.php:148
+#: includes/tags/class-percentage.php:59 includes/tags/class-tag-base.php:149
 msgid "Decimals"
 msgstr ""
 
@@ -788,7 +808,7 @@ msgstr ""
 msgid "Product ID (post meta)"
 msgstr ""
 
-#: includes/tags/class-product-id.php:71 includes/tags/class-tag-base.php:95
+#: includes/tags/class-product-id.php:71 includes/tags/class-tag-base.php:96
 #: includes/widgets/class-widget-base.php:133
 msgid "Meta Key"
 msgstr ""
@@ -816,1158 +836,1218 @@ msgstr ""
 msgid "Amount Still Needed"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:69
+#: includes/tags/class-tag-base.php:70
 #: includes/widgets/class-widget-base.php:97
 msgid "Campaign Source"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:73
+#: includes/tags/class-tag-base.php:74
 #: includes/widgets/class-widget-base.php:90
 msgid "Current post / loop item"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:74
+#: includes/tags/class-tag-base.php:75
 #: includes/widgets/class-widget-base.php:89
 msgid "Pick a campaign"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:75
+#: includes/tags/class-tag-base.php:76
 #: includes/widgets/class-widget-base.php:92
 msgid "Post meta field"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:83
-#: includes/widgets/class-order-counter.php:94
-#: includes/widgets/class-progress.php:251
+#: includes/tags/class-tag-base.php:84
+#: includes/widgets/class-order-counter.php:95
+#: includes/widgets/class-progress.php:252
 #: includes/widgets/class-widget-base.php:107
 msgid "Campaign"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:100
+#: includes/tags/class-tag-base.php:101
 msgid "Custom field on the current post holding the product ID."
 msgstr ""
 
-#: includes/tags/class-tag-base.php:112
+#: includes/tags/class-tag-base.php:113
 msgid "Format"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:117 includes/widgets/class-progress.php:395
+#: includes/tags/class-tag-base.php:118 includes/widgets/class-progress.php:396
 msgid "Match the rest of the site"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:118
+#: includes/tags/class-tag-base.php:119
 msgid "Store currency format"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:119
+#: includes/tags/class-tag-base.php:120
 msgid "Compact (1.2K)"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:120
+#: includes/tags/class-tag-base.php:121
 msgid "Raw number"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:122
+#: includes/tags/class-tag-base.php:123
 msgid ""
 "\"Match the rest of the site\" follows a multi-currency switcher. Choose "
 "\"Raw number\" when the tag feeds a numeric control, such as a counter's end "
 "value."
 msgstr ""
 
-#: includes/tags/class-tag-base.php:129 includes/widgets/class-progress.php:405
+#: includes/tags/class-tag-base.php:130 includes/widgets/class-progress.php:406
 msgid "Currency Symbol Position"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:133 includes/widgets/class-progress.php:409
+#: includes/tags/class-tag-base.php:134 includes/widgets/class-progress.php:410
 msgid "Follow WooCommerce setting"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:134 includes/widgets/class-progress.php:410
+#: includes/tags/class-tag-base.php:135 includes/widgets/class-progress.php:411
 msgid "Automatic — let a currency switcher decide"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:135 includes/widgets/class-progress.php:411
+#: includes/tags/class-tag-base.php:136 includes/widgets/class-progress.php:412
 msgid "Left — {symbol}100"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:136 includes/widgets/class-progress.php:412
+#: includes/tags/class-tag-base.php:137 includes/widgets/class-progress.php:413
 msgid "Right — 100{symbol}"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:137 includes/widgets/class-progress.php:413
+#: includes/tags/class-tag-base.php:138 includes/widgets/class-progress.php:414
 msgid "Left with space — {symbol} 100"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:138 includes/widgets/class-progress.php:414
+#: includes/tags/class-tag-base.php:139 includes/widgets/class-progress.php:415
 msgid "Right with space — 100 {symbol}"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:140
+#: includes/tags/class-tag-base.php:141
 msgid ""
 "The default reads and enforces WooCommerce → Settings → General → Currency "
 "position. Choose \"Automatic\" to let a multi-currency switcher decide "
 "instead."
 msgstr ""
 
-#: includes/tags/class-tag-base.php:153 includes/widgets/class-progress.php:428
+#: includes/tags/class-tag-base.php:154 includes/widgets/class-progress.php:429
 msgid "Store default"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:161 includes/widgets/class-progress.php:436
+#: includes/tags/class-tag-base.php:162 includes/widgets/class-progress.php:437
 msgid "Hide .00 Decimals"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:245
+#: includes/tags/class-tag-base.php:246
 #: includes/widgets/class-widget-base.php:222
 msgid "Live Updates"
 msgstr ""
 
-#: includes/tags/class-tag-base.php:250
+#: includes/tags/class-tag-base.php:251
 msgid ""
 "Refreshes the figure after load, so a page served from cache still shows the "
 "real one. Wraps the value in a span — safe inside text, not inside a numeric "
 "or URL control."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:58
-msgid "WCDP Donation Form"
-msgstr ""
-
-#: includes/widgets/class-donation-form.php:147
-msgid "Donation Form"
-msgstr ""
-
-#: includes/widgets/class-donation-form.php:155
-msgid "Form Layout"
-msgstr ""
-
-#: includes/widgets/class-donation-form.php:160
+#: includes/widgets/class-donation-form.php:68
 msgid "1 — Three steps with progress header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:161
+#: includes/widgets/class-donation-form.php:69
 msgid "2 — Everything on one page"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:162
+#: includes/widgets/class-donation-form.php:70
 msgid "3 — Three steps, no header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:163
+#: includes/widgets/class-donation-form.php:71
 msgid "4 — Amount only, redirect to checkout"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:164
+#: includes/widgets/class-donation-form.php:72
 msgid "5 — Three steps with banner header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:172
+#: includes/widgets/class-donation-form.php:73
+msgid "6 — Steps, no header, back arrow on top"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:74
+msgid "7 — Two steps, no header"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:75
+msgid "8 — Two steps with banner header"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:121
+msgid "WCDP Donation Form"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:210
+msgid "Donation Form"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:218
+msgid "Form Layout"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:226
+msgid ""
+"Styles 6–8 need Donation Platform for WooCommerce 1.5.0 (style 6) or 1.5.1 "
+"(styles 7–8) or newer."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:228
+msgid "Styles 7–8 need Donation Platform for WooCommerce 1.5.1 or newer."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:236
 msgid "Open in a Popup"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:182
+#: includes/widgets/class-donation-form.php:246
 msgid "Show Trigger Button"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:187
+#: includes/widgets/class-donation-form.php:251
 msgid "Turn off to open the popup from your own link pointing at #wcdp-form."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:194
+#: includes/widgets/class-donation-form.php:258
 msgid "Trigger Button Label"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:196
+#: includes/widgets/class-donation-form.php:260
 msgid "Donate now!"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:209
+#: includes/widgets/class-donation-form.php:273
 msgid "Show Product Image"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:220
+#: includes/widgets/class-donation-form.php:284
 msgid "Show Product Title"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:230
+#: includes/widgets/class-donation-form.php:294
 msgid "Show Short Description"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:240
+#: includes/widgets/class-donation-form.php:304
 msgid "Show Full Description"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:250
+#: includes/widgets/class-donation-form.php:314
 msgid "Modern Step Header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:256
+#: includes/widgets/class-donation-form.php:320
 msgid ""
 "Rebuilds the step header with CSS grid instead of floats and a fixed height. "
 "Same design, but it no longer collapses inside flex containers. Enable this "
 "if the header looks misaligned."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:264
+#: includes/widgets/class-donation-form.php:328
 msgid ""
 "WCDP allows one donation form per page, and requires the classic "
 "[woocommerce_checkout] — the WooCommerce checkout block is unsupported "
 "upstream."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:280
+#: includes/widgets/class-donation-form.php:344
 msgid "Colors"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:288
+#: includes/widgets/class-donation-form.php:352
 msgid "Brand"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:292
+#: includes/widgets/class-donation-form.php:356
 msgid "Primary"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:295
+#: includes/widgets/class-donation-form.php:359
 msgid "Active step, buttons and the progress fill."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:299
+#: includes/widgets/class-donation-form.php:363
 msgid "Secondary"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:302
+#: includes/widgets/class-donation-form.php:366
 msgid "Inactive step and the progress track."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:306
+#: includes/widgets/class-donation-form.php:370
 msgid "Error"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:310
+#: includes/widgets/class-donation-form.php:374
 msgid "Step Markers"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:314
+#: includes/widgets/class-donation-form.php:378
 msgid "Step 2"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:319
+#: includes/widgets/class-donation-form.php:383
 msgid "Step 3"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:323
-#: includes/widgets/class-donation-form.php:547
+#: includes/widgets/class-donation-form.php:387
+#: includes/widgets/class-donation-form.php:622
 msgid "Amount Buttons"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:327
-#: includes/widgets/class-donation-form.php:718
-#: includes/widgets/class-donation-form.php:1055
+#: includes/widgets/class-donation-form.php:391
+#: includes/widgets/class-donation-form.php:793
+#: includes/widgets/class-donation-form.php:1134
 msgid "Background"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:332
-#: includes/widgets/class-donation-form.php:610
-#: includes/widgets/class-donation-form.php:918
-#: includes/widgets/class-leaderboard.php:589
-#: includes/widgets/class-product-image.php:278
+#: includes/widgets/class-donation-form.php:396
+#: includes/widgets/class-donation-form.php:685
+#: includes/widgets/class-donation-form.php:997
+#: includes/widgets/class-leaderboard.php:590
+#: includes/widgets/class-product-image.php:279
 msgid "Hover"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:337
-#: includes/widgets/class-order-counter.php:103
-#: includes/widgets/class-order-counter.php:163
-#: includes/widgets/class-progress.php:354
+#: includes/widgets/class-donation-form.php:401
+#: includes/widgets/class-order-counter.php:104
+#: includes/widgets/class-order-counter.php:164
+#: includes/widgets/class-progress.php:355
 msgid "Text"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:342
+#: includes/widgets/class-donation-form.php:406
 msgid "Selected Text"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:344
+#: includes/widgets/class-donation-form.php:408
 msgid "Also used for any text sitting on the primary colour."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:347
+#: includes/widgets/class-donation-form.php:411
 msgid "Fields & Popup"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:351
+#: includes/widgets/class-donation-form.php:415
 msgid "Input Text"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:356
+#: includes/widgets/class-donation-form.php:420
 msgid "Popup Background"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:361
+#: includes/widgets/class-donation-form.php:425
 msgid "Overlay"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:409
+#: includes/widgets/class-donation-form.php:473
 msgid "Form Box"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:444
-#: includes/widgets/class-product-image.php:161
+#: includes/widgets/class-donation-form.php:508
+#: includes/widgets/class-product-image.php:162
 msgid "Maximum Width"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:455
+#: includes/widgets/class-donation-form.php:519
 msgid "Spacing Between Rows"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:473
+#: includes/widgets/class-donation-form.php:537
 msgid "Step Header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:485
+#: includes/widgets/class-donation-form.php:549
 msgid "Step Circle Size"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:497
+#: includes/widgets/class-donation-form.php:561
 msgid "Progress Line Thickness"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:517
+#: includes/widgets/class-donation-form.php:583
 msgid "Banner Header"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:528
-#: includes/widgets/class-progress.php:518
+#: includes/widgets/class-donation-form.php:599
+#: includes/widgets/class-progress.php:519
 msgid "Height"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:555
+#: includes/widgets/class-donation-form.php:630
 msgid "Columns"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:560
+#: includes/widgets/class-donation-form.php:635
 msgid "Auto"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:564
+#: includes/widgets/class-donation-form.php:639
 msgid "Set this per device — three amount buttons rarely fit on a phone."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:570
+#: includes/widgets/class-donation-form.php:645
 msgid "Gap"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:587
-#: includes/widgets/class-donation-form.php:895
-#: includes/widgets/class-leaderboard.php:574
-#: includes/widgets/class-product-image.php:250
+#: includes/widgets/class-donation-form.php:662
+#: includes/widgets/class-donation-form.php:974
+#: includes/widgets/class-leaderboard.php:575
+#: includes/widgets/class-product-image.php:251
 msgid "Normal"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:628
-#: includes/widgets/class-donation-form.php:657
+#: includes/widgets/class-donation-form.php:703
+#: includes/widgets/class-donation-form.php:732
 msgid "Border Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:636
+#: includes/widgets/class-donation-form.php:711
 msgid "Selected"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:666
+#: includes/widgets/class-donation-form.php:741
 msgid "Hide Checkmark"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:691
+#: includes/widgets/class-donation-form.php:766
 msgid "Keyboard Focus Ring"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:696
+#: includes/widgets/class-donation-form.php:771
 msgid ""
 "Keep this visible — it is how keyboard users see which amount is focused."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:707
+#: includes/widgets/class-donation-form.php:782
 msgid "Amount Input"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:738
-#: includes/widgets/class-donation-form.php:1196
-#: includes/widgets/class-product-image.php:150
+#: includes/widgets/class-donation-form.php:813
+#: includes/widgets/class-donation-form.php:1275
+#: includes/widgets/class-product-image.php:151
 msgid "Width"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:750
-#: includes/widgets/class-donation-form.php:1076
+#: includes/widgets/class-donation-form.php:825
+#: includes/widgets/class-donation-form.php:1155
 msgid "Focus Border Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:779
+#: includes/widgets/class-donation-form.php:854
 msgid "Amount Slider"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:787
+#: includes/widgets/class-donation-form.php:862
 msgid ""
 "Applies when the product's amount layout is set to \"Input box with range "
 "slider\" in WCDP."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:794
+#: includes/widgets/class-donation-form.php:869
 msgid "Handle Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:803
+#: includes/widgets/class-donation-form.php:878
 msgid "Handle Size"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:815
+#: includes/widgets/class-donation-form.php:890
 msgid "Track Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:823
+#: includes/widgets/class-donation-form.php:898
 msgid "Track Thickness"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:839
+#: includes/widgets/class-donation-form.php:914
 msgid "Labels & Headings"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:852
+#: includes/widgets/class-donation-form.php:927
 msgid "Required Marker"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:870
+#: includes/widgets/class-donation-form.php:945
 msgid "Hide Asterisk"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:884
+#: includes/widgets/class-donation-form.php:959
 msgid "Buttons"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:938
-#: includes/widgets/class-leaderboard.php:609
-#: includes/widgets/class-product-image.php:326
+#: includes/widgets/class-donation-form.php:1017
+#: includes/widgets/class-leaderboard.php:610
+#: includes/widgets/class-product-image.php:327
 msgid "Transition Duration"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:970
+#: includes/widgets/class-donation-form.php:1049
 msgid "Gap in Button Row"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:982
+#: includes/widgets/class-donation-form.php:1061
 msgid "Hide Arrows"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:992
+#: includes/widgets/class-donation-form.php:1071
 msgid "Trigger Button Alignment"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1026
+#: includes/widgets/class-donation-form.php:1105
 msgid "Checkout Fields"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1042
+#: includes/widgets/class-donation-form.php:1121
 msgid "Inputs"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1090
+#: includes/widgets/class-donation-form.php:1169
 msgid "Field Columns"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1096
+#: includes/widgets/class-donation-form.php:1175
 msgid "Theme default"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1100
+#: includes/widgets/class-donation-form.php:1179
 msgid "Lay the billing fields out in a grid. Set 1 on mobile."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1106
+#: includes/widgets/class-donation-form.php:1185
 msgid "Column Gap"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1122
+#: includes/widgets/class-donation-form.php:1201
 msgid "Fee Recovery Box"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1131
+#: includes/widgets/class-donation-form.php:1210
 msgid "Applies when WCDP fee recovery is enabled."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1161
+#: includes/widgets/class-donation-form.php:1240
 msgid "Checkbox Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1180
+#: includes/widgets/class-donation-form.php:1259
 msgid "Popup"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1190
+#: includes/widgets/class-donation-form.php:1269
 msgid ""
 "WCDP prints the popup in the page footer, outside this widget. These rules "
 "therefore target the popup by id — safe, because WCDP allows one form per "
 "page."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1207
+#: includes/widgets/class-donation-form.php:1286
 msgid "Top Offset"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1227
+#: includes/widgets/class-donation-form.php:1306
 msgid "Overlay Blur"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1240
+#: includes/widgets/class-donation-form.php:1319
 msgid "Close Button"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1257
+#: includes/widgets/class-donation-form.php:1336
 msgid "Size"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1275
+#: includes/widgets/class-donation-form.php:1354
 msgid "Product Media & Text"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1309
+#: includes/widgets/class-donation-form.php:1388
 msgid "Image Width"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1325
-#: includes/widgets/class-product-title.php:134
+#: includes/widgets/class-donation-form.php:1404
+#: includes/widgets/class-product-title.php:135
 msgid "Title"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1339
+#: includes/widgets/class-donation-form.php:1418
 msgid "Description"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1373
+#: includes/widgets/class-donation-form.php:1452
 msgid "Notices, Loader & Branding"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1384
+#: includes/widgets/class-donation-form.php:1463
 msgid "Notice Background"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1397
+#: includes/widgets/class-donation-form.php:1479
+msgid "Field Messages"
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:1499
 msgid "Loader"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1406
+#: includes/widgets/class-donation-form.php:1508
 msgid "Dots Color"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1415
+#: includes/widgets/class-donation-form.php:1517
 msgid "WCDP Branding"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1428
+#: includes/widgets/class-donation-form.php:1530
 msgid "Hide Branding"
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1432
+#: includes/widgets/class-donation-form.php:1534
 msgid ""
 "Whether WCDP shows this at all is a WCDP setting; this only hides it for "
 "this instance."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1459
+#: includes/widgets/class-donation-form.php:1562
 msgid ""
 "WCDP cannot build a checkout form during an editor refresh. Reload the "
 "preview to see the form; Style tab changes apply live and need no reload."
 msgstr ""
 
-#: includes/widgets/class-donation-form.php:1524
+#: includes/widgets/class-donation-form.php:1575
+msgid ""
+"The editor does not build the donation form for a password-protected "
+"campaign or one you cannot view. Open the page or Preview to see what "
+"visitors get; Style tab changes apply live."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:1655
+msgid ""
+"This popup has no button of its own: it opens from your link pointing at "
+"#wcdp-form, so there is nothing to show here. Use Preview to try it."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:1688
 msgid ""
 "The Elementor editor has no WooCommerce cart, so WCDP cannot build the form "
 "here. Open the page or Preview to see it with the styles set in this widget."
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:50
+#. translators: 1: form layout number, 2: minimum Donation Platform for WooCommerce version, 3: installed version.
+#: includes/widgets/class-donation-form.php:1714
+#, php-format
+msgid ""
+"Layout %1$s needs Donation Platform for WooCommerce %2$s or newer "
+"(installed: %3$s), so WCDP shows layout 1 instead. Update WCDP to use it."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:1734
+msgid ""
+"WCDP cannot build a checkout form during this editor refresh. Close and "
+"reopen the editor to see the form; Style tab changes apply live."
+msgstr ""
+
+#: includes/widgets/class-donation-form.php:1737
+msgid ""
+"WCDP cannot build a checkout form in the Elementor editor. Open the page or "
+"Preview to see it with the styles set in this widget; Style tab changes "
+"apply live."
+msgstr ""
+
+#: includes/widgets/class-leaderboard.php:51
 msgid "WCDP Leaderboard"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:95
+#: includes/widgets/class-leaderboard.php:96
 msgid "Leaderboard"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:109
-#: includes/widgets/class-progress.php:805
+#: includes/widgets/class-leaderboard.php:110
+#: includes/widgets/class-progress.php:806
 msgid "Layout"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:114
+#: includes/widgets/class-leaderboard.php:115
 msgid "1 — Timeline with dots"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:115
+#: includes/widgets/class-leaderboard.php:116
 msgid "2 — Compact list with icon"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:123
+#: includes/widgets/class-leaderboard.php:124
 msgid "Number of Donations"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:135
+#: includes/widgets/class-leaderboard.php:136
 msgid "Order By"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:139
+#: includes/widgets/class-leaderboard.php:140
 msgid "Most recent"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:140
+#: includes/widgets/class-leaderboard.php:141
 msgid "Largest amount"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:148
+#: includes/widgets/class-leaderboard.php:149
 msgid "Show Initially"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:152
+#: includes/widgets/class-leaderboard.php:153
 msgid ""
 "Reveal the rest behind a \"Show more\" button. Use -1 to show everything at "
 "once."
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:159
+#: includes/widgets/class-leaderboard.php:160
 msgid "\"Show More\" Label"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:161
+#: includes/widgets/class-leaderboard.php:162
 msgid "Show more"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:179
+#: includes/widgets/class-leaderboard.php:180
 msgid "Text With No Donations"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:190
-#: includes/widgets/class-order-counter.php:151
+#: includes/widgets/class-leaderboard.php:191
+#: includes/widgets/class-order-counter.php:152
 #: includes/widgets/class-widget-base.php:201
 msgid "Combine Translations"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:195
+#: includes/widgets/class-leaderboard.php:196
 msgid ""
 "With Polylang or WPML active, include donations made through every "
 "translation of this product."
 msgstr ""
 
 #. translators: %s: link to the WCDP settings screen.
-#: includes/widgets/class-leaderboard.php:205
+#: includes/widgets/class-leaderboard.php:206
 #, php-format
 msgid ""
 "The donor line itself (\"{firstname} donated {amount}\") is a WCDP setting "
 "shared site-wide. %s"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:206
+#: includes/widgets/class-leaderboard.php:207
 msgid "Edit it in WCDP settings"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:219
+#: includes/widgets/class-leaderboard.php:220
 msgid "List & Rows"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:229
+#: includes/widgets/class-leaderboard.php:230
 msgid "Rows"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:251
+#: includes/widgets/class-leaderboard.php:252
 msgid "Divider Between Rows"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:262
+#: includes/widgets/class-leaderboard.php:263
 msgid "Divider Color"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:274
+#: includes/widgets/class-leaderboard.php:275
 msgid "Divider Width"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:289
+#: includes/widgets/class-leaderboard.php:290
 msgid "Alternate Row Background"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:305
+#: includes/widgets/class-leaderboard.php:306
 msgid "Marker"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:314
+#: includes/widgets/class-leaderboard.php:315
 msgid "Dot Color"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:324
+#: includes/widgets/class-leaderboard.php:325
 msgid "Dot Size"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:337
+#: includes/widgets/class-leaderboard.php:338
 msgid "Line Color"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:346
+#: includes/widgets/class-leaderboard.php:347
 msgid "Line Width"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:358
+#: includes/widgets/class-leaderboard.php:359
 msgid "Text Indent"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:370
+#: includes/widgets/class-leaderboard.php:371
 msgid "Line Offset"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:385
+#: includes/widgets/class-leaderboard.php:386
 msgid "Icon"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:390
+#: includes/widgets/class-leaderboard.php:391
 msgid "Leave empty to keep the WCDP donation icon."
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:396
+#: includes/widgets/class-leaderboard.php:397
 msgid "Icon Width"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:408
+#: includes/widgets/class-leaderboard.php:409
 msgid "Icon Height"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:420
+#: includes/widgets/class-leaderboard.php:421
 msgid "Icon Gap"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:441
+#: includes/widgets/class-leaderboard.php:442
 msgid "Donor Line"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:453
+#: includes/widgets/class-leaderboard.php:454
 msgid "Secondary Line"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:464
+#: includes/widgets/class-leaderboard.php:465
 msgid "Empty State"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:481
-#: includes/widgets/class-progress.php:319
-#: includes/widgets/class-progress.php:718
+#: includes/widgets/class-leaderboard.php:482
+#: includes/widgets/class-progress.php:320
+#: includes/widgets/class-progress.php:719
 msgid "Amount"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:482
+#: includes/widgets/class-leaderboard.php:483
 msgid "First Name"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:483
+#: includes/widgets/class-leaderboard.php:484
 msgid "Last Name"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:484
+#: includes/widgets/class-leaderboard.php:485
 msgid "Company or Name"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:485
+#: includes/widgets/class-leaderboard.php:486
 msgid "Time Ago"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:486
+#: includes/widgets/class-leaderboard.php:487
 msgid "Date & Time"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:487
+#: includes/widgets/class-leaderboard.php:488
 msgid "City"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:488
+#: includes/widgets/class-leaderboard.php:489
 msgid "Comment"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:489
+#: includes/widgets/class-leaderboard.php:490
 msgid "Anonymous Label"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:490
+#: includes/widgets/class-leaderboard.php:491
 msgid "Campaign Name"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:496
-#: includes/widgets/class-progress.php:769
+#: includes/widgets/class-leaderboard.php:497
+#: includes/widgets/class-progress.php:770
 msgid "Individual Values"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:499
+#: includes/widgets/class-leaderboard.php:500
 msgid ""
 "Only the placeholders used by the WCDP donor-line template have any effect."
 msgstr ""
 
 #. translators: %s: name of the value, e.g. "Amount".
 #. translators: %s: name of the value, e.g. "Raised Value".
-#: includes/widgets/class-leaderboard.php:513
-#: includes/widgets/class-progress.php:790
+#: includes/widgets/class-leaderboard.php:514
+#: includes/widgets/class-progress.php:791
 #, php-format
 msgid "%s Color"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:526
+#: includes/widgets/class-leaderboard.php:527
 msgid "Show More Button"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:561
+#: includes/widgets/class-leaderboard.php:562
 msgid "Full Width"
 msgstr ""
 
-#: includes/widgets/class-leaderboard.php:713
+#: includes/widgets/class-leaderboard.php:714
 msgid "WCDP returned no output for this leaderboard."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:47
+#: includes/widgets/class-order-counter.php:48
 msgid "WCDP Donation Counter"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:106
+#: includes/widgets/class-order-counter.php:107
 msgid "{ORDER_COUNT} people have already contributed to this project"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:109
+#: includes/widgets/class-order-counter.php:110
 msgid "Use {ORDER_COUNT} or {count} where the number should appear."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:116
+#: includes/widgets/class-order-counter.php:117
 msgid "Text With No Donations Yet"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:122
+#: includes/widgets/class-order-counter.php:123
 msgid "Shown when the count is zero. Leave empty to keep the text above."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:133
+#: includes/widgets/class-order-counter.php:134
 msgid "Added to the real count. Can be negative."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:140
+#: includes/widgets/class-order-counter.php:141
 msgid "Hide When Zero"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:144
+#: includes/widgets/class-order-counter.php:145
 msgid "Render nothing at all until the first donation arrives."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:155
+#: includes/widgets/class-order-counter.php:156
 msgid ""
 "With Polylang or WPML active, count donations from every translation of this "
 "product."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:176
+#: includes/widgets/class-order-counter.php:177
 msgid "Number"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:192
+#: includes/widgets/class-order-counter.php:193
 msgid "Badge"
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:195
+#: includes/widgets/class-order-counter.php:196
 msgid "Give the number a background to turn it into a badge."
 msgstr ""
 
-#: includes/widgets/class-order-counter.php:203
+#: includes/widgets/class-order-counter.php:204
 msgid "Minimum Width"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:41
+#: includes/widgets/class-product-image.php:42
 msgid "WCDP Campaign Image"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:75
+#: includes/widgets/class-product-image.php:76
 msgid "Campaign Image"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:93
-#: includes/widgets/class-product-title.php:105
+#: includes/widgets/class-product-image.php:94
+#: includes/widgets/class-product-title.php:106
 msgid "Link to Campaign"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:103
+#: includes/widgets/class-product-image.php:104
 msgid "Lazy Load"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:107
+#: includes/widgets/class-product-image.php:108
 msgid ""
 "Turn off for an image above the fold — lazy loading a hero image delays "
 "Largest Contentful Paint."
 msgstr ""
 
-#: includes/widgets/class-product-image.php:120
+#: includes/widgets/class-product-image.php:121
 msgid "Image"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:173
+#: includes/widgets/class-product-image.php:174
 msgid "Aspect Ratio"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:177
+#: includes/widgets/class-product-image.php:178
 msgid "Original"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:188
+#: includes/widgets/class-product-image.php:189
 msgid ""
 "Crops every campaign image to the same shape — the reliable way to keep "
 "archive cards aligned."
 msgstr ""
 
-#: includes/widgets/class-product-image.php:195
+#: includes/widgets/class-product-image.php:196
 msgid "Fit"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:199
+#: includes/widgets/class-product-image.php:200
 msgid "Cover"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:200
+#: includes/widgets/class-product-image.php:201
 msgid "Contain"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:201
-#: includes/widgets/class-progress.php:553
+#: includes/widgets/class-product-image.php:202
+#: includes/widgets/class-progress.php:554
 msgid "Fill"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:202
+#: includes/widgets/class-product-image.php:203
 msgid "Scale Down"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:212
+#: includes/widgets/class-product-image.php:213
 msgid "Focal Point"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:217
+#: includes/widgets/class-product-image.php:218
 msgid "Top"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:218
+#: includes/widgets/class-product-image.php:219
 msgid "Bottom"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:263
-#: includes/widgets/class-product-image.php:291
+#: includes/widgets/class-product-image.php:264
+#: includes/widgets/class-product-image.php:292
 msgid "Opacity"
 msgstr ""
 
-#: includes/widgets/class-product-image.php:307
+#: includes/widgets/class-product-image.php:308
 msgid "Zoom"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:40
+#: includes/widgets/class-product-price.php:41
 msgid "WCDP Campaign Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:74
+#: includes/widgets/class-product-price.php:75
 msgid "Campaign Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:81
-#: includes/widgets/class-product-title.php:84
+#: includes/widgets/class-product-price.php:82
+#: includes/widgets/class-product-title.php:85
 msgid "HTML Tag"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:104
+#: includes/widgets/class-product-price.php:105
 msgid "Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:113
+#: includes/widgets/class-product-price.php:114
 msgid "Sale Prices"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:116
+#: includes/widgets/class-product-price.php:117
 msgid ""
 "WooCommerce shows a struck-through original price next to the current one."
 msgstr ""
 
-#: includes/widgets/class-product-price.php:120
+#: includes/widgets/class-product-price.php:121
 msgid "Original Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:126
+#: includes/widgets/class-product-price.php:127
 msgid "Original Price Color"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:131
+#: includes/widgets/class-product-price.php:132
 msgid "Current Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:137
+#: includes/widgets/class-product-price.php:138
 msgid "Current Price Color"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:145
+#: includes/widgets/class-product-price.php:146
 msgid "Hide Original Price"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:152
+#: includes/widgets/class-product-price.php:153
 msgid "Price Suffix"
 msgstr ""
 
-#: includes/widgets/class-product-price.php:175
+#: includes/widgets/class-product-price.php:176
 msgid "This product has no price to display."
 msgstr ""
 
-#: includes/widgets/class-product-title.php:43
+#: includes/widgets/class-product-title.php:44
 msgid "WCDP Campaign Title"
 msgstr ""
 
-#: includes/widgets/class-product-title.php:77
+#: includes/widgets/class-product-title.php:78
 msgid "Campaign Title"
 msgstr ""
 
-#: includes/widgets/class-product-title.php:115
+#: includes/widgets/class-product-title.php:116
 msgid "Limit to Lines"
 msgstr ""
 
-#: includes/widgets/class-product-title.php:120
+#: includes/widgets/class-product-title.php:121
 msgid "No limit"
 msgstr ""
 
-#: includes/widgets/class-product-title.php:124
+#: includes/widgets/class-product-title.php:125
 msgid "Truncates long campaign names so archive cards stay the same height."
 msgstr ""
 
-#: includes/widgets/class-product-title.php:144
+#: includes/widgets/class-product-title.php:145
 msgid "Link Color"
 msgstr ""
 
-#: includes/widgets/class-product-title.php:154
+#: includes/widgets/class-product-title.php:155
 msgid "Link Hover Color"
 msgstr ""
 
-#: includes/widgets/class-progress.php:60
+#: includes/widgets/class-progress.php:61
 msgid "WCDP Progress"
 msgstr ""
 
-#: includes/widgets/class-progress.php:165
+#: includes/widgets/class-progress.php:166
 msgid "1 — Bar with amount inside"
 msgstr ""
 
-#: includes/widgets/class-progress.php:166
+#: includes/widgets/class-progress.php:167
 msgid "2 — Amounts and deadline above bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:167
+#: includes/widgets/class-progress.php:168
 msgid "3 — Amounts above bar, deadline below"
 msgstr ""
 
-#: includes/widgets/class-progress.php:168
+#: includes/widgets/class-progress.php:169
 msgid "4 — Percentage and deadline above bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:169
+#: includes/widgets/class-progress.php:170
 msgid "5 — Deadline only"
 msgstr ""
 
-#: includes/widgets/class-progress.php:170
+#: includes/widgets/class-progress.php:171
 msgid "6 — Goal only"
 msgstr ""
 
-#: includes/widgets/class-progress.php:171
+#: includes/widgets/class-progress.php:172
 msgid "7 — Amount still needed"
 msgstr ""
 
-#: includes/widgets/class-progress.php:172
+#: includes/widgets/class-progress.php:173
 msgid "8 — Raised of goal"
 msgstr ""
 
-#: includes/widgets/class-progress.php:173
+#: includes/widgets/class-progress.php:174
 msgid "9 — Raised only"
 msgstr ""
 
-#: includes/widgets/class-progress.php:174
+#: includes/widgets/class-progress.php:175
 msgid "10 — Percentage only"
 msgstr ""
 
 #. translators: {raised} and {goal} are replaced with formatted amounts. Keep both placeholders.
-#: includes/widgets/class-progress.php:214
+#: includes/widgets/class-progress.php:215
 msgid "{raised} of {goal}"
 msgstr ""
 
 #. translators: {count} is replaced with the number of donations. Keep the placeholder.
-#: includes/widgets/class-progress.php:218
+#: includes/widgets/class-progress.php:219
 msgid "{count} donations"
 msgstr ""
 
-#: includes/widgets/class-progress.php:264
+#: includes/widgets/class-progress.php:265
 msgid "Layout & Elements"
 msgstr ""
 
-#: includes/widgets/class-progress.php:270
+#: includes/widgets/class-progress.php:271
 msgid "Composition"
 msgstr ""
 
-#: includes/widgets/class-progress.php:274
+#: includes/widgets/class-progress.php:275
 msgid "Use a preset"
 msgstr ""
 
-#: includes/widgets/class-progress.php:275
+#: includes/widgets/class-progress.php:276
 msgid "Build it myself"
 msgstr ""
 
-#: includes/widgets/class-progress.php:283
+#: includes/widgets/class-progress.php:284
 msgid "Preset"
 msgstr ""
 
-#: includes/widgets/class-progress.php:296
-#: includes/widgets/class-progress.php:508
+#: includes/widgets/class-progress.php:297
+#: includes/widgets/class-progress.php:509
 msgid "Progress Bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:308
-#: includes/widgets/class-progress.php:671
+#: includes/widgets/class-progress.php:309
+#: includes/widgets/class-progress.php:672
 msgid "Text Inside Bar"
-msgstr ""
-
-#: includes/widgets/class-progress.php:320
-#: includes/widgets/class-progress.php:719
-msgid "Goal"
 msgstr ""
 
 #: includes/widgets/class-progress.php:321
 #: includes/widgets/class-progress.php:720
-msgid "Percentage"
+msgid "Goal"
 msgstr ""
 
 #: includes/widgets/class-progress.php:322
 #: includes/widgets/class-progress.php:721
-msgid "Still Needed"
+msgid "Percentage"
 msgstr ""
 
 #: includes/widgets/class-progress.php:323
 #: includes/widgets/class-progress.php:722
+msgid "Still Needed"
+msgstr ""
+
+#: includes/widgets/class-progress.php:324
+#: includes/widgets/class-progress.php:723
 msgid "Deadline"
 msgstr ""
 
-#: includes/widgets/class-progress.php:367
+#: includes/widgets/class-progress.php:368
 msgid "Position"
 msgstr ""
 
-#: includes/widgets/class-progress.php:371
+#: includes/widgets/class-progress.php:372
 msgid "Above the bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:372
+#: includes/widgets/class-progress.php:373
 msgid "Below the bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:385
+#: includes/widgets/class-progress.php:386
 msgid "Number Format"
 msgstr ""
 
-#: includes/widgets/class-progress.php:391
+#: includes/widgets/class-progress.php:392
 msgid "Amount Formatting"
 msgstr ""
 
-#: includes/widgets/class-progress.php:396
+#: includes/widgets/class-progress.php:397
 msgid "Format here"
 msgstr ""
 
-#: includes/widgets/class-progress.php:398
+#: includes/widgets/class-progress.php:399
 msgid ""
 "\"Match the rest of the site\" prints the amounts exactly as WCDP does, so a "
 "multi-currency switcher keeps working. Choose \"Format here\" only if you "
@@ -1975,7 +2055,7 @@ msgid ""
 "and will not follow a currency switcher."
 msgstr ""
 
-#: includes/widgets/class-progress.php:416
+#: includes/widgets/class-progress.php:417
 msgid ""
 "Applies in both formatting modes. The default reads WooCommerce → Settings → "
 "General → Currency position and enforces it, so a currency plugin cannot "
@@ -1983,141 +2063,141 @@ msgid ""
 "switcher to set the position per currency."
 msgstr ""
 
-#: includes/widgets/class-progress.php:423
+#: includes/widgets/class-progress.php:424
 msgid "Amount Decimals"
 msgstr ""
 
-#: includes/widgets/class-progress.php:440
+#: includes/widgets/class-progress.php:441
 msgid "Show whole amounts without decimal places."
 msgstr ""
 
-#: includes/widgets/class-progress.php:448
+#: includes/widgets/class-progress.php:449
 msgid "Compact Notation"
 msgstr ""
 
-#: includes/widgets/class-progress.php:452
+#: includes/widgets/class-progress.php:453
 msgid ""
 "Render large amounts as 1.2K / 3.4M. The currency symbol is dropped in this "
 "mode."
 msgstr ""
 
-#: includes/widgets/class-progress.php:461
+#: includes/widgets/class-progress.php:462
 msgid "Percentage Decimals"
 msgstr ""
 
-#: includes/widgets/class-progress.php:478
+#: includes/widgets/class-progress.php:479
 msgid ""
 "Placeholders: {raised} {goal} {remaining} {percentage} {count} {timeleft}"
 msgstr ""
 
-#: includes/widgets/class-progress.php:535
+#: includes/widgets/class-progress.php:536
 msgid "Track"
 msgstr ""
 
-#: includes/widgets/class-progress.php:588
+#: includes/widgets/class-progress.php:589
 msgid "Animate on Load"
 msgstr ""
 
-#: includes/widgets/class-progress.php:599
+#: includes/widgets/class-progress.php:600
 msgid "Animation Duration"
 msgstr ""
 
-#: includes/widgets/class-progress.php:683
+#: includes/widgets/class-progress.php:684
 msgid "Placement"
 msgstr ""
 
-#: includes/widgets/class-progress.php:687
+#: includes/widgets/class-progress.php:688
 msgid "Follow the fill"
 msgstr ""
 
-#: includes/widgets/class-progress.php:688
+#: includes/widgets/class-progress.php:689
 msgid "Over the whole bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:758
+#: includes/widgets/class-progress.php:759
 msgid "Raised Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:759
+#: includes/widgets/class-progress.php:760
 msgid "Goal Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:760
+#: includes/widgets/class-progress.php:761
 msgid "Remaining Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:761
+#: includes/widgets/class-progress.php:762
 msgid "Percentage Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:762
+#: includes/widgets/class-progress.php:763
 msgid "Count Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:763
+#: includes/widgets/class-progress.php:764
 msgid "Time Left Value"
 msgstr ""
 
-#: includes/widgets/class-progress.php:772
+#: includes/widgets/class-progress.php:773
 msgid ""
 "Overrides for a single placeholder inside the text above. Only the "
 "placeholders you actually use have any effect."
 msgstr ""
 
-#: includes/widgets/class-progress.php:811
+#: includes/widgets/class-progress.php:812
 msgid "Rows Direction"
 msgstr ""
 
-#: includes/widgets/class-progress.php:815
+#: includes/widgets/class-progress.php:816
 msgid "Side by side"
 msgstr ""
 
-#: includes/widgets/class-progress.php:819
+#: includes/widgets/class-progress.php:820
 msgid "Stacked"
 msgstr ""
 
-#: includes/widgets/class-progress.php:827
+#: includes/widgets/class-progress.php:828
 msgid ""
 "Set this per device — stacking the amounts on mobile is usually what you "
 "want."
 msgstr ""
 
-#: includes/widgets/class-progress.php:837
+#: includes/widgets/class-progress.php:838
 msgid "Alignment — All Rows"
 msgstr ""
 
-#: includes/widgets/class-progress.php:845
+#: includes/widgets/class-progress.php:846
 msgid "Per-Row Override"
 msgstr ""
 
-#: includes/widgets/class-progress.php:848
+#: includes/widgets/class-progress.php:849
 msgid ""
 "Rows above and below the bar usually hold a different number of items — two "
 "amounts spread apart above, a single value aligned right below. Leave a "
 "field empty to keep the shared alignment."
 msgstr ""
 
-#: includes/widgets/class-progress.php:855
+#: includes/widgets/class-progress.php:856
 msgid "Above the Bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:861
+#: includes/widgets/class-progress.php:862
 msgid "Below the Bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:866
+#: includes/widgets/class-progress.php:867
 msgid "Gap Inside Rows"
 msgstr ""
 
-#: includes/widgets/class-progress.php:877
+#: includes/widgets/class-progress.php:878
 msgid "Gap Between Rows and Bar"
 msgstr ""
 
-#: includes/widgets/class-progress.php:953
+#: includes/widgets/class-progress.php:954
 msgid "Nothing to show — enable the bar or at least one element."
 msgstr ""
 
-#: includes/widgets/class-progress.php:1355
+#: includes/widgets/class-progress.php:1356
 msgid ""
 "No fundraising goal is set on this product, so the bar, percentage and "
 "remaining amount are hidden. Set a goal in the product's WCDP settings, or "

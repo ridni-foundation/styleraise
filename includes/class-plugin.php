@@ -81,6 +81,10 @@ final class Plugin {
 		// back — leaving a spinner where the form already is.
 		new Cache\Script_Guard();
 
+		// WCDP builds no form in the Elementor editor without a WooCommerce
+		// cart; this gives the editor bootstrap one, for that request only.
+		new Editor\Form_Preview();
+
 		$this->register_purge_triggers();
 
 		// Enabling donations on a product changes what the campaign picker
@@ -392,6 +396,14 @@ final class Plugin {
 				WCDP_EL_VERSION
 			);
 		}
+
+		// Elementor preview iframe only, enqueued by Editor\Form_Preview.
+		wp_register_style(
+			'wcdp-el-preview',
+			WCDP_EL_URL . 'assets/css/wcdp-el-preview.css',
+			array(),
+			WCDP_EL_VERSION
+		);
 
 		$this->register_live_script();
 	}

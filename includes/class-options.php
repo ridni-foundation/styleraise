@@ -58,6 +58,10 @@ final class Options {
 			// Keeps the donation form's script out of "delay JavaScript until
 			// interaction": `auto`, `attributes` or `off`.
 			'script_guard'             => 'auto',
+
+			// Show WCDP's real form on the Elementor editor canvas: the editor
+			// bootstrap gets a WooCommerce cart for that request only.
+			'editor_form_preview'      => true,
 		);
 	}
 

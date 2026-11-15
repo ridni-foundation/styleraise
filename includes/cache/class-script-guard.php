@@ -24,11 +24,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * is missing. It reads as a broken page on exactly the traffic a campaign paid
  * for.
  *
- * There is a trap in fixing it. `wcdp.js` opens with `jQuery(function ($) {…})`
- * but WCDP registers it with **no dependencies**, so excluding it alone makes it
- * run before jQuery and die with `jQuery is not defined` — a worse failure than
- * the spinner. jQuery is therefore always excluded together with it, and the
- * missing dependency is declared properly on top.
+ * The script has to be excluded together with what it really depends on, and
+ * that changed in WCDP 1.5.0:
+ *
+ * - **WCDP 1.5.0 and later** register `wcdp.js` with `wp-i18n` (which pulls in
+ *   `wp-hooks`) and call `wp.i18n` as soon as it runs. Held back on its own,
+ *   `wp-i18n` would leave the script failing and the form hidden — a worse
+ *   failure than the spinner. jQuery is not among the dependencies: neither
+ *   `wcdp.js` nor `wcdp.min.js` references it (checked in 1.5.0 and 1.5.1), so
+ *   it stays delayed like the rest of the site.
+ * - **WCDP 1.3.2–1.4.x** open `wcdp.js` with `jQuery(function ($) {…})` yet
+ *   register it with **no dependencies**. Excluded alone, it runs before
+ *   jQuery and dies with `jQuery is not defined`. There jQuery is excluded
+ *   together with it, and the missing dependency is declared on top.
+ *
+ * Which case applies is read from WCDP's own registration: no `wp-i18n` among
+ * the dependencies means the jQuery-based script.
  *
  * Two mechanisms, because no single one reaches every optimiser:
  *
@@ -42,12 +53,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Script_Guard {
 
 	/**
-	 * Script handles that must load together and on time.
+	 * Script handles that must load together and on time (WCDP 1.5.0+).
+	 *
+	 * The WCDP form script, its real dependency chain (`wp-i18n` → `wp-hooks`)
+	 * and the live-figures script.
+	 */
+	const HANDLES = array( 'wc-donation-platform', 'wcdp-el-live', 'wp-i18n', 'wp-hooks' );
+
+	/**
+	 * Script handles that must load together and on time (WCDP before 1.5.0).
 	 *
 	 * `jquery` is an alias with no file of its own; `jquery-core` is the one
 	 * that actually emits a tag.
 	 */
-	const HANDLES = array( 'wc-donation-platform', 'wcdp-el-live', 'jquery', 'jquery-core', 'jquery-migrate' );
+	const LEGACY_HANDLES = array( 'wc-donation-platform', 'wcdp-el-live', 'jquery', 'jquery-core', 'jquery-migrate' );
+
+	/**
+	 * Whether a donation form widget rendered during this request.
+	 *
+	 * @var bool
+	 */
+	private static $form_rendered = false;
 
 	/**
 	 * Register hooks.
@@ -78,11 +104,24 @@ final class Script_Guard {
 	}
 
 	/**
+	 * Record that the donation form widget is about to print a form.
+	 *
+	 * Called from the widget's render. WCDP 1.5.1 sets `WCDP_FORM` to `false`
+	 * on Elementor pages even when they carry a form, so the widget reports it
+	 * itself.
+	 */
+	public static function mark_form_rendered(): void {
+		self::$form_rendered = true;
+	}
+
+	/**
 	 * Whether this request renders a donation form.
 	 *
-	 * WCDP defines `WCDP_FORM` when a form actually renders — after its
-	 * one-form-per-page check, so a second, refused form does not count. Every
-	 * filter below runs during buffer processing, long after that point.
+	 * True when the widget reported a form, or when WCDP queued its form
+	 * script — which it does for every form it renders, whatever placed it:
+	 * shortcode, block, product page or checkout. `WCDP_FORM` is not used: WCDP
+	 * defines it, as `true` or `false`, on every page with a post. Every filter
+	 * below runs during buffer processing, long after the form rendered.
 	 *
 	 * @return bool
 	 */
@@ -92,21 +131,53 @@ final class Script_Guard {
 		 *
 		 * @param bool $protect Whether to exclude the scripts from delaying.
 		 */
-		return (bool) apply_filters( 'wcdp_el_protect_form_scripts', defined( 'WCDP_FORM' ) );
+		return (bool) apply_filters(
+			'wcdp_el_protect_form_scripts',
+			self::$form_rendered || wp_script_is( 'wc-donation-platform', 'enqueued' )
+		);
 	}
 
 	/**
-	 * Declare the jQuery dependency WCDP omits.
+	 * Whether the installed WCDP ships the jQuery-based form script.
 	 *
-	 * `wcdp.js` is wrapped in `jQuery(function ($) {…})` yet is registered with
-	 * an empty dependency array. It works only because something else happens
-	 * to load jQuery first. Stating it makes WordPress — and every optimiser
-	 * that respects dependency order — keep the two in the right sequence.
+	 * WCDP 1.5.0 moved `wcdp.js` off jQuery and onto `wp.i18n`, and registers
+	 * it with `wp-i18n` since. Its registration is the most direct evidence;
+	 * before WCDP has registered the script, its version stands in.
+	 *
+	 * @return bool True for WCDP before 1.5.0.
+	 */
+	public static function wcdp_needs_jquery(): bool {
+		$scripts = wp_scripts();
+
+		if ( isset( $scripts->registered['wc-donation-platform'] ) ) {
+			return ! in_array( 'wp-i18n', (array) $scripts->registered['wc-donation-platform']->deps, true );
+		}
+
+		return defined( 'WCDP_VERSION' ) && version_compare( (string) WCDP_VERSION, '1.5.0', '<' );
+	}
+
+	/**
+	 * Script handles guarded for the installed WCDP.
+	 *
+	 * @return string[]
+	 */
+	public static function handles(): array {
+		return self::wcdp_needs_jquery() ? self::LEGACY_HANDLES : self::HANDLES;
+	}
+
+	/**
+	 * Declare the jQuery dependency WCDP before 1.5.0 omits.
+	 *
+	 * There `wcdp.js` is wrapped in `jQuery(function ($) {…})` yet registered
+	 * with an empty dependency array, and works only because something else
+	 * happens to load jQuery first. Stating it makes WordPress — and every
+	 * optimiser that respects dependency order — keep the two in sequence.
+	 * WCDP 1.5.0 and later are left untouched: their script needs no jQuery.
 	 */
 	public function declare_jquery_dependency(): void {
 		$scripts = wp_scripts();
 
-		if ( ! isset( $scripts->registered['wc-donation-platform'] ) ) {
+		if ( ! isset( $scripts->registered['wc-donation-platform'] ) || ! self::wcdp_needs_jquery() ) {
 			return;
 		}
 
@@ -150,11 +221,23 @@ final class Script_Guard {
 	 * @return string[]
 	 */
 	public static function regex_patterns(): array {
+		if ( self::wcdp_needs_jquery() ) {
+			return self::filter_patterns(
+				array(
+					'wc-donation-platform',
+					'/jquery-?[0-9.]*(\.min|\.slim|\.slim\.min)?\.js',
+					'jquery-migrate',
+				)
+			);
+		}
+
 		return self::filter_patterns(
 			array(
 				'wc-donation-platform',
-				'/jquery-?[0-9.]*(\.min|\.slim|\.slim\.min)?\.js',
-				'jquery-migrate',
+				'/wp-includes/js/dist/i18n',
+				'/wp-includes/js/dist/hooks',
+				// WordPress prints the locale data right after `wp-i18n`.
+				'wp-i18n-js-after',
 			)
 		);
 	}
@@ -165,12 +248,23 @@ final class Script_Guard {
 	 * @return string[]
 	 */
 	public static function plain_patterns(): array {
+		if ( self::wcdp_needs_jquery() ) {
+			return self::filter_patterns(
+				array(
+					'wc-donation-platform',
+					'jquery.js',
+					'jquery.min.js',
+					'jquery-migrate',
+				)
+			);
+		}
+
 		return self::filter_patterns(
 			array(
 				'wc-donation-platform',
-				'jquery.js',
-				'jquery.min.js',
-				'jquery-migrate',
+				'/wp-includes/js/dist/i18n',
+				'/wp-includes/js/dist/hooks',
+				'wp-i18n-js-after',
 			)
 		);
 	}
@@ -181,8 +275,8 @@ final class Script_Guard {
 	 * The live-figures script depends on nothing and exists precisely to
 	 * correct a cached total before the visitor touches anything. Delaying it
 	 * until first interaction would defeat it on archive pages, which carry
-	 * progress bars but no form — and unlike jQuery, excluding it costs the
-	 * rest of the site nothing.
+	 * progress bars but no form — and excluding it costs the rest of the site
+	 * nothing.
 	 *
 	 * @return string[]
 	 */
@@ -273,9 +367,15 @@ final class Script_Guard {
 	/**
 	 * Mark a guarded script so attribute-driven optimisers leave it alone.
 	 *
-	 * Unconditional by necessity: jQuery's tag is printed in the head, before
-	 * anything has rendered, so there is no way to know yet whether this page
-	 * carries a form. That is exactly why the mode is opt-in.
+	 * Unconditional by necessity: the dependencies (`wp-i18n` and `wp-hooks`,
+	 * or jQuery before WCDP 1.5.0) are printed in the head, before anything has
+	 * rendered, so there is no way to know yet whether this page carries a
+	 * form. That is exactly why the mode is opt-in.
+	 *
+	 * The string WordPress passes here can hold several tags: the inline
+	 * translations WCDP 1.5.1 sets up for `wcdp.js` precede the main tag, and
+	 * `wp-i18n` is followed by its inline locale data. Every opening tag is
+	 * marked, so none of them is left behind for an optimiser to delay.
 	 *
 	 * @param string $tag    The script tag.
 	 * @param string $handle Script handle.
@@ -285,21 +385,9 @@ final class Script_Guard {
 	public function mark_script_tag( $tag, $handle, $src ): string {
 		unset( $src );
 
-		if ( ! in_array( $handle, self::HANDLES, true ) ) {
+		if ( ! in_array( $handle, self::handles(), true ) ) {
 			return $tag;
 		}
-
-		if ( false !== strpos( $tag, 'data-cfasync' ) ) {
-			return $tag;
-		}
-
-		// Cloudflare ignores `data-cfasync` when a legacy type attribute is
-		// present, so the type WordPress adds for non-HTML5 themes has to go.
-		$tag = str_replace(
-			array( " type='text/javascript'", ' type="text/javascript"' ),
-			'',
-			$tag
-		);
 
 		/**
 		 * Filter the opt-out attributes added to guarded scripts.
@@ -316,11 +404,31 @@ final class Script_Guard {
 			$handle
 		);
 
-		if ( false !== strpos( $tag, '<script ' ) ) {
-			return preg_replace( '/<script\s/', '<script ' . $attributes . ' ', $tag, 1 );
-		}
+		$marked = preg_replace_callback(
+			'/<script(\s[^>]*)?>/i',
+			static function ( array $match ) use ( $attributes ): string {
+				$existing = isset( $match[1] ) ? $match[1] : '';
 
-		return str_replace( '<script>', '<script ' . $attributes . '>', $tag );
+				// Already marked, by us or by someone else.
+				if ( false !== strpos( $existing, 'data-cfasync' ) ) {
+					return $match[0];
+				}
+
+				// Cloudflare ignores `data-cfasync` when a legacy type attribute
+				// is present, so the type WordPress adds for non-HTML5 themes
+				// has to go.
+				$existing = str_replace(
+					array( " type='text/javascript'", ' type="text/javascript"' ),
+					'',
+					$existing
+				);
+
+				return '<script ' . $attributes . $existing . '>';
+			},
+			(string) $tag
+		);
+
+		return null === $marked ? (string) $tag : $marked;
 	}
 
 	/* ─────────────────────────── Diagnostics ─────────────────────────── */

@@ -8,6 +8,7 @@
 namespace WCDP_Elementor\Admin;
 
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Editor\Form_Preview;
 use WCDP_Elementor\Cache\Freshness;
 use WCDP_Elementor\Cache\Location_Index;
 use WCDP_Elementor\Cache\Purger;
@@ -157,6 +158,9 @@ final class Settings {
 		$clean['disabled_widgets'] = array_values( array_diff( $registry, $enabled ) );
 
 		$clean = $this->sanitize_freshness( $input, $clean );
+
+		// A checkbox: absent from the submission means switched off.
+		$clean['editor_form_preview'] = ! empty( $input['editor_form_preview'] );
 
 		// Turning a widget off changes which controls exist, so the generated
 		// per-page CSS has to be rebuilt.
@@ -363,6 +367,24 @@ final class Settings {
 						</ul>
 					<?php endif; ?>
 
+					</div>
+
+					<div class="wcdp-el-card">
+						<h2 class="wcdp-el-card__title"><?php esc_html_e( 'Elementor editor', 'styleraise' ); ?></h2>
+						<label for="wcdp-el-editor-form-preview" class="wcdp-el-toggle">
+							<input type="checkbox"
+								id="wcdp-el-editor-form-preview"
+								name="<?php echo esc_attr( Options::OPTION ); ?>[editor_form_preview]"
+								value="1"
+								<?php checked( Form_Preview::is_enabled() ); ?>>
+							<span class="wcdp-el-toggle__track" aria-hidden="true"></span>
+							<span class="wcdp-el-toggle__text">
+								<span class="wcdp-el-toggle__name"><?php esc_html_e( 'Show the donation form in the Elementor editor', 'styleraise' ); ?></span>
+							</span>
+						</label>
+						<p class="wcdp-el-card__hint">
+							<?php esc_html_e( 'Loads a WooCommerce cart only while you edit, so WCDP can build the form. Nothing is added to the cart.', 'styleraise' ); ?>
+						</p>
 					</div>
 
 					<div class="wcdp-el-card wcdp-el-card__actions">
@@ -932,11 +954,11 @@ final class Settings {
 								$guard_options = array(
 									'auto'       => array(
 										esc_html__( 'Only where the form is (recommended)', 'styleraise' ),
-										esc_html__( 'Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the form script — and jQuery, which it needs — alone, but only on pages that actually contain a form. The rest of the site keeps every optimisation.', 'styleraise' ),
+										esc_html__( 'Tells WP Rocket, LiteSpeed, Perfmatters and Autoptimize to leave the donation form script and the scripts it needs alone — the WordPress translation scripts, or jQuery with Donation Platform for WooCommerce older than 1.5.0 — but only on pages that actually contain a form. The rest of the site keeps every optimisation.', 'styleraise' ),
 									),
 									'attributes' => array(
 										esc_html__( 'Also mark the tags (widest coverage)', 'styleraise' ),
-										esc_html__( 'Adds opt-out attributes the above plus Cloudflare Rocket Loader, WP Meteor and NitroPack understand. These cannot be limited to form pages, so jQuery stops being delayed site-wide. Use it if the form still shows a spinner.', 'styleraise' ),
+										esc_html__( 'Adds opt-out attributes the above plus Cloudflare Rocket Loader, WP Meteor and NitroPack understand. These cannot be limited to form pages, so the scripts the donation form script needs (the WordPress translation scripts, or jQuery with Donation Platform for WooCommerce older than 1.5.0) stop being delayed site-wide. Use it if the form still shows a spinner.', 'styleraise' ),
 									),
 									'off'        => array(
 										esc_html__( 'Off', 'styleraise' ),
@@ -962,7 +984,7 @@ final class Settings {
 							</fieldset>
 
 							<p class="description">
-								<?php esc_html_e( 'With this on, remove any manual exclusion you added for the donation form or jQuery in your caching plugin — a manual jQuery exclusion applies to the whole site and undoes the point of the targeted mode.', 'styleraise' ); ?>
+								<?php esc_html_e( 'With this on, remove any manual exclusion you added in your caching plugin for the donation form or the scripts it needs (the WordPress translation scripts, or jQuery with Donation Platform for WooCommerce older than 1.5.0) — a manual exclusion applies to the whole site and undoes the point of the targeted mode.', 'styleraise' ); ?>
 							</p>
 						</td>
 					</tr>

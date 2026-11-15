@@ -8,6 +8,26 @@ Versions before 3.1.2 were used privately by the Ridni Foundation under the
 name "WCDP Elementor Integration" and were never published; they are listed so
 the history of the code is complete.
 
+## [3.2.0] — 2026-11-14
+
+### Added
+
+- The donation form widget now shows the real donation form in the Elementor editor, and updates it within about a second when you change a content setting such as the layout. WooCommerce gets a temporary cart in memory for that render only: nothing is added to your cart, and no session, cookie or order is created. Saving a page never stores the form or your details in the page. A new setting, "Show the donation form in the Elementor editor", turns it off. Needs WooCommerce 6.9 or newer; tested with Donation Platform for WooCommerce 1.5.1. With Donation Platform for WooCommerce 1.3.2 the form shows when the editor opens, but changing a content setting does not redraw it: close and reopen the editor to see the change. For a password-protected campaign, or an unpublished one you cannot read, the editor shows a hint instead of the form, both when it opens and when the widget redraws — with the setting on or off, also when another plugin (such as Elementor Pro's WooCommerce module) loads a WooCommerce cart in the editor.
+- Form layouts 6 (Donation Platform for WooCommerce 1.5.0 or newer), 7 and 8 (1.5.1 or newer). With an older version they are not offered, and the editor explains a saved layout your version does not have.
+- "Field Messages" style controls for the inline field messages of Donation Platform for WooCommerce 1.5.1.
+
+### Changed
+
+- Script protection now keeps exactly what the donation form script needs out of "delay JavaScript": the WordPress translation scripts on Donation Platform for WooCommerce 1.5.0 and newer, jQuery only on older versions. In the recommended mode it applies only to pages that contain a donation form, no longer to the whole site.
+- The button style controls no longer paint the back arrow at the top of layout 6.
+- Editor hints now say exactly why the form is not shown and what to do.
+- Declared as tested with Elementor 4.4 and WooCommerce 11.3.
+
+### Fixed
+
+- The divider image of layout 2 was removed from the form since 3.1.7; it shows again.
+- In the Elementor editor, a popup form without a button is no longer printed into the editor interface.
+
 ## [3.1.10] — 2026-11-06
 
 ### Fixed
@@ -175,6 +195,7 @@ the history of the code is complete.
 
 - Initial version: Elementor widgets for the donation form, progress bar, leaderboard, donation counter and campaign title, price and image, plus a Product ID dynamic tag.
 
+[3.2.0]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.2.0
 [3.1.10]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.10
 [3.1.8]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.8
 [3.1.7]: https://github.com/ridni-foundation/styleraise/releases/tag/v3.1.7

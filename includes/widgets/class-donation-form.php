@@ -12,7 +12,9 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
+use WCDP_Elementor\Cache\Script_Guard;
 use WCDP_Elementor\Data\Product_Resolver;
+use WCDP_Elementor\Editor\Form_Preview;
 use WCDP_Elementor\Render\Kses;
 use WCDP_Elementor\Render\Shortcode_Runner;
 
@@ -35,11 +37,71 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - In popup mode WCDP prints the form on `wp_footer`, outside the widget
  *   wrapper, so style selectors have to name `#wcdp-form` as well as
  *   `{{WRAPPER}}`. Only one form per page is permitted, so that id is unique.
- * - WCDP refuses to render on `elementor_ajax` and returns a placeholder
- *   string instead, so the form cannot re-render live after a content change.
- *   Style controls are unaffected: they are pure CSS and need no re-render.
+ * - WCDP's shortcode refuses to render on `elementor_ajax`, the request that
+ *   re-renders the widget after a content change. With the editor preview on,
+ *   Editor\Form_Preview builds the form there through WCDP's own method;
+ *   otherwise the widget shows a hint. Style controls are unaffected: they are
+ *   pure CSS and need no re-render.
  */
 class Donation_Form extends Widget_Base {
+
+	/**
+	 * Oldest WCDP release that renders each newer layout.
+	 *
+	 * An older WCDP does not reject an unknown layout: it silently renders
+	 * layout 1. Layouts missing here exist in every supported release.
+	 */
+	private const STYLE_MIN_WCDP = array(
+		'6' => '1.5.0',
+		'7' => '1.5.1',
+		'8' => '1.5.1',
+	);
+
+	/**
+	 * Form layouts the given WCDP release can render, key => label.
+	 *
+	 * @param string $wcdp_version Installed WCDP version, '0' when unknown.
+	 * @return array<string, string>
+	 */
+	public static function available_styles( string $wcdp_version ): array {
+		$styles = array(
+			'1' => esc_html__( '1 — Three steps with progress header', 'styleraise' ),
+			'2' => esc_html__( '2 — Everything on one page', 'styleraise' ),
+			'3' => esc_html__( '3 — Three steps, no header', 'styleraise' ),
+			'4' => esc_html__( '4 — Amount only, redirect to checkout', 'styleraise' ),
+			'5' => esc_html__( '5 — Three steps with banner header', 'styleraise' ),
+			'6' => esc_html__( '6 — Steps, no header, back arrow on top', 'styleraise' ),
+			'7' => esc_html__( '7 — Two steps, no header', 'styleraise' ),
+			'8' => esc_html__( '8 — Two steps with banner header', 'styleraise' ),
+		);
+
+		foreach ( self::STYLE_MIN_WCDP as $style => $minimum ) {
+			if ( version_compare( $wcdp_version, $minimum, '<' ) ) {
+				unset( $styles[ $style ] );
+			}
+		}
+
+		return $styles;
+	}
+
+	/**
+	 * Installed WCDP version, '0' when WCDP does not declare one.
+	 *
+	 * Filterable so a site — or a test — can describe a different release
+	 * than the constant reports.
+	 *
+	 * @return string
+	 */
+	private static function wcdp_version(): string {
+		$version = defined( 'WCDP_VERSION' ) ? (string) WCDP_VERSION : '0';
+
+		/**
+		 * Filters the WCDP version the donation form widget compares layouts against.
+		 *
+		 * @param string $version WCDP_VERSION, or '0' when it is not defined.
+		 */
+		return (string) apply_filters( 'wcdp_el_wcdp_version', $version );
+	}
 
 	/**
 	 * Widget name.
@@ -149,23 +211,24 @@ class Donation_Form extends Widget_Base {
 
 		$this->register_product_controls();
 
-		// Legacy control names, unchanged from 1.0.x.
-		$this->add_control(
-			'style',
-			array(
-				'label'     => esc_html__( 'Form Layout', 'styleraise' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => '1',
-				'separator' => 'before',
-				'options'   => array(
-					'1' => esc_html__( '1 — Three steps with progress header', 'styleraise' ),
-					'2' => esc_html__( '2 — Everything on one page', 'styleraise' ),
-					'3' => esc_html__( '3 — Three steps, no header', 'styleraise' ),
-					'4' => esc_html__( '4 — Amount only, redirect to checkout', 'styleraise' ),
-					'5' => esc_html__( '5 — Three steps with banner header', 'styleraise' ),
-				),
-			)
+		// Legacy control names, unchanged from 1.0.x. Only the layouts the
+		// installed WCDP can render are offered; a saved newer one is kept.
+		$styles = self::available_styles( self::wcdp_version() );
+		$layout = array(
+			'label'     => esc_html__( 'Form Layout', 'styleraise' ),
+			'type'      => Controls_Manager::SELECT,
+			'default'   => '1',
+			'separator' => 'before',
+			'options'   => $styles,
 		);
+
+		if ( ! isset( $styles['6'] ) ) {
+			$layout['description'] = esc_html__( 'Styles 6–8 need Donation Platform for WooCommerce 1.5.0 (style 6) or 1.5.1 (styles 7–8) or newer.', 'styleraise' );
+		} elseif ( ! isset( $styles['7'] ) ) {
+			$layout['description'] = esc_html__( 'Styles 7–8 need Donation Platform for WooCommerce 1.5.1 or newer.', 'styleraise' );
+		}
+
+		$this->add_control( 'style', $layout );
 
 		$this->add_control(
 			'popup',
@@ -472,7 +535,7 @@ class Donation_Form extends Widget_Base {
 		$this->open_style_section(
 			'section_header',
 			esc_html__( 'Step Header', 'styleraise' ),
-			array( 'condition' => array( 'style' => array( '1', '5' ) ) )
+			array( 'condition' => array( 'style' => array( '1', '5', '8' ) ) )
 		);
 
 		$root = $this->root();
@@ -510,7 +573,9 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_margin( 'header_margin', $this->sel( '.wcdp-header' ), array( 'condition' => array( 'style' => '1' ) ) );
 
-		/* ── Layout 5: chevron bar ── */
+		/* ── Layouts 5 and 8: chevron bar (8 reuses 5's markup, two steps) ── */
+
+		$banner = array( 'style' => array( '5', '8' ) );
 
 		$this->add_control(
 			'header5_heading',
@@ -518,12 +583,17 @@ class Donation_Form extends Widget_Base {
 				'label'     => esc_html__( 'Banner Header', 'styleraise' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
-				'condition' => array( 'style' => '5' ),
+				'condition' => $banner,
 			)
 		);
 
-		$this->add_typography( 'header5_typography', $this->sel( '.wcdp-style5' ), array( 'condition' => array( 'style' => '5' ) ) );
+		$this->add_typography( 'header5_typography', $this->sel( '.wcdp-style5' ), array( 'condition' => $banner ) );
 
+		// Layout 8 lets its two labels wrap (WCDP: `height: auto; min-height: 2em`),
+		// so there the same value is a minimum. The second, more specific rule
+		// matches only layout 8's wrapper and leaves layout 5's CSS unchanged.
+		// add_slider() merges `$args` last, so `$args['selectors']` replaces the
+		// positional selector and template below (kept for the helper signature).
 		$this->add_slider(
 			'header5_height',
 			esc_html__( 'Height', 'styleraise' ),
@@ -532,11 +602,15 @@ class Donation_Form extends Widget_Base {
 			array(
 				'size_units' => array( 'em', 'px', 'rem' ),
 				'range'      => array( 'em' => array( 'max' => 8 ) ),
-				'condition'  => array( 'style' => '5' ),
+				'condition'  => $banner,
+				'selectors'  => array(
+					$this->sel( '.wcdp-style5' )                       => 'height: {{SIZE}}{{UNIT}};',
+					$this->sel( '.wcdp-steps-wrapper-2 .wcdp-style5' ) => 'height: auto; min-height: {{SIZE}}{{UNIT}};',
+				),
 			)
 		);
 
-		$this->add_margin( 'header5_margin', $this->sel( '.wcdp-steps-wrapper' ), array( 'condition' => array( 'style' => '5' ) ) );
+		$this->add_margin( 'header5_margin', $this->sel( '.wcdp-steps-wrapper' ), array( 'condition' => $banner ) );
 
 		$this->end_controls_section();
 	}
@@ -885,8 +959,12 @@ class Donation_Form extends Widget_Base {
 		$this->open_style_section( 'section_buttons', esc_html__( 'Buttons', 'styleraise' ) );
 
 		// Inside the form and, separately, the popup trigger which lives in the
-		// widget wrapper even when the form itself is in the footer.
-		$button  = $this->sel( 'button' ) . ', ' . $this->sel( '.wcdp-button' );
+		// widget wrapper even when the form itself is in the footer. Layout 6's
+		// back arrow is a <button> too, but WCDP draws it as a bare 36×36 icon:
+		// it is left out, and `:where()` keeps the selector's specificity exactly
+		// as it was before the exclusion, so saved sites cascade the same.
+		$plain   = 'button:where(:not(.wcdp-style-6-back))';
+		$button  = $this->sel( $plain ) . ', ' . $this->sel( '.wcdp-button' );
 		$button .= ', {{WRAPPER}} .wcdp-modal-open';
 
 		$this->add_typography( 'buttons_typography', $button );
@@ -918,9 +996,9 @@ class Donation_Form extends Widget_Base {
 
 		$this->start_controls_tab( 'buttons_tab_hover', array( 'label' => esc_html__( 'Hover', 'styleraise' ) ) );
 
-		$button_hover  = $this->sel( 'button:hover' ) . ', ' . $this->sel( '.wcdp-button:hover' );
+		$button_hover  = $this->sel( $plain . ':hover' ) . ', ' . $this->sel( '.wcdp-button:hover' );
 		$button_hover .= ', {{WRAPPER}} .wcdp-modal-open:hover';
-		$button_hover .= ', ' . $this->sel( 'button:focus-visible' ) . ', {{WRAPPER}} .wcdp-modal-open:focus-visible';
+		$button_hover .= ', ' . $this->sel( $plain . ':focus-visible' ) . ', {{WRAPPER}} .wcdp-modal-open:focus-visible';
 
 		$this->add_color( 'buttons_color_hover', $button_hover, array( 'global_default' => null ) );
 
@@ -1392,6 +1470,29 @@ class Donation_Form extends Widget_Base {
 
 		$this->add_padding( 'notice_padding', $notice );
 
+		// WCDP's inline field messages (red text under a field, WCDP 1.5.1).
+		// Kept apart from the notice box above so saved widgets keep their CSS,
+		// and without global defaults: nothing is emitted until a value is set.
+		$this->add_control(
+			'field_messages_heading',
+			array(
+				'label'     => esc_html__( 'Field Messages', 'styleraise' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
+		$field_message = '';
+
+		foreach ( array( '.wcdp-required-field-notice', '.wcdp-amount-notice', '.wcdp-variation-error', '.wcdp-invalid-field-notice' ) as $index => $class ) {
+			$field_message .= ( $index ? ', ' : '' ) . $this->sel( $class );
+		}
+
+		$this->add_color( 'field_messages_color', $field_message, array( 'global_default' => null ) );
+
+		// `global` replaces the helper's Global Fonts default, which would emit CSS.
+		$this->add_typography( 'field_messages_typography', $field_message, array( 'global' => array() ) );
+
 		$this->add_control(
 			'loader_heading',
 			array(
@@ -1452,10 +1553,11 @@ class Donation_Form extends Widget_Base {
 			return;
 		}
 
-		// WCDP refuses to run on `elementor_ajax` and returns a stand-in
-		// sentence. Intercepting it here gives a clearer explanation than
-		// echoing that sentence into the layout.
-		if ( $this->is_widget_ajax_render() ) {
+		// Any elementor_ajax render other than Elementor's own render_widget —
+		// above all save_builder, which stores every widget's output in
+		// post_content — prints exactly what 3.1.x printed: WCDP builds no form
+		// there, and no form with the editor's data may ever be stored.
+		if ( $this->is_widget_ajax_render() && ! Form_Preview::is_widget_render_action() ) {
 			$this->render_placeholder(
 				esc_html__( 'WCDP cannot build a checkout form during an editor refresh. Reload the preview to see the form; Style tab changes apply live and need no reload.', 'styleraise' )
 			);
@@ -1463,9 +1565,24 @@ class Donation_Form extends Widget_Base {
 			return;
 		}
 
+		// Wherever the form is built for the editor canvas — the editor
+		// bootstrap with a cart (ours, or another plugin's even with the
+		// preview off), or a widget refresh — it is built only for a campaign
+		// the user may see there: published or readable, and without a
+		// password (Form_Preview::campaign_previewable()).
+		if ( Form_Preview::is_preview_render() && ! Form_Preview::campaign_previewable( $product_id ) ) {
+			$this->render_placeholder(
+				esc_html__( 'The editor does not build the donation form for a password-protected campaign or one you cannot view. Open the page or Preview to see what visitors get; Style tab changes apply live.', 'styleraise' )
+			);
+
+			return;
+		}
+
+		$style = (string) ( $settings['style'] ?? '1' );
+
 		$atts = array(
 			'id'    => $product_id,
-			'style' => (string) ( $settings['style'] ?? '1' ),
+			'style' => $style,
 		);
 
 		if ( ! empty( $settings['popup'] ) ) {
@@ -1494,11 +1611,50 @@ class Donation_Form extends Widget_Base {
 			$atts['className'] = 'wcdp-el-form--modern-header';
 		}
 
-		$html = Shortcode_Runner::run( 'wcdp_donation_form', $atts );
+		// A layout newer than the installed WCDP is still passed on as saved:
+		// WCDP renders layout 1 in its place, and the saved choice applies as
+		// soon as WCDP is updated. Only the editor is told why.
+		$this->render_style_hint( $style );
+
+		// Before the shortcode runs: a popup form without a trigger button
+		// returns nothing here and still prints in the footer.
+		Script_Guard::mark_form_rendered();
+
+		if ( $this->is_widget_ajax_render() ) {
+			// Elementor's render_widget (the only elementor_ajax action left
+			// here) re-renders a widget on every content control change, where
+			// WCDP's shortcode refuses to run.
+			// The editor preview builds the form there itself (the campaign was
+			// checked above); without it the widget explains instead of echoing
+			// WCDP's stand-in sentence.
+			$html = Form_Preview::build_for_widget_refresh( $atts );
+
+			if ( null === $html ) {
+				$this->render_placeholder( $this->refresh_hint() );
+
+				return;
+			}
+		} else {
+			// A popup is queued for wp_footer, which on the editor bootstrap is
+			// the editor shell, not the canvas: keep the form out of it.
+			$editor_shell = ! empty( $atts['popup'] ) && Form_Preview::is_editor_shell_render();
+			$footer       = $editor_shell ? Form_Preview::footer_snapshot() : array();
+
+			$html = Shortcode_Runner::run( 'wcdp_donation_form', $atts );
+
+			if ( $editor_shell ) {
+				Form_Preview::drop_footer_added_since( $footer );
+			}
+		}
 
 		if ( '' === trim( $html ) ) {
 			// Expected when the popup renders with no trigger button: the form
-			// itself was queued for the footer.
+			// itself was queued for the footer, which the editor canvas never
+			// shows — so the editor gets a word of explanation instead of a gap.
+			$this->render_placeholder(
+				esc_html__( 'This popup has no button of its own: it opens from your link pointing at #wcdp-form, so there is nothing to show here. Use Preview to try it.', 'styleraise' )
+			);
+
 			return;
 		}
 
@@ -1508,6 +1664,13 @@ class Donation_Form extends Widget_Base {
 
 		if ( ! empty( $settings['popup'] ) && ! empty( $settings['button'] ) ) {
 			$classes[] = 'wcdp-el-form-trigger';
+		}
+
+		// In the editor wcdp.js never runs on this markup, so the form would
+		// stay hidden behind its spinner. Only the root's visibility changes,
+		// and only before kses sees the markup.
+		if ( $this->is_editor() && Form_Preview::is_enabled() ) {
+			$html = Form_Preview::reveal( $html );
 		}
 
 		printf( '<div class="%s">', esc_attr( implode( ' ', $classes ) ) );
@@ -1525,6 +1688,53 @@ class Donation_Form extends Widget_Base {
 				esc_html__( 'The Elementor editor has no WooCommerce cart, so WCDP cannot build the form here. Open the page or Preview to see it with the styles set in this widget.', 'styleraise' )
 			);
 		}
+	}
+
+	/**
+	 * Editor-only hint for a saved layout the installed WCDP cannot render.
+	 *
+	 * @param string $style Saved layout key.
+	 */
+	private function render_style_hint( string $style ): void {
+		if ( ! isset( self::STYLE_MIN_WCDP[ $style ] ) || ! $this->is_editor() ) {
+			return;
+		}
+
+		$version = self::wcdp_version();
+
+		if ( isset( self::available_styles( $version )[ $style ] ) ) {
+			return;
+		}
+
+		printf(
+			'<div class="wcdp-el-placeholder wcdp-el-placeholder--hint"><span class="wcdp-el-placeholder__text">%s</span></div>',
+			esc_html(
+				sprintf(
+					/* translators: 1: form layout number, 2: minimum Donation Platform for WooCommerce version, 3: installed version. */
+					__( 'Layout %1$s needs Donation Platform for WooCommerce %2$s or newer (installed: %3$s), so WCDP shows layout 1 instead. Update WCDP to use it.', 'styleraise' ),
+					$style,
+					self::STYLE_MIN_WCDP[ $style ],
+					$version
+				)
+			)
+		);
+	}
+
+	/**
+	 * Hint for a widget refresh that could not build the form.
+	 *
+	 * With the editor preview on and supported, reopening the editor shows the
+	 * form (its bootstrap builds it); otherwise the editor never shows it, and
+	 * the page or Preview does.
+	 *
+	 * @return string Escaped text.
+	 */
+	private function refresh_hint(): string {
+		if ( Form_Preview::is_enabled() && Form_Preview::session_swap_supported() ) {
+			return esc_html__( 'WCDP cannot build a checkout form during this editor refresh. Close and reopen the editor to see the form; Style tab changes apply live.', 'styleraise' );
+		}
+
+		return esc_html__( 'WCDP cannot build a checkout form in the Elementor editor. Open the page or Preview to see it with the styles set in this widget; Style tab changes apply live.', 'styleraise' );
 	}
 
 	/**

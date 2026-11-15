@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * and by WCDP (the donation form, the leaderboard). Each echo goes through
  * `wp_kses()` with one of these lists, so nothing reaches the page unescaped.
  * The lists are `wp_kses_allowed_html( 'post' )` plus exactly what those
- * producers emit; the form list was taken from the real WCDP 1.5.0 form
- * (`tests/stand/run/kses.php` compares the markup before and after).
+ * producers emit; the form list was taken from the real WCDP 1.5.1 form in
+ * layouts 1–8 (`tests/stand/run/kses.php` compares the markup before and after).
  */
 final class Kses {
 
@@ -150,10 +150,49 @@ final class Kses {
 				'cols'         => true,
 			);
 
+			$markup = self::markup();
+
 			self::$cache['form'] = self::build(
 				array_merge(
-					self::markup(),
+					$markup,
 					array(
+						// The arrow divider of WCDP layout 2 and of its checkout
+						// template: an inline SVG with a clip path and two
+						// gradients. Only the form list carries these — values
+						// and prices never print such markup. Its `style` values
+						// (fill, fill-rule, clip-rule, stop-color, stop-opacity…)
+						// survive only because safecss_filter_attr() allows SVG
+						// presentation properties since WordPress 7.1, which the
+						// plugin requires; on older cores kses would strip them.
+						'svg'                         => array_merge(
+							$markup['svg'],
+							array(
+								'version'   => true,
+								'xml:space' => true,
+							)
+						),
+						'rect'                        => array(
+							'x'      => true,
+							'y'      => true,
+							'width'  => true,
+							'height' => true,
+						),
+						'clippath'                    => array(),
+						'g'                           => array(
+							'clip-path' => true,
+						),
+						'defs'                        => array(),
+						'lineargradient'              => array(
+							'x1'                => true,
+							'y1'                => true,
+							'x2'                => true,
+							'y2'                => true,
+							'gradientunits'     => true,
+							'gradienttransform' => true,
+						),
+						'stop'                        => array(
+							'offset' => true,
+						),
 						'form'                        => array(
 							'action'         => true,
 							'method'         => true,

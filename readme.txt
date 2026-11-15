@@ -5,7 +5,7 @@ Tags: donation, elementor, woocommerce, fundraising, progress bar
 Requires at least: 7.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.10
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ switchers keep working.
 **7 widgets**
 
 * **Donation Progress** — the bar, plus raised, goal, percentage, still-needed, deadline and donation count. Use one of ten presets or compose your own from toggles.
-* **Donation Form** — the WCDP form with a full Style tab: palette, step header, amount buttons with hover and selected states, inputs, checkout fields, popup, fee-recovery box.
+* **Donation Form** — the WCDP form with a full Style tab: palette, step header, amount buttons with hover and selected states, inputs, checkout fields, field messages, popup, fee-recovery box. All eight form layouts, and the real form right in the Elementor editor.
 * **Donor Wall** — timeline or compact list, with separate controls for every value in a donor line.
 * **Donation Counter** — the number renders in its own element, so it can be a badge.
 * **Campaign Title, Price, Image** — for campaigns that are not the current post.
@@ -54,7 +54,7 @@ hand-written CSS.
 * **Every placeholder is its own element.** A big bold raised amount next to a small grey goal takes two controls, not a CSS snippet.
 * **Nothing uses `!important`.** Your theme, Global Classes and Elementor's cascade all stay in charge.
 * **Fresh figures on cached pages.** A page cache freezes the amount raised at the moment it stored the page. A 6 KB script refreshes the figures from a read-only endpoint, and a donation purges exactly the cached pages that show the campaign. Without JavaScript the server-rendered figure stays.
-* **A donation form that does not wait for a mouse move.** "Delay JavaScript" features hold back the donation platform's form script, so the form sits behind a spinner until the visitor interacts — and on a phone that can take a while. The plugin excludes that script, together with jQuery, only on pages that show a form.
+* **A donation form that does not wait for a mouse move.** "Delay JavaScript" features hold back the donation platform's form script, so the form sits behind a spinner until the visitor interacts — and on a phone that can take a while. The plugin excludes that script, together with exactly the scripts it needs, only on pages that show a form.
 
 = Works with =
 
@@ -99,14 +99,44 @@ prefer a fixed currency-symbol position instead, there is a control for that.
 Yes. Set the campaign source to "Current post / loop item". If your campaign
 lives in a custom field on a CPT, use "Post meta field" or a dynamic tag.
 
-= Why don't I see the donation form in the Elementor editor? =
+= Does the Elementor editor show the real donation form? =
 
-The donation platform builds its form on top of a WooCommerce cart, and the
-Elementor editor usually has none, so in the editor the widget shows the
-platform's "not available in the current view" notice with an explanation
-instead of the form. It also refuses to build a checkout while Elementor
-refreshes a single widget. Open the page or Preview to see the form: every style
-you set on the widget applies there.
+Yes, since 3.2.0. The donation platform builds its form on top of a WooCommerce
+cart, which the editor does not have, so for that render the plugin gives
+WooCommerce a temporary cart that lives only in memory. Nothing is added to your
+cart, no WooCommerce session, cookie or order is created, and the checkout fields
+stay empty. If another plugin (for example Elementor Pro's WooCommerce module)
+already loads a WooCommerce cart in the editor, the donation platform uses that
+cart instead, and its checkout fields may show your own account details; that
+form is shown only to you in the editor and is never saved with the page. When
+you change a content setting such as the layout, the form
+updates within about a second. Saving the page never stores the form or your
+details in the page.
+
+You can turn this off under Elementor → WCDP Integration → "Show the donation
+form in the Elementor editor". The widget then shows a hint instead of the form,
+as it also does with WooCommerce older than 6.9. One exception: if another
+plugin (for example Elementor Pro's WooCommerce module) already loads a
+WooCommerce cart in the editor, the donation platform builds its form with that
+cart when the editor opens, behind its loading spinner, as it did before 3.2.0;
+a redraw still shows the hint.
+
+On or off, the editor never builds the form of a password-protected campaign or
+of an unpublished campaign you cannot read: the widget shows a hint, both when
+the editor opens and when it redraws. A form inside a nested Elementor Pro
+template or loop item shows a hint when it redraws. Open the page or Preview to
+see the form there: every style you set on the widget applies.
+
+With Donation Platform for WooCommerce 1.3.2 the form shows when the editor
+opens, but changing a content setting does not redraw it: close and reopen the
+editor to see the change. Newer versions (tested with 1.5.1) redraw it.
+
+= Which form layouts can I use? =
+
+All eight layouts of the donation platform. Layout 6 needs Donation Platform for
+WooCommerce 1.5.0 or newer, layouts 7 and 8 need 1.5.1 or newer. With an older
+version they are not offered; if a page was saved with one of them, the form
+falls back to layout 1 and the editor tells you which version to install.
 
 = Does it slow the site down? =
 
@@ -139,9 +169,21 @@ calling it: no personal data, no writes.
 4. A plain Heading widget uses the "Amount Still Needed" dynamic tag to show "Still needed: €2,600", with the WCDP Donation tag group open next to the Title field.
 5. The Donor Wall's Donor Line style section, with typography, colour, alignment and margin controls and an Individual Values list for each part of a donor line (amount, first name, last name and more).
 6. The finished campaign page as a donor sees it: progress bar, amount still needed, donation count, recent donors and the donation form.
-7. The settings screen under Elementor → WCDP Integration, with freshness patterns, donation form script protection, the widget manager and a diagnostics panel.
+7. The Donation Form widget in the Elementor editor, switched to Form Layout 7 (two steps, no header): the canvas shows the real donation form with the campaign's amounts and follows every change made in the panel.
+8. The settings screen under Elementor → WCDP Integration, with freshness patterns, donation form script protection, the widget manager, the switch for the donation form in the Elementor editor and a diagnostics panel.
 
 == Changelog ==
+
+= 3.2.0 =
+* The donation form widget now shows the real donation form in the Elementor editor, and updates it within about a second when you change a content setting such as the layout. WooCommerce gets a temporary cart in memory for that render only: nothing is added to your cart, and no session, cookie or order is created. Saving a page never stores the form or your details in the page. A new setting, "Show the donation form in the Elementor editor", turns it off. Needs WooCommerce 6.9 or newer; tested with Donation Platform for WooCommerce 1.5.1. With Donation Platform for WooCommerce 1.3.2 the form shows when the editor opens, but changing a content setting does not redraw it: close and reopen the editor to see the change. For a password-protected campaign, or an unpublished one you cannot read, the editor shows a hint instead of the form, both when it opens and when the widget redraws — with the setting on or off, also when another plugin (such as Elementor Pro's WooCommerce module) loads a WooCommerce cart in the editor.
+* Form layouts 6 (Donation Platform for WooCommerce 1.5.0 or newer), 7 and 8 (1.5.1 or newer). With an older version they are not offered, and the editor explains a saved layout your version does not have.
+* "Field Messages" style controls for the inline field messages of Donation Platform for WooCommerce 1.5.1.
+* Script protection now keeps exactly what the donation form script needs out of "delay JavaScript": the WordPress translation scripts on Donation Platform for WooCommerce 1.5.0 and newer, jQuery only on older versions. In the recommended mode it applies only to pages that contain a donation form, no longer to the whole site.
+* The button style controls no longer paint the back arrow at the top of layout 6.
+* Editor hints now say exactly why the form is not shown and what to do.
+* Declared as tested with Elementor 4.4 and WooCommerce 11.3.
+* The divider image of layout 2 was removed from the form since 3.1.7; it shows again.
+* In the Elementor editor, a popup form without a button is no longer printed into the editor interface.
 
 = 3.1.10 =
 * When the REST micro-cache was full, newly fetched campaigns were dropped instead of the oldest ones, so they were never served from the cache. Version 3.1.9 had this bug and was not published.

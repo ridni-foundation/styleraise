@@ -15,7 +15,7 @@ on its own fundraising pages.
 
 | | |
 |---|---|
-| Version | 3.1.10 |
+| Version | 3.2.0 |
 | Requires | WordPress 7.1+, PHP 7.4+, WooCommerce, Elementor 3.20+, Donation Platform for WooCommerce 1.3.2+ |
 | Tested up to | WordPress 7.1 |
 | License | [GPL-2.0-or-later](LICENSE) |
@@ -43,7 +43,7 @@ Elementor Global Colors and Global Fonts, and nothing uses `!important`.
 | Widget | What it shows |
 |---|---|
 | Donation Progress | The bar plus raised, goal, percentage, still needed, deadline and donation count. Ten presets, or compose your own from toggles and text templates such as `Raised {raised} of {goal}`. |
-| Donation Form | The WCDP form with a full Style tab: palette, step header, amount buttons with hover and selected states, inputs, checkout fields, popup, fee-recovery box. |
+| Donation Form | The WCDP form with a full Style tab: palette, step header, amount buttons with hover and selected states, inputs, checkout fields, field messages, popup, fee-recovery box. All eight form layouts (6 needs WCDP 1.5.0+, 7 and 8 need 1.5.1+), and the real form in the Elementor editor. |
 | Donor Wall | Timeline or compact list, with separate controls for every value in a donor line. |
 | Donation Counter | The number renders in its own element, so it can be a badge. |
 | Campaign Title, Price, Image | For campaigns that are not the current post. |
@@ -70,7 +70,8 @@ including the Cloudflare plugin. Freshness presets live under
 **A donation form that does not wait for a mouse move.** "Delay JavaScript"
 features hold back the donation platform's form script, so the form sits behind
 a spinner until the visitor interacts. The plugin excludes that script,
-together with jQuery, only on pages that show a form — in WP Rocket, LiteSpeed
+together with exactly the scripts it needs (the WordPress translation scripts,
+or jQuery with WCDP older than 1.5.0), only on pages that show a form — in WP Rocket, LiteSpeed
 Cache, Perfmatters and Autoptimize — and can mark the tags for Cloudflare
 Rocket Loader, WP Meteor, NitroPack and SG Optimizer.
 
@@ -96,21 +97,42 @@ The finished campaign page as a donor sees it: progress bar, amount still needed
 
 ![Screenshot 6](.wordpress-org/screenshot-6.png)
 
+The Donation Form widget in the Elementor editor, switched to Form Layout 7 (two steps, no header): the canvas shows the real donation form with the campaign's amounts and follows every change made in the panel.
+
+![Screenshot 7](.wordpress-org/screenshot-7.png)
+
 All screenshots are in [`.wordpress-org/`](.wordpress-org/). The demo campaign and donors are made up.
 
-## Coming in 3.2
+## The donation form in the Elementor editor
 
-- **Live donation form in the Elementor editor.** Today the editor has no WooCommerce
-  cart, so the donation form widget shows a notice there and the form appears only on the
-  page or in Preview. Version 3.2 builds the form right in the editor canvas, so you see
-  every style change live. It will be on by default, with a switch in
-  Elementor → WCDP Integration to turn it off.
+Since 3.2.0 the Donation Form widget shows the real donation form in the editor
+canvas, and a change to a content setting such as the layout redraws it within
+about a second. The donation platform builds its form on top of a WooCommerce
+cart, which the editor does not have, so for that render the plugin gives
+WooCommerce a cart that lives only in memory: nothing is added to your cart, no
+WooCommerce session, cookie or order is created, and the checkout fields stay
+empty. If another plugin (for example Elementor Pro's WooCommerce module) already
+loads a WooCommerce cart in the editor, the donation platform uses that cart
+instead, and its checkout fields may show your own account details; that form is
+shown only to you in the editor. Saving the page never stores the form or your details in the page.
+
+It is on by default; turn it off under **Elementor → WCDP Integration** →
+"Show the donation form in the Elementor editor". Turned off, or with
+WooCommerce older than 6.9, the widget shows a hint instead of the form, unless
+another plugin (for example Elementor Pro's WooCommerce module) already loads a
+WooCommerce cart in the editor: then the donation platform builds its form with
+that cart when the editor opens, behind its loading spinner, as it did before
+3.2.0, and a redraw shows the hint. On or off, the editor never builds the form of a password-protected
+campaign or of an unpublished one you cannot read: the widget shows a hint, both
+when the editor opens and when it redraws. With WCDP 1.3.2 the form shows when the editor opens, but a
+content setting change does not redraw it: close and reopen the editor to see
+the change.
 
 ## Installation
 
 1. Install and activate WooCommerce, Elementor and Donation Platform for
    WooCommerce.
-2. Download `styleraise-3.1.10.zip` from the
+2. Download `styleraise-3.2.0.zip` from the
    [latest release](https://github.com/ridni-foundation/styleraise/releases/latest) and upload it under
    **Plugins → Add New → Upload Plugin**. Use the release asset, not GitHub's
    "Download ZIP" button: the release asset unpacks into the folder WordPress
